@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveSettings() {
     const payload = {
-      apiKey: refs.apiKey.value.trim(),
-      model: refs.model.value.trim(),
-      system: refs.system.value.trim()
+      apiKey: refs.apiKey?.value.trim() || "",
+      model: refs.model?.value.trim() || "",
+      system: refs.system?.value.trim() || ""
     };
     localStorage.setItem(settingsKey, JSON.stringify(payload));
     setStatus("Settings saved");
@@ -33,29 +33,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function hydrate() {
     const saved = getSaved();
-    refs.apiKey.value = saved.apiKey || "";
-    refs.model.value = saved.model || "";
-    refs.system.value = saved.system || "";
+    if (refs.apiKey) refs.apiKey.value = saved.apiKey || "";
+    if (refs.model) refs.model.value = saved.model || "";
+    if (refs.system) refs.system.value = saved.system || "";
   }
 
   function setStatus(text) {
-    refs.status.textContent = text;
+    if (refs.status) refs.status.textContent = text;
   }
 
   async function runGemini() {
-    const apiKey = refs.apiKey.value.trim();
-    const model = refs.model.value.trim();
-    const system = refs.system.value.trim();
-    const prompt = refs.prompt.value.trim();
+    const apiKey = refs.apiKey?.value.trim() || "";
+    const model = refs.model?.value.trim() || "";
+    const system = refs.system?.value.trim() || "";
+    const prompt = refs.prompt?.value.trim() || "";
 
     if (!apiKey || !model || !prompt) {
       setStatus("Missing API key, model, or prompt");
-      refs.output.textContent = "Fill in the API key, model name, and prompt.";
+      if (refs.output) refs.output.textContent = "Fill in the API key, model name, and prompt.";
       return;
     }
 
     setStatus("Running...");
-    refs.output.textContent = "Waiting for Gemini response...";
+    if (refs.output) refs.output.textContent = "Waiting for Gemini response...";
 
     try {
       const response = await fetch(
@@ -69,11 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 parts: [
                   {
                     text: system
-                      ? `System instructions:
-${system}
-
-User request:
-${prompt}`
+                      ? `System instructions:\n${system}\n\nUser request:\n${prompt}`
                       : prompt
                   }
                 ]
@@ -86,30 +82,29 @@ ${prompt}`
       const data = await response.json();
 
       if (!response.ok) {
-        refs.output.textContent = JSON.stringify(data, null, 2);
+        if (refs.output) refs.output.textContent = JSON.stringify(data, null, 2);
         setStatus("Request failed");
         return;
       }
 
       const text =
-        data?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("
-") ||
+        data?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("\n") ||
         "No text returned.";
 
-      refs.output.textContent = text;
+      if (refs.output) refs.output.textContent = text;
       setStatus("Done");
     } catch (error) {
-      refs.output.textContent = error.message || "Unknown error";
+      if (refs.output) refs.output.textContent = error.message || "Unknown error";
       setStatus("Network error");
     }
   }
 
-  refs.save.addEventListener("click", saveSettings);
-  refs.clear.addEventListener("click", () => {
-    refs.output.textContent = "Response will appear here.";
+  refs.save?.addEventListener("click", saveSettings);
+  refs.clear?.addEventListener("click", () => {
+    if (refs.output) refs.output.textContent = "Response will appear here.";
     setStatus("Idle");
   });
-  refs.run.addEventListener("click", runGemini);
+  refs.run?.addEventListener("click", runGemini);
 
   hydrate();
 });
