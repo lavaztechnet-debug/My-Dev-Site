@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuroStack Mobile SPA</title>
   <link rel="stylesheet" href="styles.css" />
-  <script defer src="app.js"></script>
-  <script defer src="gemini.js"></script>
+  <script src="app.js" defer></script>
+  <script src="gemini.js" defer></script>
 </head>
 <body>
   <div class="bg-orb orb-a"></div>
@@ -23,10 +23,10 @@
       </div>
 
       <nav class="nav">
-        <button class="nav-btn active" data-route="dashboard">Dashboard</button>
-        <button class="nav-btn" data-route="notes">Notes</button>
-        <button class="nav-btn" data-route="gemini">Gemini Helper</button>
-        <button class="nav-btn" data-route="prompts">Prompt Lab</button>
+        <button class="nav-btn active" data-route="dashboard" type="button">Dashboard</button>
+        <button class="nav-btn" data-route="notes" type="button">Notes</button>
+        <button class="nav-btn" data-route="gemini" type="button">Gemini Helper</button>
+        <button class="nav-btn" data-route="prompts" type="button">Prompt Lab</button>
       </nav>
 
       <section class="sidebar-card neu-panel">
@@ -41,7 +41,11 @@
           <h2 id="pageTitle">Dashboard</h2>
           <p id="pageSubtitle">Build, write, and prompt from one mobile-first interface.</p>
         </div>
-        <button id="clearAllData" class="neu-btn danger-btn">Clear App Data</button>
+
+        <div class="topbar-actions">
+          <button id="themeToggle" class="neu-btn" aria-label="Toggle dark mode" type="button">🌙 Dark</button>
+          <button id="clearAllData" class="neu-btn danger-btn" type="button">Clear App Data</button>
+        </div>
       </header>
 
       <section class="view active" data-view="dashboard">
@@ -54,9 +58,9 @@
               soft gradients, and animated lift to create an exaggerated neumorphic look.
             </p>
             <div class="hero-actions">
-              <button class="neu-btn jump-btn" data-jump="notes">Open Notes</button>
-              <button class="neu-btn jump-btn" data-jump="gemini">Open Gemini</button>
-              <button class="neu-btn jump-btn" data-jump="prompts">Build Prompt</button>
+              <button class="neu-btn jump-btn" data-jump="notes" type="button">Open Notes</button>
+              <button class="neu-btn jump-btn" data-jump="gemini" type="button">Open Gemini</button>
+              <button class="neu-btn jump-btn" data-jump="prompts" type="button">Build Prompt</button>
             </div>
           </article>
 
@@ -124,9 +128,9 @@
               <textarea id="geminiSystem" class="neu-input area-md" placeholder="System instructions"></textarea>
               <textarea id="geminiPrompt" class="neu-input area-lg" placeholder="Ask Gemini anything..."></textarea>
               <div class="row">
-                <button id="runGemini" class="neu-btn primary-btn">Run Gemini</button>
-                <button id="saveGeminiSettings" class="neu-btn">Save Settings</button>
-                <button id="clearGeminiOutput" class="neu-btn">Clear Output</button>
+                <button id="runGemini" class="neu-btn primary-btn" type="button">Run Gemini</button>
+                <button id="saveGeminiSettings" class="neu-btn" type="button">Save Settings</button>
+                <button id="clearGeminiOutput" class="neu-btn" type="button">Clear Output</button>
               </div>
             </div>
           </article>
@@ -152,9 +156,9 @@
               <textarea id="pbConstraints" class="neu-input area-sm" placeholder="Constraints"></textarea>
               <textarea id="pbFormat" class="neu-input area-sm" placeholder="Desired output format"></textarea>
               <div class="row">
-                <button id="buildPrompt" class="neu-btn primary-btn">Generate Prompt</button>
-                <button id="copyPrompt" class="neu-btn">Copy</button>
-                <button id="clearPrompt" class="neu-btn">Clear</button>
+                <button id="buildPrompt" class="neu-btn primary-btn" type="button">Generate Prompt</button>
+                <button id="copyPrompt" class="neu-btn" type="button">Copy</button>
+                <button id="clearPrompt" class="neu-btn" type="button">Clear</button>
               </div>
             </div>
           </article>
