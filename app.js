@@ -6,18 +6,13 @@ const store = {
     try {
       const raw = localStorage.getItem(key);
       return raw ? JSON.parse(raw) : fallback;
-    } catch {
+    } catch (e) {
       return fallback;
     }
   },
   set(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
   }
-};
-
-const app = {
-  notes: store.get("neuro_notes", []),
-  route: (location.hash || "#dashboard").replace("#", ""),
 };
 
 const viewMeta = {
@@ -39,28 +34,51 @@ const viewMeta = {
   }
 };
 
+const app = {
+  notes: store.get("neuro_notes", []),
+  route: (location.hash || "#dashboard").replace("#", ""),
+  theme: store.get("neuro_theme", "light")
+};
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function formatDate(ts) {
+  try {
+    return new Date(ts).toLocaleString();
+  } catch (e) {
+    return "";
+  }
+}
+
+function syncStats() {
+  const statsText = $("#statsText");
+  const dashNotesCount = $("#dashNotesCount");
+  if (statsText) statsText.textContent = `${app.notes.length} notes saved`;
+  if (dashNotesCount) dashNotesCount.textContent = app.notes.length;
+}
+
 function saveNotes() {
   store.set("neuro_notes", app.notes);
   syncStats();
 }
 
-function syncStats() {
-  $("#statsText").textContent = `${app.notes.length} notes saved`;
-  $("#dashNotesCount").textContent = app.notes.length;
-}
-
 function setRoute(route) {
-  app.route = route;
-  location.hash = route;
+  const safeRoute = viewMeta[route] ? route : "dashboard";
+  app.route = safeRoute;
+  location.hash = safeRoute;
   renderRoute();
 }
 
 function renderRoute() {
   const safeRoute = viewMeta[app.route] ? app.route : "dashboard";
   const meta = viewMeta[safeRoute];
-
-  $$("#app [data-view]");
-  $(".content");
 
   $$(".view").forEach((view) => {
     view.classList.toggle("active", view.dataset.view === safeRoute);
@@ -70,24 +88,25 @@ function renderRoute() {
     btn.classList.toggle("active", btn.dataset.route === safeRoute);
   });
 
-  $("#pageTitle").textContent = meta.title;
-  $("#pageSubtitle").textContent = meta.subtitle;
-}
-
-function formatDate(ts) {
-  return new Date(ts).toLocaleString();
+  const title = $("#pageTitle");
+  const subtitle = $("#pageSubtitle");
+  if (title) title.textContent = meta.title;
+  if (subtitle) subtitle.textContent = meta.subtitle;
 }
 
 function resetNoteForm() {
-  $("#noteTitle").value = "";
-  $("#noteBody").value = "";
-  $("#editingNoteId").value = "";
+  const title = $("#noteTitle");
+  const body = $("#noteBody");
+  const editing = $("#editingNoteId");
+  if (title) title.value = "";
+  if (body) body.value = "";
+  if (editing) editing.value = "";
 }
 
 function fillNoteForm(note) {
-  $("#noteTitle").value = note.title;
-  $("#noteBody").value = note.body;
-  $("#editingNoteId").value = note.id;
+  $("#noteTitle").value = note.title || "";
+  $("#noteBody").value = note.body || "";
+  $("#editingNoteId").value = note.id || "";
   setRoute("notes");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -99,13 +118,16 @@ function deleteNote(id) {
 }
 
 function renderNotes() {
-  const query = $("#searchNotes").value.trim().toLowerCase();
-  const filtered = app.notes.filter((note) => {
-    const text = `${note.title} ${note.body}`.toLowerCase();
-    return text.includes(query);
-  });
-
   const list = $("#notesList");
+  const search = $("#searchNotes");
+  if (!list) return;
+
+  const query = (search?.value || "").trim().toLowerCase();
+
+  const filtered = app.notes.filter((note) => {
+    const haystack = `${note.title || ""} ${note.body || ""}`.toLowerCase();
+    return haystack.includes(query);
+  });
 
   if (!filtered.length) {
     list.innerHTML = `
@@ -117,21 +139,17 @@ function renderNotes() {
     return;
   }
 
-  list.innerHTML = filtered
-    .map(
-      (note) => `
-        <article class="note-card">
-          <h4>${escapeHtml(note.title)}</h4>
-          <div class="note-meta">Updated ${formatDate(note.updatedAt)}</div>
-          <p>${escapeHtml(note.body)}</p>
-          <div class="note-actions">
-            <button class="neu-btn edit-note" data-id="${note.id}">Edit</button>
-            <button class="neu-btn delete-note" data-id="${note.id}">Delete</button>
-          </div>
-        </article>
-      `
-    )
-    .join("");
+  list.innerHTML = filtered.map((note) => `
+    <article class="note-card">
+      <h4>${escapeHtml(note.title)}</h4>
+      <div class="note-meta">Updated ${escapeHtml(formatDate(note.updatedAt))}</div>
+      <p>${escapeHtml(note.body)}</p>
+      <div class="note-actions">
+        <button class="neu-btn edit-note" data-id="${note.id}" type="button">Edit</button>
+        <button class="neu-btn delete-note" data-id="${note.id}" type="button">Delete</button>
+      </div>
+    </article>
+  `).join("");
 
   $$(".edit-note").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -145,17 +163,10 @@ function renderNotes() {
   });
 }
 
-function escapeHtml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
 function exportNotes() {
-  const blob = new Blob([JSON.stringify(app.notes, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify(app.notes, null, 2)], {
+    type: "application/json"
+  });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -165,13 +176,13 @@ function exportNotes() {
 }
 
 function buildPrompt() {
-  const role = $("#pbRole").value.trim();
-  const goal = $("#pbGoal").value.trim();
-  const audience = $("#pbAudience").value.trim();
-  const tone = $("#pbTone").value.trim();
-  const context = $("#pbContext").value.trim();
-  const constraints = $("#pbConstraints").value.trim();
-  const format = $("#pbFormat").value.trim();
+  const role = $("#pbRole")?.value.trim() || "";
+  const goal = $("#pbGoal")?.value.trim() || "";
+  const audience = $("#pbAudience")?.value.trim() || "";
+  const tone = $("#pbTone")?.value.trim() || "";
+  const context = $("#pbContext")?.value.trim() || "";
+  const constraints = $("#pbConstraints")?.value.trim() || "";
+  const format = $("#pbFormat")?.value.trim() || "";
 
   const lines = [
     role ? `You are ${role}.` : "",
@@ -184,13 +195,38 @@ function buildPrompt() {
     "Respond clearly, specifically, and with practical detail."
   ].filter(Boolean);
 
-  $("#promptOutput").value = lines.join("
-");
+  const out = $("#promptOutput");
+  if (out) out.value = lines.join("\n");
 }
 
 function clearPromptBuilder() {
-  ["#pbRole", "#pbGoal", "#pbAudience", "#pbTone", "#pbContext", "#pbConstraints", "#pbFormat", "#promptOutput"]
-    .forEach((id) => $(id).value = "");
+  [
+    "#pbRole",
+    "#pbGoal",
+    "#pbAudience",
+    "#pbTone",
+    "#pbContext",
+    "#pbConstraints",
+    "#pbFormat",
+    "#promptOutput"
+  ].forEach((id) => {
+    const el = $(id);
+    if (el) el.value = "";
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  app.theme = theme;
+  store.set("neuro_theme", theme);
+  const toggle = $("#themeToggle");
+  if (toggle) {
+    toggle.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
+  }
+}
+
+function toggleTheme() {
+  applyTheme(app.theme === "dark" ? "light" : "dark");
 }
 
 function bindEvents() {
@@ -207,57 +243,66 @@ function bindEvents() {
     renderRoute();
   });
 
-  $("#noteForm").addEventListener("submit", (event) => {
-    event.preventDefault();
+  const noteForm = $("#noteForm");
+  if (noteForm) {
+    noteForm.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    const title = $("#noteTitle").value.trim();
-    const body = $("#noteBody").value.trim();
-    const editingId = $("#editingNoteId").value;
+      const title = $("#noteTitle")?.value.trim() || "";
+      const body = $("#noteBody")?.value.trim() || "";
+      const editingId = $("#editingNoteId")?.value || "";
 
-    if (!title || !body) return;
+      if (!title || !body) return;
 
-    if (editingId) {
-      app.notes = app.notes.map((note) =>
-        note.id === editingId ? { ...note, title, body, updatedAt: Date.now() } : note
-      );
-    } else {
-      app.notes.unshift({
-        id: crypto.randomUUID(),
-        title,
-        body,
-        updatedAt: Date.now()
-      });
-    }
+      if (editingId) {
+        app.notes = app.notes.map((note) =>
+          note.id === editingId
+            ? { ...note, title, body, updatedAt: Date.now() }
+            : note
+        );
+      } else {
+        app.notes.unshift({
+          id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
+          title,
+          body,
+          updatedAt: Date.now()
+        });
+      }
 
-    saveNotes();
-    resetNoteForm();
-    renderNotes();
-  });
+      saveNotes();
+      resetNoteForm();
+      renderNotes();
+    });
+  }
 
-  $("#resetNote").addEventListener("click", resetNoteForm);
-  $("#searchNotes").addEventListener("input", renderNotes);
-  $("#exportNotes").addEventListener("click", exportNotes);
+  $("#resetNote")?.addEventListener("click", resetNoteForm);
+  $("#searchNotes")?.addEventListener("input", renderNotes);
+  $("#exportNotes")?.addEventListener("click", exportNotes);
 
-  $("#buildPrompt").addEventListener("click", buildPrompt);
-  $("#clearPrompt").addEventListener("click", clearPromptBuilder);
-  $("#copyPrompt").addEventListener("click", async () => {
-    const text = $("#promptOutput").value;
+  $("#buildPrompt")?.addEventListener("click", buildPrompt);
+  $("#clearPrompt")?.addEventListener("click", clearPromptBuilder);
+  $("#copyPrompt")?.addEventListener("click", async () => {
+    const text = $("#promptOutput")?.value || "";
     if (!text) return;
     await navigator.clipboard.writeText(text);
   });
 
-  $("#clearAllData").addEventListener("click", () => {
+  $("#clearAllData")?.addEventListener("click", () => {
     localStorage.removeItem("neuro_notes");
     localStorage.removeItem("gemini_settings");
+    localStorage.removeItem("neuro_theme");
     app.notes = [];
     saveNotes();
     renderNotes();
     resetNoteForm();
-    syncStats();
+    applyTheme("light");
   });
+
+  $("#themeToggle")?.addEventListener("click", toggleTheme);
 }
 
 function init() {
+  applyTheme(app.theme || "light");
   syncStats();
   renderRoute();
   renderNotes();
