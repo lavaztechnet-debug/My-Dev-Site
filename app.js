@@ -6,7 +6,7 @@ const store = {
     try {
       const raw = localStorage.getItem(key);
       return raw ? JSON.parse(raw) : fallback;
-    } catch (e) {
+    } catch {
       return fallback;
     }
   },
@@ -52,7 +52,7 @@ function escapeHtml(value = "") {
 function formatDate(ts) {
   try {
     return new Date(ts).toLocaleString();
-  } catch (e) {
+  } catch {
     return "";
   }
 }
@@ -104,9 +104,12 @@ function resetNoteForm() {
 }
 
 function fillNoteForm(note) {
-  $("#noteTitle").value = note.title || "";
-  $("#noteBody").value = note.body || "";
-  $("#editingNoteId").value = note.id || "";
+  const title = $("#noteTitle");
+  const body = $("#noteBody");
+  const editing = $("#editingNoteId");
+  if (title) title.value = note.title || "";
+  if (body) body.value = note.body || "";
+  if (editing) editing.value = note.id || "";
   setRoute("notes");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -196,20 +199,12 @@ function buildPrompt() {
   ].filter(Boolean);
 
   const out = $("#promptOutput");
-  if (out) out.value = lines.join("\n");
+  if (out) out.value = lines.join("
+");
 }
 
 function clearPromptBuilder() {
-  [
-    "#pbRole",
-    "#pbGoal",
-    "#pbAudience",
-    "#pbTone",
-    "#pbContext",
-    "#pbConstraints",
-    "#pbFormat",
-    "#promptOutput"
-  ].forEach((id) => {
+  ["#pbRole", "#pbGoal", "#pbAudience", "#pbTone", "#pbContext", "#pbConstraints", "#pbFormat", "#promptOutput"].forEach((id) => {
     const el = $(id);
     if (el) el.value = "";
   });
@@ -220,9 +215,7 @@ function applyTheme(theme) {
   app.theme = theme;
   store.set("neuro_theme", theme);
   const toggle = $("#themeToggle");
-  if (toggle) {
-    toggle.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
-  }
+  if (toggle) toggle.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
 }
 
 function toggleTheme() {
@@ -230,13 +223,8 @@ function toggleTheme() {
 }
 
 function bindEvents() {
-  $$(".nav-btn").forEach((btn) => {
-    btn.addEventListener("click", () => setRoute(btn.dataset.route));
-  });
-
-  $$(".jump-btn").forEach((btn) => {
-    btn.addEventListener("click", () => setRoute(btn.dataset.jump));
-  });
+  $$(".nav-btn").forEach((btn) => btn.addEventListener("click", () => setRoute(btn.dataset.route)));
+  $$(".jump-btn").forEach((btn) => btn.addEventListener("click", () => setRoute(btn.dataset.jump)));
 
   window.addEventListener("hashchange", () => {
     app.route = (location.hash || "#dashboard").replace("#", "");
@@ -251,15 +239,10 @@ function bindEvents() {
       const title = $("#noteTitle")?.value.trim() || "";
       const body = $("#noteBody")?.value.trim() || "";
       const editingId = $("#editingNoteId")?.value || "";
-
       if (!title || !body) return;
 
       if (editingId) {
-        app.notes = app.notes.map((note) =>
-          note.id === editingId
-            ? { ...note, title, body, updatedAt: Date.now() }
-            : note
-        );
+        app.notes = app.notes.map((note) => note.id === editingId ? { ...note, title, body, updatedAt: Date.now() } : note);
       } else {
         app.notes.unshift({
           id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
@@ -278,13 +261,18 @@ function bindEvents() {
   $("#resetNote")?.addEventListener("click", resetNoteForm);
   $("#searchNotes")?.addEventListener("input", renderNotes);
   $("#exportNotes")?.addEventListener("click", exportNotes);
-
   $("#buildPrompt")?.addEventListener("click", buildPrompt);
   $("#clearPrompt")?.addEventListener("click", clearPromptBuilder);
   $("#copyPrompt")?.addEventListener("click", async () => {
     const text = $("#promptOutput")?.value || "";
     if (!text) return;
-    await navigator.clipboard.writeText(text);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const out = $("#promptOutput");
+      if (out) out.focus();
+      document.execCommand("copy");
+    }
   });
 
   $("#clearAllData")?.addEventListener("click", () => {
@@ -292,7 +280,7 @@ function bindEvents() {
     localStorage.removeItem("gemini_settings");
     localStorage.removeItem("neuro_theme");
     app.notes = [];
-    saveNotes();
+    syncStats();
     renderNotes();
     resetNoteForm();
     applyTheme("light");
