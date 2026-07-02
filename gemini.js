@@ -21,6 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function setStatus(text) {
+    if (refs.status) refs.status.textContent = text;
+  }
+
+  function showOutput(text) {
+    if (refs.output) refs.output.textContent = text;
+  }
+
   function saveSettings() {
     const payload = {
       apiKey: refs.apiKey?.value.trim() || "",
@@ -38,8 +46,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (refs.system) refs.system.value = saved.system || "";
   }
 
-  function setStatus(text) {
-    if (refs.status) refs.status.textContent = text;
+  function buildPayload(system, prompt) {
+    return {
+      contents: [
+        {
+          parts: [
+            {
+              text: system
+                ? `System instructions:
+${system}
+
+User request:
+${prompt}`
+                : prompt
+            }
+          ]
+        }
+      ]
+    };
+  }
+
+  function extractText(data) {
+    return data?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("
+") || "No text returned.";
   }
 
   async function runGemini() {
@@ -50,12 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!apiKey || !model || !prompt) {
       setStatus("Missing API key, model, or prompt");
-      if (refs.output) refs.output.textContent = "Fill in the API key, model name, and prompt.";
+      showOutput("Fill in the API key, model name, and prompt.");
       return;
     }
 
     setStatus("Running...");
-    if (refs.output) refs.output.textContent = "Waiting for Gemini response...";
+    showOutput("Waiting for Gemini response...");
 
     try {
       const response = await fetch(
@@ -63,48 +92,43 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: system
-                      ? `System instructions:\n${system}\n\nUser request:\n${prompt}`
-                      : prompt
-                  }
-                ]
-              }
-            ]
-          })
+          body: JSON.stringify(buildPayload(system, prompt))
         }
       );
 
       const data = await response.json();
 
       if (!response.ok) {
-        if (refs.output) refs.output.textContent = JSON.stringify(data, null, 2);
+        showOutput(JSON.stringify(data, null, 2));
         setStatus("Request failed");
         return;
       }
 
-      const text =
-        data?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("\n") ||
-        "No text returned.";
-
-      if (refs.output) refs.output.textContent = text;
+      showOutput(extractText(data));
       setStatus("Done");
     } catch (error) {
-      if (refs.output) refs.output.textContent = error.message || "Unknown error";
+      showOutput(error?.message || "Unknown error");
       setStatus("Network error");
     }
   }
 
-  refs.save?.addEventListener("click", saveSettings);
-  refs.clear?.addEventListener("click", () => {
-    if (refs.output) refs.output.textContent = "Response will appear here.";
+  function clearOutput() {
+    showOutput("Response will appear here.");
     setStatus("Idle");
-  });
+  }
+
+  refs.save?.addEventListener("click", saveSettings);
+  refs.clear?.addEventListener("click", clearOutput);
   refs.run?.addEventListener("click", runGemini);
+
+  [refs.apiKey, refs.model, refs.system, refs.prompt].forEach((el) => {
+    el?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey && el !== refs.system && el !== refs.prompt) {
+        event.preventDefault();
+        runGemini();
+      }
+    });
+  });
 
   hydrate();
 });
