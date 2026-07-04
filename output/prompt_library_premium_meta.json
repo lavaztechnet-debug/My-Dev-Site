@@ -1,0 +1,12 @@
+{
+  "categories": {
+    "Writing": 1,
+    "Research": 2,
+    "Planning": 4,
+    "Creative": 7,
+    "Business": 4,
+    "Systems": 6,
+    "General": 20
+  },
+  "total_cards": 44
+}
