@@ -38,7 +38,7 @@ function applyTheme(theme) {
   app.theme = theme;
   store.set("neuro_theme", theme);
   const toggle = $("#themeToggle");
-  if (toggle) toggle.textContent = theme === "dark" ? "â˜€ï¸ Light" : "ðŸŒ™ Dark";
+  if (toggle) toggle.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
 }
 
 function toggleTheme() { applyTheme(app.theme === "dark" ? "light" : "dark"); }
@@ -136,7 +136,8 @@ function buildPrompt() {
     "Respond clearly, specifically, and with practical detail."
   ].filter(Boolean);
   const out = $("#promptOutput");
-  if (out) out.value = lines.join("\n");
+  if (out) out.value = lines.join("
+");
 }
 
 function clearPromptBuilder() {
@@ -213,18 +214,23 @@ function initThemeAndClear() {
 }
 
 function initDashboardNav() {
-  $$("[data-route]").forEach(btn => btn.addEventListener("click", () => {
+  $("[data-route]")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-route]");
+    if (!btn) return;
     const target = btn.dataset.route;
     if (target === "notes") window.location.href = "notes.html";
     if (target === "gemini") window.location.href = "gemini.html";
     if (target === "prompts") window.location.href = "prompts.html";
-  }));
-  $$("[data-jump]").forEach(btn => btn.addEventListener("click", () => {
+  });
+
+  $("[data-jump]")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-jump]");
+    if (!btn) return;
     const target = btn.dataset.jump;
     if (target === "notes") window.location.href = "notes.html";
     if (target === "gemini") window.location.href = "gemini.html";
     if (target === "prompts") window.location.href = "prompts.html";
-  }));
+  });
 }
 
 function init() {
