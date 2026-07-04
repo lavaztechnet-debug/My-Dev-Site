@@ -164,9 +164,7 @@ function renderNotes() {
 }
 
 function exportNotes() {
-  const blob = new Blob([JSON.stringify(app.notes, null, 2)], {
-    type: "application/json"
-  });
+  const blob = new Blob([JSON.stringify(app.notes, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -183,7 +181,6 @@ function buildPrompt() {
   const context = $("#pbContext")?.value.trim() || "";
   const constraints = $("#pbConstraints")?.value.trim() || "";
   const format = $("#pbFormat")?.value.trim() || "";
-
   const lines = [
     role ? `You are ${role}.` : "",
     goal ? `Primary goal: ${goal}.` : "",
@@ -194,25 +191,60 @@ function buildPrompt() {
     format ? `Output format: ${format}` : "",
     "Respond clearly, specifically, and with practical detail."
   ].filter(Boolean);
-
   const out = $("#promptOutput");
-  if (out) out.value = lines.join("\n");
+  if (out) out.value = lines.join("
+");
 }
 
 function clearPromptBuilder() {
-  [
-    "#pbRole",
-    "#pbGoal",
-    "#pbAudience",
-    "#pbTone",
-    "#pbContext",
-    "#pbConstraints",
-    "#pbFormat",
-    "#promptOutput"
-  ].forEach((id) => {
+  ["#pbRole", "#pbGoal", "#pbAudience", "#pbTone", "#pbContext", "#pbConstraints", "#pbFormat", "#promptOutput"].forEach(id => {
     const el = $(id);
     if (el) el.value = "";
   });
+}
+
+function clearAllData() {
+  localStorage.removeItem("neuro_notes");
+  localStorage.removeItem("gemini_settings");
+  localStorage.removeItem("neuro_theme");
+  app.notes = [];
+  saveNotes();
+  renderNotes();
+  resetNoteForm();
+  applyTheme("light");
+}
+
+function renderPromptLibrary() {
+  const root = $("#promptLibrary");
+  const stats = $("#promptStats");
+  if (!root || !window.PROMPT_LIBRARY) return;
+  const labels = { Writing: 'writing', Research: 'research', Planning: 'planning', Creative: 'creative', Business: 'business', Systems: 'general', General: 'general' };
+  if (stats) {
+    stats.innerHTML = Object.entries(window.PROMPT_LIBRARY).map(([cat, list]) => `<article class="mini-card neu-panel depth-md"><span class="mini-label">${escapeHtml(cat)}</span><strong>${(list || []).length}</strong><p>premium prompts</p></article>`).join('');
+  }
+  root.innerHTML = Object.entries(window.PROMPT_LIBRARY).map(([cat, list]) => {
+    const chips = (list || []).map(item => `<article class="prompt-chip ${labels[cat] || 'general'}"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small></article>`).join('');
+    return `<section class="prompt-section"><h3>${escapeHtml(cat)}</h3><div class="prompt-grid">${chips}</div></section>`;
+  }).join('');
+}
+
+function initNotesPage() {
+  const form = $("#noteForm");
+  if (form) form.addEventListener("submit", e => { e.preventDefault(); const title = $("#noteTitle")?.value.trim() || ""; const body = $("#noteBody")?.value.trim() || ""; const editingId = $("#editingNoteId")?.value || ""; if (!title || !body) return; if (editingId) { app.notes = app.notes.map(n => n.id === editingId ? { ...n, title, body, updatedAt: Date.now() } : n); } else { app.notes.unshift({ id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()), title, body, updatedAt: Date.now() }); } saveNotes(); resetNoteForm(); renderNotes(); });
+  $("#resetNote")?.addEventListener("click", resetNoteForm);
+  $("#searchNotes")?.addEventListener("input", renderNotes);
+  $("#exportNotes")?.addEventListener("click", exportNotes);
+}
+
+function initPromptBuilder() {
+  $("#buildPrompt")?.addEventListener("click", buildPrompt);
+  $("#clearPrompt")?.addEventListener("click", clearPromptBuilder);
+  $("#copyPrompt")?.addEventListener("click", async () => { const text = $("#promptOutput")?.value || ""; if (!text) return; await navigator.clipboard.writeText(text); });
+}
+
+function initCommon() {
+  $("#themeToggle")?.addEventListener("click", toggleTheme);
+  $("#clearAllData")?.addEventListener("click", clearAllData);
 }
 
 function applyTheme(theme) {
@@ -220,93 +252,11 @@ function applyTheme(theme) {
   app.theme = theme;
   store.set("neuro_theme", theme);
   const toggle = $("#themeToggle");
-  if (toggle) {
-    toggle.textContent = theme === "dark" ? "â˜€ï¸ Light" : "ðŸŒ™ Dark";
-  }
+  if (toggle) toggle.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
 }
 
 function toggleTheme() {
   applyTheme(app.theme === "dark" ? "light" : "dark");
 }
 
-function bindEvents() {
-  $$(".nav-btn").forEach((btn) => {
-    btn.addEventListener("click", () => setRoute(btn.dataset.route));
-  });
-
-  $$(".jump-btn").forEach((btn) => {
-    btn.addEventListener("click", () => setRoute(btn.dataset.jump));
-  });
-
-  window.addEventListener("hashchange", () => {
-    app.route = (location.hash || "#dashboard").replace("#", "");
-    renderRoute();
-  });
-
-  const noteForm = $("#noteForm");
-  if (noteForm) {
-    noteForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const title = $("#noteTitle")?.value.trim() || "";
-      const body = $("#noteBody")?.value.trim() || "";
-      const editingId = $("#editingNoteId")?.value || "";
-
-      if (!title || !body) return;
-
-      if (editingId) {
-        app.notes = app.notes.map((note) =>
-          note.id === editingId
-            ? { ...note, title, body, updatedAt: Date.now() }
-            : note
-        );
-      } else {
-        app.notes.unshift({
-          id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
-          title,
-          body,
-          updatedAt: Date.now()
-        });
-      }
-
-      saveNotes();
-      resetNoteForm();
-      renderNotes();
-    });
-  }
-
-  $("#resetNote")?.addEventListener("click", resetNoteForm);
-  $("#searchNotes")?.addEventListener("input", renderNotes);
-  $("#exportNotes")?.addEventListener("click", exportNotes);
-
-  $("#buildPrompt")?.addEventListener("click", buildPrompt);
-  $("#clearPrompt")?.addEventListener("click", clearPromptBuilder);
-  $("#copyPrompt")?.addEventListener("click", async () => {
-    const text = $("#promptOutput")?.value || "";
-    if (!text) return;
-    await navigator.clipboard.writeText(text);
-  });
-
-  $("#clearAllData")?.addEventListener("click", () => {
-    localStorage.removeItem("neuro_notes");
-    localStorage.removeItem("gemini_settings");
-    localStorage.removeItem("neuro_theme");
-    app.notes = [];
-    saveNotes();
-    renderNotes();
-    resetNoteForm();
-    applyTheme("light");
-  });
-
-  $("#themeToggle")?.addEventListener("click", toggleTheme);
-}
-
-function init() {
-  applyTheme(app.theme || "light");
-  syncStats();
-  renderRoute();
-  renderNotes();
-  bindEvents();
-}
-
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => { applyTheme(app.theme || "light"); syncStats(); renderNotes(); renderPromptLibrary(); initNotesPage(); initPromptBuilder(); initCommon(); });
