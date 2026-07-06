@@ -1,167 +1,244 @@
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+(function () {
+  const NOTES_KEY = 'neurostack_notes_v2';
+  const PROMPTS_KEY = 'neurostack_prompts_v2';
 
-const store = {
-  get(key, fallback) {
-    try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; }
-  },
-  set(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
-};
+  const views = {
+    dashboard: document.getElementById('view-dashboard'),
+    notes: document.getElementById('view-notes'),
+    prompts: document.getElementById('view-prompts'),
+    gemini: document.getElementById('view-gemini')
+  };
 
-const app = { notes: store.get("neuro_notes", []), theme: store.get("neuro_theme", "light") };
+  const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+  const jumpButtons = Array.from(document.querySelectorAll('[data-jump]'));
 
-function escapeHtml(value = "") {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+  const noteTitle = document.getElementById('noteTitle');
+  const noteBody = document.getElementById('noteBody');
+  const promptTitle = document.getElementById('promptTitle');
+  const promptBody = document.getElementById('promptBody');
+  const geminiPrompt = document.getElementById('geminiPrompt');
 
-function formatDate(ts) { try { return new Date(ts).toLocaleString(); } catch { return ""; } }
+  const noteCount = document.getElementById('noteCount');
+  const promptCount = document.getElementById('promptCount');
+  const notesList = document.getElementById('notesList');
+  const promptsList = document.getElementById('promptsList');
+  const recentNoteCard = document.getElementById('recentNoteCard');
 
-function applyTheme(theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-  app.theme = theme;
-  store.set("neuro_theme", theme);
-  const toggle = $("#themeToggle");
-  if (toggle) toggle.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
-}
-function toggleTheme() { applyTheme(app.theme === "dark" ? "light" : "dark"); }
-
-function syncStats() {
-  const statsText = $("#statsText");
-  const dashNotesCount = $("#dashNotesCount");
-  if (statsText) statsText.textContent = `${app.notes.length} notes saved`;
-  if (dashNotesCount) dashNotesCount.textContent = app.notes.length;
-}
-function saveNotes() { store.set("neuro_notes", app.notes); syncStats(); }
-
-function clearNoteForm() { ["#noteTitle", "#noteBody", "#editingNoteId"].forEach(id => { const el = $(id); if (el) el.value = ""; }); }
-
-function renderNotes() {
-  const list = $("#notesList"); if (!list) return;
-  const q = ($("#searchNotes")?.value || "").trim().toLowerCase();
-  const filtered = app.notes.filter(n => `${n.title || ""} ${n.body || ""}`.toLowerCase().includes(q));
-  if (!filtered.length) { list.innerHTML = `<article class="note-card"><h4>No notes found</h4><p>Create your first note or change the search text.</p></article>`; return; }
-  list.innerHTML = filtered.map(note => `
-    <article class="note-card">
-      <h4>${escapeHtml(note.title)}</h4>
-      <div class="note-meta">Updated ${escapeHtml(formatDate(note.updatedAt))}</div>
-      <p>${escapeHtml(note.body)}</p>
-      <div class="note-actions">
-        <button class="neu-btn edit-note" data-id="${note.id}" type="button">Edit</button>
-        <button class="neu-btn delete-note" data-id="${note.id}" type="button">Delete</button>
-      </div>
-    </article>
-  `).join("");
-  $$(".edit-note").forEach(btn => btn.addEventListener("click", () => {
-    const note = app.notes.find(n => n.id === btn.dataset.id);
-    if (note) { $("#noteTitle").value = note.title || ""; $("#noteBody").value = note.body || ""; $("#editingNoteId").value = note.id || ""; window.scrollTo({ top: 0, behavior: "smooth" }); }
-  }));
-  $$(".delete-note").forEach(btn => btn.addEventListener("click", () => { app.notes = app.notes.filter(n => n.id !== btn.dataset.id); saveNotes(); renderNotes(); }));
-}
-
-function exportNotes() { const blob = new Blob([JSON.stringify(app.notes, null, 2)], { type: "application/json" }); const url = URL.createObjectURL(blob); const link = document.createElement("a"); link.href = url; link.download = "neurostack-notes.json"; link.click(); URL.revokeObjectURL(url); }
-function clearAllData() { localStorage.removeItem("neuro_notes"); localStorage.removeItem("gemini_settings"); localStorage.removeItem("neuro_theme"); app.notes = []; applyTheme("light"); syncStats(); renderNotes(); clearNoteForm(); clearPromptBuilder(); }
-
-function buildPrompt() {
-  const role = $("#pbRole")?.value.trim() || "";
-  const goal = $("#pbGoal")?.value.trim() || "";
-  const audience = $("#pbAudience")?.value.trim() || "";
-  const tone = $("#pbTone")?.value.trim() || "";
-  const context = $("#pbContext")?.value.trim() || "";
-  const constraints = $("#pbConstraints")?.value.trim() || "";
-  const format = $("#pbFormat")?.value.trim() || "";
-  const out = $("#promptOutput");
-  if (!out) return;
-  const lines = [
-    role ? `You are ${role}.` : "",
-    goal ? `Primary goal: ${goal}.` : "",
-    audience ? `Target audience: ${audience}.` : "",
-    tone ? `Tone: ${tone}.` : "",
-    context ? `Context: ${context}` : "",
-    constraints ? `Constraints: ${constraints}` : "",
-    format ? `Output format: ${format}` : "",
-    "Respond clearly, specifically, and with practical detail."
-  ].filter(Boolean);
-  out.value = lines.join("
-");
-}
-
-function clearPromptBuilder() { ["#pbRole", "#pbGoal", "#pbAudience", "#pbTone", "#pbContext", "#pbConstraints", "#pbFormat", "#promptOutput"].forEach(id => { const el = $(id); if (el) el.value = ""; }); }
-
-function renderPromptLibrary() {
-  const root = $("#promptLibrary");
-  const stats = $("#promptStats");
-  if (!root || !window.PROMPT_LIBRARY) return;
-  const labels = { Writing: 'writing', Research: 'research', Planning: 'planning', Creative: 'creative', Business: 'business', Systems: 'general', General: 'general' };
-  if (stats) {
-    stats.innerHTML = Object.entries(window.PROMPT_LIBRARY).map(([cat, list]) => `<article class="mini-card neu-panel depth-md"><span class="mini-label">${escapeHtml(cat)}</span><strong>${(list || []).length}</strong><p>premium prompts</p></article>`).join('');
+  function readStore(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    } catch (e) {
+      return [];
+    }
   }
-  root.innerHTML = Object.entries(window.PROMPT_LIBRARY).map(([cat, list]) => {
-    const chips = (list || []).map(item => `<article class="prompt-chip ${labels[cat] || 'general'}"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small></article>`).join('');
-    return `<section class="prompt-section"><h3>${escapeHtml(cat)}</h3><div class="prompt-grid">${chips}</div></section>`;
-  }).join('');
-}
 
-function initNotesPage() {
-  const form = $("#noteForm");
-  if (form) form.addEventListener("submit", e => {
-    e.preventDefault();
-    const title = $("#noteTitle")?.value.trim() || "";
-    const body = $("#noteBody")?.value.trim() || "";
-    const editingId = $("#editingNoteId")?.value || "";
-    if (!title || !body) return;
-    if (editingId) app.notes = app.notes.map(n => n.id === editingId ? { ...n, title, body, updatedAt: Date.now() } : n);
-    else app.notes.unshift({ id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()), title, body, updatedAt: Date.now() });
-    saveNotes();
-    clearNoteForm();
+  function writeStore(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function activateView(name) {
+    Object.entries(views).forEach(([key, node]) => {
+      if (!node) return;
+      node.classList.toggle('active', key === name);
+    });
+
+    tabButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.view === name);
+    });
+
+    location.hash = name;
+  }
+
+  function renderNotes() {
+    const notes = readStore(NOTES_KEY);
+    noteCount.textContent = String(notes.length);
+
+    if (!notes.length) {
+      notesList.innerHTML = '<div class="empty-state">No notes saved yet.</div>';
+      recentNoteCard.textContent = 'No notes yet.';
+      return;
+    }
+
+    recentNoteCard.innerHTML = `
+      <div class="item-card">
+        <h4>${escapeHtml(notes[0].title || 'Untitled note')}</h4>
+        <p>${escapeHtml(notes[0].body || '')}</p>
+      </div>
+    `;
+
+    notesList.innerHTML = notes.map((item, index) => `
+      <article class="item-card">
+        <h4>${escapeHtml(item.title || 'Untitled note')}</h4>
+        <p>${escapeHtml(item.body || '')}</p>
+        <div class="item-tools">
+          <button class="mini-btn" data-note-load="${index}">Load</button>
+          <button class="mini-btn" data-note-delete="${index}">Delete</button>
+        </div>
+      </article>
+    `).join('');
+
+    document.querySelectorAll('[data-note-load]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.noteLoad);
+        const note = notes[idx];
+        if (!note) return;
+        noteTitle.value = note.title || '';
+        noteBody.value = note.body || '';
+        activateView('notes');
+      });
+    });
+
+    document.querySelectorAll('[data-note-delete]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.noteDelete);
+        const updated = readStore(NOTES_KEY);
+        updated.splice(idx, 1);
+        writeStore(NOTES_KEY, updated);
+        renderAll();
+      });
+    });
+  }
+
+  function renderPrompts() {
+    const prompts = readStore(PROMPTS_KEY);
+    promptCount.textContent = String(prompts.length);
+
+    if (!prompts.length) {
+      promptsList.innerHTML = '<div class="empty-state">No prompts saved yet.</div>';
+      return;
+    }
+
+    promptsList.innerHTML = prompts.map((item, index) => `
+      <article class="item-card">
+        <h4>${escapeHtml(item.title || 'Untitled prompt')}</h4>
+        <p>${escapeHtml(item.body || '')}</p>
+        <div class="item-tools">
+          <button class="mini-btn" data-prompt-load="${index}">Load</button>
+          <button class="mini-btn" data-prompt-copy="${index}">Copy</button>
+          <button class="mini-btn" data-prompt-delete="${index}">Delete</button>
+        </div>
+      </article>
+    `).join('');
+
+    document.querySelectorAll('[data-prompt-load]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.promptLoad);
+        const item = prompts[idx];
+        if (!item) return;
+        promptTitle.value = item.title || '';
+        promptBody.value = item.body || '';
+        activateView('prompts');
+      });
+    });
+
+    document.querySelectorAll('[data-prompt-copy]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const idx = Number(btn.dataset.promptCopy);
+        const item = prompts[idx];
+        if (!item) return;
+        await navigator.clipboard.writeText(item.body || '');
+      });
+    });
+
+    document.querySelectorAll('[data-prompt-delete]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.promptDelete);
+        const updated = readStore(PROMPTS_KEY);
+        updated.splice(idx, 1);
+        writeStore(PROMPTS_KEY, updated);
+        renderAll();
+      });
+    });
+  }
+
+  function renderAll() {
     renderNotes();
-  });
-  $("#resetNote")?.addEventListener("click", clearNoteForm);
-  $("#searchNotes")?.addEventListener("input", renderNotes);
-  $("#exportNotes")?.addEventListener("click", exportNotes);
-}
+    renderPrompts();
+  }
 
-function initPromptBuilder() {
-  $("#buildPrompt")?.addEventListener("click", buildPrompt);
-  $("#clearPrompt")?.addEventListener("click", clearPromptBuilder);
-  $("#copyPrompt")?.addEventListener("click", async () => {
-    const text = $("#promptOutput")?.value || "";
+  document.getElementById('saveNoteBtn').addEventListener('click', () => {
+    const title = noteTitle.value.trim();
+    const body = noteBody.value.trim();
+    if (!title && !body) return;
+
+    const notes = readStore(NOTES_KEY);
+    notes.unshift({
+      title,
+      body,
+      createdAt: Date.now()
+    });
+    writeStore(NOTES_KEY, notes);
+    noteTitle.value = '';
+    noteBody.value = '';
+    renderAll();
+    activateView('dashboard');
+  });
+
+  document.getElementById('clearNoteBtn').addEventListener('click', () => {
+    noteTitle.value = '';
+    noteBody.value = '';
+  });
+
+  document.getElementById('savePromptBtn').addEventListener('click', () => {
+    const title = promptTitle.value.trim();
+    const body = promptBody.value.trim();
+    if (!title && !body) return;
+
+    const prompts = readStore(PROMPTS_KEY);
+    prompts.unshift({
+      title,
+      body,
+      createdAt: Date.now()
+    });
+    writeStore(PROMPTS_KEY, prompts);
+    promptTitle.value = '';
+    promptBody.value = '';
+    renderAll();
+    activateView('dashboard');
+  });
+
+  document.getElementById('clearPromptBtn').addEventListener('click', () => {
+    promptTitle.value = '';
+    promptBody.value = '';
+  });
+
+  document.getElementById('copyGeminiBtn').addEventListener('click', async () => {
+    const text = geminiPrompt.value.trim();
     if (!text) return;
     await navigator.clipboard.writeText(text);
   });
-}
 
-function initThemeAndClear() {
-  $("#themeToggle")?.addEventListener("click", toggleTheme);
-  $("#clearAllData")?.addEventListener("click", clearAllData);
-}
+  document.getElementById('openGeminiBtn').addEventListener('click', () => {
+    window.open('https://gemini.google.com/', '_blank');
+  });
 
-function initNavigation() {
-  $$('[data-route]').forEach(btn => btn.addEventListener('click', () => {
-    const route = btn.dataset.route;
-    if (route === 'notes') window.location.href = 'notes.html';
-    if (route === 'gemini') window.location.href = 'gemini.html';
-    if (route === 'prompts') window.location.href = 'prompts.html';
-  }));
-  $$('[data-jump]').forEach(btn => btn.addEventListener('click', () => {
-    const route = btn.dataset.jump;
-    if (route === 'notes') window.location.href = 'notes.html';
-    if (route === 'gemini') window.location.href = 'gemini.html';
-    if (route === 'prompts') window.location.href = 'prompts.html';
-  }));
-}
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => activateView(btn.dataset.view));
+  });
 
-document.addEventListener("DOMContentLoaded", () => {
-  applyTheme(app.theme || "light");
-  syncStats();
-  renderNotes();
-  renderPromptLibrary();
-  initNotesPage();
-  initPromptBuilder();
-  initThemeAndClear();
-  initNavigation();
-});
+  jumpButtons.forEach(btn => {
+    btn.addEventListener('click', () => activateView(btn.dataset.jump));
+  });
+
+  document.getElementById('themePulseBtn').addEventListener('click', () => {
+    document.body.classList.toggle('pulse-mode');
+  });
+
+  window.addEventListener('hashchange', () => {
+    const target = location.hash.replace('#', '') || 'dashboard';
+    if (views[target]) activateView(target);
+  });
+
+  const initial = location.hash.replace('#', '') || 'dashboard';
+  activateView(views[initial] ? initial : 'dashboard');
+  renderAll();
+})();

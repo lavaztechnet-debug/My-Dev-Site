@@ -2,174 +2,125 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeuroStack Mobile SPA</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="app.js" defer></script>
-  <script src="gemini.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NeuroStack Mobile</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-a"></div>
-  <div class="bg-orb orb-b"></div>
-
-  <main class="shell">
-    <aside class="sidebar neu-panel">
-      <div class="brand neu-inset">
-        <div class="brand-mark">N</div>
-        <div>
-          <h1>NeuroStack</h1>
-          <p>3D Neumorphic Mobile SPA</p>
-        </div>
+  <div class="app-shell">
+    <header class="topbar walnut-panel">
+      <div>
+        <p class="eyebrow">Walnut Noir</p>
+        <h1>NeuroStack</h1>
       </div>
+      <button id="themePulseBtn" class="icon-btn" aria-label="Pulse interface">◐</button>
+    </header>
 
-      <nav class="nav">
-        <button class="nav-btn active" data-route="dashboard" type="button">Dashboard</button>
-        <button class="nav-btn" data-route="notes" type="button">Notes</button>
-        <button class="nav-btn" data-route="gemini" type="button">Gemini Helper</button>
-        <button class="nav-btn" data-route="prompts" type="button">Prompt Lab</button>
+    <main class="main-stack">
+      <section class="hero walnut-panel">
+        <p class="eyebrow">Mobile knowledge system</p>
+        <h2>Write, collect, prompt, and move fast.</h2>
+        <p class="hero-copy">A responsive offline-first shell for notes, prompts, and Gemini-assisted drafting.</p>
+      </section>
+
+      <nav class="tabbar walnut-panel" aria-label="Primary">
+        <button class="tab-btn active" data-view="dashboard">Dashboard</button>
+        <button class="tab-btn" data-view="notes">Notes</button>
+        <button class="tab-btn" data-view="prompts">Prompts</button>
+        <button class="tab-btn" data-view="gemini">Gemini</button>
       </nav>
 
-      <section class="sidebar-card neu-panel">
-        <h3>Stored Data</h3>
-        <p id="statsText">0 notes saved</p>
-      </section>
-    </aside>
-
-    <section class="content">
-      <header class="topbar neu-panel">
-        <div>
-          <h2 id="pageTitle">Dashboard</h2>
-          <p id="pageSubtitle">Build, write, and prompt from one mobile-first interface.</p>
-        </div>
-
-        <div class="topbar-actions">
-          <button id="themeToggle" class="neu-btn" aria-label="Toggle dark mode" type="button">🌙 Dark</button>
-          <button id="clearAllData" class="neu-btn danger-btn" type="button">Clear App Data</button>
-        </div>
-      </header>
-
-      <section class="view active" data-view="dashboard">
-        <div class="grid two">
-          <article class="hero neu-panel depth-xl">
-            <div class="hero-badge">Extreme 3D Depth</div>
-            <h3>Soft shadows, hard presence.</h3>
-            <p>
-              This interface uses stacked highlights, deep dual shadows, inset depth,
-              soft gradients, and animated lift to create an exaggerated neumorphic look.
-            </p>
-            <div class="hero-actions">
-              <button class="neu-btn jump-btn" data-jump="notes" type="button">Open Notes</button>
-              <button class="neu-btn jump-btn" data-jump="gemini" type="button">Open Gemini</button>
-              <button class="neu-btn jump-btn" data-jump="prompts" type="button">Build Prompt</button>
-            </div>
+      <section id="view-dashboard" class="view active">
+        <div class="grid two-up">
+          <article class="walnut-panel metric-card">
+            <p class="eyebrow">Saved notes</p>
+            <h3 id="noteCount">0</h3>
           </article>
-
-          <article class="neu-panel depth-lg">
-            <h3>Included Pages</h3>
-            <ul class="feature-list">
-              <li>Local note taking with search, edit, delete, and export.</li>
-              <li>Gemini helper with API key, model name, system prompt, and response panel.</li>
-              <li>Prompt creator that composes structured prompts in one tap.</li>
-              <li>Single-page routing with no framework or build step required.</li>
-            </ul>
+          <article class="walnut-panel metric-card">
+            <p class="eyebrow">Saved prompts</p>
+            <h3 id="promptCount">0</h3>
           </article>
         </div>
 
-        <div class="grid three">
-          <article class="mini-card neu-panel depth-md">
-            <span class="mini-label">Notes</span>
-            <strong id="dashNotesCount">0</strong>
-            <p>Saved locally on your device.</p>
-          </article>
-          <article class="mini-card neu-panel depth-md">
-            <span class="mini-label">Prompts</span>
-            <strong>Structured</strong>
-            <p>Generate better prompts faster.</p>
-          </article>
-          <article class="mini-card neu-panel depth-md">
-            <span class="mini-label">AI</span>
-            <strong>Gemini</strong>
-            <p>Paste your key and model, then run.</p>
-          </article>
-        </div>
+        <article class="walnut-panel quick-actions">
+          <p class="eyebrow">Quick actions</p>
+          <div class="action-row">
+            <button class="pill-btn" data-jump="notes">New note</button>
+            <button class="pill-btn" data-jump="prompts">New prompt</button>
+            <button class="pill-btn" data-jump="gemini">Open Gemini</button>
+          </div>
+        </article>
+
+        <article class="walnut-panel">
+          <p class="eyebrow">Recent note</p>
+          <div id="recentNoteCard" class="empty-state">No notes yet.</div>
+        </article>
       </section>
 
-      <section class="view" data-view="notes">
-        <div class="grid two">
-          <article class="neu-panel depth-lg">
-            <h3>Write Note</h3>
-            <form id="noteForm" class="stack">
-              <input id="noteTitle" class="neu-input" type="text" placeholder="Note title" maxlength="120" required />
-              <textarea id="noteBody" class="neu-input area-lg" placeholder="Write your note..." required></textarea>
-              <div class="row">
-                <button type="submit" class="neu-btn primary-btn">Save Note</button>
-                <button type="button" id="resetNote" class="neu-btn">Reset</button>
-                <button type="button" id="exportNotes" class="neu-btn">Export JSON</button>
-              </div>
-              <input type="hidden" id="editingNoteId" />
-            </form>
-          </article>
+      <section id="view-notes" class="view">
+        <article class="walnut-panel form-panel">
+          <p class="eyebrow">Notes</p>
+          <label class="field-label" for="noteTitle">Title</label>
+          <input id="noteTitle" class="walnut-input" type="text" placeholder="Neural capture title" />
 
-          <article class="neu-panel depth-lg">
-            <h3>Find Notes</h3>
-            <input id="searchNotes" class="neu-input" type="text" placeholder="Search title or content" />
-            <div id="notesList" class="notes-list"></div>
-          </article>
-        </div>
+          <label class="field-label" for="noteBody">Body</label>
+          <textarea id="noteBody" class="walnut-input walnut-textarea" placeholder="Write your note..."></textarea>
+
+          <div class="action-row">
+            <button id="saveNoteBtn" class="pill-btn">Save note</button>
+            <button id="clearNoteBtn" class="ghost-btn" type="button">Clear</button>
+          </div>
+        </article>
+
+        <article class="walnut-panel">
+          <p class="eyebrow">Saved notes</p>
+          <div id="notesList" class="stack-list"></div>
+        </article>
       </section>
 
-      <section class="view" data-view="gemini">
-        <div class="grid two">
-          <article class="neu-panel depth-lg">
-            <h3>Gemini Setup</h3>
-            <div class="stack">
-              <input id="geminiApiKey" class="neu-input" type="password" placeholder="Paste Gemini API key" />
-              <input id="geminiModel" class="neu-input" type="text" placeholder="Enter Gemini model name" />
-              <textarea id="geminiSystem" class="neu-input area-md" placeholder="System instructions"></textarea>
-              <textarea id="geminiPrompt" class="neu-input area-lg" placeholder="Ask Gemini anything..."></textarea>
-              <div class="row">
-                <button id="runGemini" class="neu-btn primary-btn" type="button">Run Gemini</button>
-                <button id="saveGeminiSettings" class="neu-btn" type="button">Save Settings</button>
-                <button id="clearGeminiOutput" class="neu-btn" type="button">Clear Output</button>
-              </div>
-            </div>
-          </article>
+      <section id="view-prompts" class="view">
+        <article class="walnut-panel form-panel">
+          <p class="eyebrow">Prompts</p>
+          <label class="field-label" for="promptTitle">Prompt name</label>
+          <input id="promptTitle" class="walnut-input" type="text" placeholder="Style DNA extractor" />
 
-          <article class="neu-panel depth-lg">
-            <h3>Gemini Output</h3>
-            <div id="geminiStatus" class="status-pill">Idle</div>
-            <pre id="geminiOutput" class="output-box">Response will appear here.</pre>
-          </article>
-        </div>
+          <label class="field-label" for="promptBody">Prompt content</label>
+          <textarea id="promptBody" class="walnut-input walnut-textarea" placeholder="Write your prompt..."></textarea>
+
+          <div class="action-row">
+            <button id="savePromptBtn" class="pill-btn">Save prompt</button>
+            <button id="clearPromptBtn" class="ghost-btn" type="button">Clear</button>
+          </div>
+        </article>
+
+        <article class="walnut-panel">
+          <p class="eyebrow">Prompt library</p>
+          <div id="promptsList" class="stack-list"></div>
+        </article>
       </section>
 
-      <section class="view" data-view="prompts">
-        <div class="grid two">
-          <article class="neu-panel depth-lg">
-            <h3>Prompt Builder</h3>
-            <div class="stack">
-              <input id="pbRole" class="neu-input" type="text" placeholder="Role, e.g. Senior product strategist" />
-              <input id="pbGoal" class="neu-input" type="text" placeholder="Goal" />
-              <input id="pbAudience" class="neu-input" type="text" placeholder="Audience" />
-              <input id="pbTone" class="neu-input" type="text" placeholder="Tone" />
-              <textarea id="pbContext" class="neu-input area-sm" placeholder="Context"></textarea>
-              <textarea id="pbConstraints" class="neu-input area-sm" placeholder="Constraints"></textarea>
-              <textarea id="pbFormat" class="neu-input area-sm" placeholder="Desired output format"></textarea>
-              <div class="row">
-                <button id="buildPrompt" class="neu-btn primary-btn" type="button">Generate Prompt</button>
-                <button id="copyPrompt" class="neu-btn" type="button">Copy</button>
-                <button id="clearPrompt" class="neu-btn" type="button">Clear</button>
-              </div>
-            </div>
-          </article>
+      <section id="view-gemini" class="view">
+        <article class="walnut-panel form-panel">
+          <p class="eyebrow">Gemini workspace</p>
+          <label class="field-label" for="geminiPrompt">Draft prompt</label>
+          <textarea id="geminiPrompt" class="walnut-input walnut-textarea tall" placeholder="Draft your Gemini request here..."></textarea>
 
-          <article class="neu-panel depth-lg">
-            <h3>Generated Prompt</h3>
-            <textarea id="promptOutput" class="neu-input area-xl" placeholder="Your generated prompt will appear here."></textarea>
-          </article>
-        </div>
+          <div class="action-row">
+            <button id="copyGeminiBtn" class="pill-btn">Copy prompt</button>
+            <button id="openGeminiBtn" class="ghost-btn" type="button">Open Gemini</button>
+          </div>
+        </article>
+
+        <article class="walnut-panel">
+          <p class="eyebrow">Usage note</p>
+          <div class="info-card">
+            This local shell drafts and stores your prompts on-device. Open Gemini in-browser for live model interaction.
+          </div>
+        </article>
       </section>
-    </section>
-  </main>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
