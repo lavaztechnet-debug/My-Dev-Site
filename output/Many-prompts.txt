@@ -1,1 +1,192 @@
-
+📸 CAMERA & PHOTOGRAPHY (001–015)
+#001 – "You are a professional mobile photographer. I'm shooting with a Samsung Galaxy
+S24+ main camera — 50MP Samsung s5kgn3, f/1.8 aperture, OIS, 86.7° wide field of view,
+ISO 25–3200, RAW_SENSOR capable. Give me 10 advanced shooting scenarios that push
+this sensor to its absolute limit, including manual ISO and focus mode strategies for each."
+#002 – "Act as a computational photography expert. My S24+ back ultrawide (Camera 2)
+has a 115.7° diagonal FOV and f/2.2 aperture with a fixed infinity focus. Design a creative
+ultrawide shooting guide — architecture, environmental portraits, forced perspective
+tricks — fully tailored to these optical constraints."
+#003 – "Act as a RAW photo editing specialist. My S24+ shoots RAW_SENSOR and
+YCBCR_P010 formats. Walk me through a complete RAW editing pipeline — from capture
+settings on the phone to Lightroom Mobile processing — optimized for the 1/1.57" sensor
+size and 1.0µm pixel pitch."
+#004 – "You are a video production coach. My S24+ shoots 4K UHD at 3840x2160@30fps
+on both front and rear cameras. Design a complete one-person video production workflow
+using only this phone — b-roll, talking head, and cinematic shots — including stabilization
+strategy given the OIS on Camera 0."
+#005 – "Act as a mobile cinematography expert. My S24+ has a 10MP telephoto (Camera 6)
+with a 66.4mm equivalent focal length, OIS, f/2.4, and a narrow 29.2° horizontal FOV. Give
+me a portrait compression and subject isolation guide using this telephoto specifically, with
+recommended distances and lighting setups."
+#006 – "You are a night photography expert. My S24+ main sensor is 50MP with f/1.8, ISO
+ceiling of 3200, OIS, and a 1/1.57" optical format. Design a complete low-light and night
+photography strategy — including manual settings, multi-frame stacking approach, and
+when to switch between the main and telephoto in darkness."
+#007 – "Act as a mobile content creator coach. My S24+ front camera shoots 12MP at f/2.2
+with 4K capability and auto/continuous focus modes. Design a selfie video setup guide for
+YouTube and short-form content — framing, lighting position, distance from lens, and
+audio tips given the dual cs35l43 amplifier setup."
+#008 – "You are a product photography specialist. Using the S24+ Camera2 API full(3)
+support on the main camera, design a manual product photography session guide — ISO
+lock, manual white balance, focus peaking strategy, and a lighting rig recommendation to
+match the f/1.8 wide aperture."
+#009 – "Act as a drone-alternative aerial content expert. My S24+ has a 115.7° ultrawide
+FOV camera. Create a high-angle and architectural content guide using only this phone —
+shooting from elevated positions, correcting ultrawide distortion in post, and composing
+for 3120x1440 resolution display."
+#010 – "You are a mobile sports and action photography coach. My S24+ supports
+continuous-video and continuous-picture focus modes across all cameras. Design an
+action photography guide — burst mode strategy, predictive focus tracking, shutter timing,
+and post-selection workflow for fast-moving subjects."
+#011 – "Act as a mobile photo editor. My S24+ captures in JPEG_R format which supports
+HDR gain maps. Explain how to leverage HDR10+ display capability (my screen supports
+HDR10, HLG, HDR10+) to create and view HDR photos end-to-end on this device."
+#012 – "You are a dual-camera creative director. My S24+ has simultaneous multi-camera
+capability (android.hardware.camera.concurrent). Design 5 creative dual-camera
+shooting concepts — front + back simultaneously, director's view style — with framing,
+subject, and editing guidance for each."
+#013 – "Act as a mobile macro photography expert. My S24+ supports macro focus mode on
+Cameras 0, 1, 2, and 3. Design a detailed macro photography guide including minimum
+focus distances, lighting approaches, and how to use the 50MP high resolution mode for
+extreme crop potential."
+#014 – "You are a color science expert. My S24+ uses GBRG color filter on the main sensor,
+GRBG on the front, and RGGB on the ultrawide. Explain how these different Bayer filter
+arrangements affect color rendering across cameras and give me a color consistency
+workflow when cutting between all three cameras."
+#015 – "Act as a mobile film emulation expert. My S24+ shoots in YUV_420_888 and
+YCBCR_P010 (10-bit color). Design a 10-bit video color grading guide in CapCut or DaVinci
+Resolve Mobile — LUT selection, log-to-rec709 approach, and how to exploit the wider
+color gamut of my 600dpi xxxhdpi display for monitoring."
+⚡ PERFORMANCE & HARDWARE OPTIMIZATION (016–030)
+#016 – "You are a Snapdragon 8 Gen 3 performance engineer. My S24+ has an SM8650 SoC
+with 4 CPU clusters: 1x3.4GHz Cortex-X4 prime, 2x2.96GHz A720, 3x3.15GHz A720, and
+2x2.26GHz A520. Design a workload distribution strategy for heavy Android development
+tasks — which apps and processes to prioritize on which clusters for maximum
+throughput."
+#017 – "Act as an Android battery optimization specialist. My S24+ currently shows 41°C
+battery temperature, 740mA discharge rate, and a 4755mAh power profile. Analyze these
+thermal readings, identify if this is safe under load, and give me a comprehensive battery
+health preservation guide for a heavy daily usage pattern."
+#018 – "You are a mobile GPU performance expert. My S24+ has an Adreno 750 GPU with
+Vulkan 1.3 and OpenGL ES 3.2 support, clocked 80–1000MHz. Design an Adreno
+750-optimized game settings guide — resolution scaling, refresh rate targets, and which
+Vulkan extensions to enable for the smoothest 120Hz gameplay."
+#019 – "Act as a thermal management engineer. My S24+ CPU thermal sensors are reading
+52–53°C across clusters (cpuss-0 through cpuss-3). Design a sustained performance
+protocol — cooling intervals, workload pacing, and case/environment recommendations to
+keep thermals under control during long recording or processing sessions."
+#020 – "You are a RAM management expert. My S24+ has 12GB LPDDR5X RAM. Design a
+multitasking and app stack strategy — how many background apps to keep, which app
+categories to allow persistent memory, and how to configure developer options to reduce
+unnecessary background kills."
+#021 – "Act as a display calibration expert. My S24+ screen is 3120x1440 at 515 PPI, 120Hz
+adaptive, with HDR10+ support and xxxhdpi density. Design a complete display settings
+guide — color mode, brightness curve, refresh rate scheduling, and blue light filter strategy
+for different use cases: coding, video editing, creative work, and night use."
+#022 – "You are a 5G and connectivity expert. My S24+ supports Verizon 5G, LTE, SRLTE,
+eHRPD, UWB, Wi-Fi Aware, Wi-Fi Direct, Wi-Fi RTT, and Bluetooth 5.2. Design a
+connectivity optimization guide — when to use each radio, UWB use cases, Wi-Fi Direct for
+ADB over network, and power cost of each connection type."
+#023 – "Act as an ADB and developer tooling expert. My S24+ runs Android 16 (API 36),
+Codename Baklava, on a Snapdragon 8 Gen 3 with WALT CPU governor. Design a complete
+ADB command cheat sheet tailored to this device — screen capture, logcat filtering, CPU
+governor inspection, thermal sensor reading, and GPU profiling commands."
+#024 – "You are a storage performance analyst. My S24+ uses UFS flash storage. Design a
+storage health monitoring and optimization guide — how to benchmark UFS throughput,
+identify storage bottlenecks, manage app storage allocation, and maintain performance
+over time without a file system reset."
+#025 – "Act as an audio engineering expert. My S24+ has dual cs35l43 Class D amplifiers on
+I2C addresses 0x40 and 0x41, plus pro audio feature support
+(android.hardware.audio.pro) and low-latency audio. Design a mobile music production
+setup guide — DAW recommendations, latency optimization, and how to leverage the pro
+audio hardware for recording and monitoring."
+#026 – "You are a biometrics security architect. My S24+ has both a Qualcomm qfs4008
+under-display fingerprint sensor and face biometrics (android.hardware.biometrics.face).
+Design a tiered authentication strategy — which biometric to use for which scenario,
+fallback chains, and Knox hardware keystore integration for sensitive app unlocking."
+#027 – "Act as a sensor fusion engineer. My S24+ has a full sensor array: LSM6DSV
+accelerometer+gyroscope, AK09918 magnetometer, LPS22DF barometer, STK33F11
+ambient light/proximity, step counter, and step detector. Design 10 creative Android app
+concepts that use at least 3 sensors simultaneously — with data fusion logic for each
+concept."
+#028 – "You are a NFC and mobile payments expert. My S24+ supports NFC, NFC HCE, HCEf,
+NFC ESE, and NFC authentication cover features. Design a complete NFC use case guide —
+payments, transit cards, smart tags, device pairing, and enterprise access cards —
+including which Samsung-specific NFC features unlock extra capabilities."
+#029 – "Act as a Qualcomm GNSS specialist. My S24+ uses Qualcomm GNSS GEN9 (2023).
+Design a high-precision location use case guide — which GNSS constellations it supports,
+how to achieve sub-meter accuracy for content geotagging, and how to configure location
+settings for maximum battery efficiency vs. maximum precision."
+#030 – "You are a Vulkan graphics programmer. My S24+ Adreno 750 supports Vulkan 1.3
+plus extensions including GL_QCOM_motion_estimation, GL_QCOM_frame_extrapolation,
+GL_QCOM_texture_foveated, and GL_QCOM_shading_rate. Explain what each of these
+Qualcomm-specific extensions does and design a mobile game rendering pipeline that
+leverages all four."
+🛠 ANDROID DEVELOPMENT ON-DEVICE (031–045)
+#031 – "Act as a senior Android developer. I'm developing on a Galaxy S24+ running
+Android 16 (API 36), Codename Baklava. List all the new API 36 features and platform
+changes I need to account for when targeting this device, and give me a migration checklist
+from API 34 to 36."
+#032 – "You are an Android Camera2 API expert. My S24+ exposes Camera2 API level
+'full(3)' on the main and telephoto cameras and 'limited' on the ultrawide. Explain the
+exact capability differences between full(3) and limited, and what manual controls I lose
+on the ultrawide — with code examples for Camera2 session setup."
+#033 – "Act as a Jetpack Compose performance expert. My S24+ runs ART 2.1.0 JVM on a
+Snapdragon 8 Gen 3. Identify the top 5 Compose rendering optimizations specific to
+high-refresh-rate (120Hz) AMOLED displays at 3120x1440 resolution — including
+recomposition avoidance, Canvas draw call optimization, and GPU layer usage."
+#034 – "You are an Android 16 security expert. My S24+ has Knox SDK up to API level 40,
+hardware keystore, strongbox keystore, and app attestation key support. Design a complete
+enterprise-grade security implementation guide for an Android app targeting this device —
+including Knox integration, strongbox key generation, and biometric-bound keys."
+#035 – "Act as a Samsung One UI developer. My S24+ is running One UI 8.0
+(oneui.version.80000) on Android 16. List all Samsung-specific APIs and features available
+at this One UI level that go beyond AOSP — including DeX, Edge panels, Samsung
+Positioning (SNLP), AOD service, and AR Emoji v2 integration."
+#036 – "You are an Android app widget specialist. My S24+ supports Glance API widgets
+and the 'nowbar' Samsung feature. Design a dynamic home screen widget system for a
+creative prompt vault app — data refresh strategy, Glance composables, adaptive sizing for
+different launcher grid sizes, and Samsung-specific widget placement APIs."
+#037 – "Act as an Android performance profiling expert. My S24+ has the WALT CPU
+governor managing 8 cores across 4 clusters. Explain how WALT governor makes
+scheduling decisions differently from schedutil, and design a profiling session plan using
+Android Studio Profiler to catch CPU cluster hotspots in a Compose app on this device."
+#038 – "You are a mobile ML/AI engineer. My S24+ supports AICORE_QC and
+AICORE_QC_SM8650 features, plus Gemini experience integration
+(com.google.android.feature.GEMINI_EXPERIENCE). Design an on-device AI pipeline using
+Snapdragon's neural processing — model quantization targets, NNAPI vs. Hexagon DSP
+routing, and how to call Gemini Nano through the AICore APIs."
+#039 – "Act as a Samsung camera SDK expert. My S24+ has
+com.samsung.android.sdk.camera.processor, camera.processor.effect, CameraX service,
+and camera device injector features. Design an advanced camera app architecture using
+Samsung Camera SDK extensions layered on top of CameraX — for access to
+Samsung-exclusive processing modes."
+#040 – "You are an Android UWB developer. My S24+ supports android.hardware.uwb
+and samsung.hardware.uwb. Design a UWB-based proximity feature for a mobile app —
+ranging setup, angle-of-arrival data, precision distance thresholds for UI interactions, and
+fallback to Bluetooth 5.2 when UWB isn't available."
+#041 – "Act as an Android satellite connectivity expert. My S24+ has
+android.hardware.telephony.satellite support. Explain what satellite telephony capabilities
+this enables on Android 16, design a fallback connectivity strategy that automatically
+switches to satellite when cellular and Wi-Fi are unavailable, and outline the API calls
+needed."
+#042 – "You are an Android multi-window expert. My S24+ supports freeform window
+management (android.software.freeform_window_management) and activities on
+secondary displays. Design a multi-window productivity layout for a creative developer
+using this S24+ — split screen pairs, pop-up windows, and how to programmatically
+control window bounds in Android 16."
+#043 – "Act as an Android MIDI and audio expert. My S24+ has android.software.midi
+support alongside pro audio low-latency hardware. Design a mobile DAW companion app
+architecture — MIDI input routing, audio buffer sizing for minimum latency on the
+cs35l43 amplifier chain, and real-time audio processing pipeline using AAudio."
+#044 – "You are an Android eSIM and carrier expert. My S24+ has euicc and euicc.mep
+(Multiple Enabled Profiles) support plus Verizon 5G. Design a dual-SIM management
+strategy using the eSIM MEP feature — how to switch profiles programmatically, manage
+data routing between physical SIM and eSIM, and handle IMS registration for both profiles
+simultaneously."
+#045 – "Act as an Android XR developer. My S24+ has
+com.google.android.feature.XR_PROJECTED support. Explain what XR projected mode
+enables on Android 16, how to build a spatially-aware app that uses the LSM6DSV
+gyroscope + accelerometer + AK09918 magnetometer for orientation tracking, and design a
+simple AR overlay app architecture."
