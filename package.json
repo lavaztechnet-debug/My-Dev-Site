@@ -1,0 +1,17 @@
+{
+  "name": "neurostack-mobile-spa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static NeuroStack mobile app wrapped with Capacitor for Android APK builds",
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp -f index.html notes.html prompts.html gemini.html styles.css app.js gemini.js dist/",
+    "cap:sync": "npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  }
+}

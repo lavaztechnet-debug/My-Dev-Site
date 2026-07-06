@@ -1,0 +1,6 @@
+{
+	"appId": "com.lavaztech.neurostack",
+	"appName": "NeuroStack Mobile",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

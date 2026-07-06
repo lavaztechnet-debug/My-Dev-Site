@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroStack</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+
+  <main class="shell shell-home">
+    <aside class="sidebar neu-panel">
+      <div class="brand neu-inset">
+        <div class="brand-mark">N</div>
+        <div>
+          <h1>NeuroStack</h1>
+          <p>Neumorphic Multi-Page App</p>
+        </div>
+      </div>
+
+      <nav class="nav home-nav">
+        <a class="nav-btn" href="notes.html">Notes</a>
+        <a class="nav-btn" href="gemini.html">Gemini Helper</a>
+        <a class="nav-btn" href="prompts.html">Prompt Lab</a>
+      </nav>
+
+      <section class="sidebar-card neu-panel">
+        <h3>Quick Start</h3>
+        <p>Pick a feature page to open a dedicated workspace.</p>
+      </section>
+    </aside>
+
+    <section class="content">
+      <header class="topbar neu-panel">
+        <div>
+          <h2>Dashboard</h2>
+          <p>Choose a feature page to continue.</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="neu-btn" href="notes.html">Open Notes</a>
+          <a class="neu-btn" href="gemini.html">Open Gemini</a>
+          <a class="neu-btn" href="prompts.html">Open Prompt Lab</a>
+        </div>
+      </header>
+
+      <section class="view active" data-view="dashboard">
+        <div class="grid two">
+          <article class="hero neu-panel depth-xl">
+            <div class="hero-badge">Dedicated Pages</div>
+            <h3>Soft shadows, cleaner workflow.</h3>
+            <p>
+              Each feature now opens on its own page so the layout stays focused and the buttons are reliable.
+            </p>
+            <div class="hero-actions">
+              <a class="neu-btn primary-btn" href="notes.html">Go to Notes</a>
+              <a class="neu-btn primary-btn" href="gemini.html">Go to Gemini</a>
+              <a class="neu-btn primary-btn" href="prompts.html">Go to Prompts</a>
+            </div>
+          </article>
+
+          <article class="neu-panel depth-lg">
+            <h3>Included Pages</h3>
+            <ul class="feature-list">
+              <li>Notes page for local note taking, search, edit, delete, and export.</li>
+              <li>Gemini page for API key, model, system prompt, and output.</li>
+              <li>Prompt Lab for structured prompt building.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid three">
+          <article class="mini-card neu-panel depth-md">
+            <span class="mini-label">Notes</span>
+            <strong>Local</strong>
+            <p>Saved directly in your browser.</p>
+          </article>
+          <article class="mini-card neu-panel depth-md">
+            <span class="mini-label">Prompts</span>
+            <strong>Structured</strong>
+            <p>Generate better prompts faster.</p>
+          </article>
+          <article class="mini-card neu-panel depth-md">
+            <span class="mini-label">AI</span>
+            <strong>Gemini</strong>
+            <p>Open the helper page to run it.</p>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
