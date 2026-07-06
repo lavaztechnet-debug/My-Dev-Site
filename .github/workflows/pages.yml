@@ -39,7 +39,6 @@ jobs:
           [ -f gemini.html ] && cp gemini.html _site/
           [ -f prompts.html ] && cp prompts.html _site/
           [ -f prompt-library.js ] && cp prompt-library.js _site/
-          [ -f README.md ] && cp README.md _site/
 
           [ -d assets ] && cp -r assets _site/
 
