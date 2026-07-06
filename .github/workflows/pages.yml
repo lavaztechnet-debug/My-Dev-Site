@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,17 +25,37 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare clean site folder
+        run: |
+          rm -rf _site
+          mkdir -p _site
+
+          cp index.html _site/
+          cp styles.css _site/
+          cp app.js _site/
+          cp gemini.js _site/
+
+          [ -f notes.html ] && cp notes.html _site/
+          [ -f gemini.html ] && cp gemini.html _site/
+          [ -f prompts.html ] && cp prompts.html _site/
+          [ -f prompt-library.js ] && cp prompt-library.js _site/
+          [ -f README.md ] && cp README.md _site/
+
+          [ -d assets ] && cp -r assets _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     needs: build
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
