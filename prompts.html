@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=./index.html#prompts" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompts Redirect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NeuroStack Prompts</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-<body></body>
+<body data-page="prompts">
+  <div class="app-shell">
+    <header class="topbar walnut-panel">
+      <div>
+        <p class="eyebrow">Prompts</p>
+        <h1>Library</h1>
+      </div>
+      <a class="ghost-btn link-btn" href="./index.html">Home</a>
+    </header>
+
+    <main class="main-stack">
+      <article class="walnut-panel form-panel">
+        <label class="field-label" for="promptSearch">Search library</label>
+        <input id="promptSearch" class="walnut-input" type="text" placeholder="Search Android, horror, cinematic, utility..." />
+
+        <label class="field-label" for="promptTitle">Prompt title</label>
+        <input id="promptTitle" class="walnut-input" type="text" placeholder="Prompt title" />
+
+        <label class="field-label" for="promptBody">Prompt body</label>
+        <textarea id="promptBody" class="walnut-input walnut-textarea" placeholder="Prompt content..."></textarea>
+
+        <div class="action-row">
+          <button id="savePromptBtn" class="pill-btn">Save prompt</button>
+          <button id="clearPromptBtn" class="ghost-btn" type="button">Clear</button>
+        </div>
+      </article>
+
+      <article class="walnut-panel">
+        <p class="eyebrow">Saved prompts</p>
+        <div id="promptsList" class="stack-list"></div>
+      </article>
+
+      <article class="walnut-panel">
+        <p class="eyebrow">Document library</p>
+        <div id="promptLibraryList" class="stack-list"></div>
+      </article>
+    </main>
+
+    <nav class="bottom-nav walnut-panel">
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link" href="./notes.html">Notes</a>
+      <a class="nav-link active" href="./prompts.html">Prompts</a>
+      <a class="nav-link" href="./gemini.html">Gemini</a>
+    </nav>
+  </div>
+
+  <script src="./prompt-library.js"></script>
+  <script src="./app.js"></script>
+</body>
 </html>

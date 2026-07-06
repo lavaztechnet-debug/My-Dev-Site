@@ -11,116 +11,53 @@
     <header class="topbar walnut-panel">
       <div>
         <p class="eyebrow">Walnut Noir</p>
-        <h1>NeuroStack</h1>
+        <h1>Lavaz NeuroStack</h1>
       </div>
-      <button id="themePulseBtn" class="icon-btn" aria-label="Pulse interface">◐</button>
+      <a class="icon-btn link-btn" href="./prompts.html" aria-label="Open prompts">LN</a>
     </header>
 
     <main class="main-stack">
       <section class="hero walnut-panel">
-        <p class="eyebrow">Mobile knowledge system</p>
-        <h2>Write, collect, prompt, and move fast.</h2>
-        <p class="hero-copy">A responsive offline-first shell for notes, prompts, and Gemini-assisted drafting.</p>
+        <p class="eyebrow">Dashboard</p>
+        <h2>Dedicated pages. Real prompt library. Responsive shell.</h2>
+        <p class="hero-copy">This rebuild separates Notes, Prompts, and Gemini into their own pages and keeps the walnut-noir interface consistent throughout the app.</p>
       </section>
 
-      <nav class="tabbar walnut-panel" aria-label="Primary">
-        <button class="tab-btn active" data-view="dashboard">Dashboard</button>
-        <button class="tab-btn" data-view="notes">Notes</button>
-        <button class="tab-btn" data-view="prompts">Prompts</button>
-        <button class="tab-btn" data-view="gemini">Gemini</button>
-      </nav>
-
-      <section id="view-dashboard" class="view active">
-        <div class="grid two-up">
-          <article class="walnut-panel metric-card">
-            <p class="eyebrow">Saved notes</p>
-            <h3 id="noteCount">0</h3>
-          </article>
-          <article class="walnut-panel metric-card">
-            <p class="eyebrow">Saved prompts</p>
-            <h3 id="promptCount">0</h3>
-          </article>
-        </div>
-
-        <article class="walnut-panel quick-actions">
-          <p class="eyebrow">Quick actions</p>
-          <div class="action-row">
-            <button class="pill-btn" data-jump="notes">New note</button>
-            <button class="pill-btn" data-jump="prompts">New prompt</button>
-            <button class="pill-btn" data-jump="gemini">Open Gemini</button>
-          </div>
-        </article>
-
-        <article class="walnut-panel">
-          <p class="eyebrow">Recent note</p>
-          <div id="recentNoteCard" class="empty-state">No notes yet.</div>
-        </article>
-      </section>
-
-      <section id="view-notes" class="view">
-        <article class="walnut-panel form-panel">
-          <p class="eyebrow">Notes</p>
-          <label class="field-label" for="noteTitle">Title</label>
-          <input id="noteTitle" class="walnut-input" type="text" placeholder="Neural capture title" />
-
-          <label class="field-label" for="noteBody">Body</label>
-          <textarea id="noteBody" class="walnut-input walnut-textarea" placeholder="Write your note..."></textarea>
-
-          <div class="action-row">
-            <button id="saveNoteBtn" class="pill-btn">Save note</button>
-            <button id="clearNoteBtn" class="ghost-btn" type="button">Clear</button>
-          </div>
-        </article>
-
-        <article class="walnut-panel">
+      <section class="grid two-up">
+        <article class="walnut-panel metric-card">
           <p class="eyebrow">Saved notes</p>
-          <div id="notesList" class="stack-list"></div>
+          <h3 id="noteCount">0</h3>
+        </article>
+        <article class="walnut-panel metric-card">
+          <p class="eyebrow">Saved prompts</p>
+          <h3 id="promptCount">0</h3>
         </article>
       </section>
 
-      <section id="view-prompts" class="view">
-        <article class="walnut-panel form-panel">
-          <p class="eyebrow">Prompts</p>
-          <label class="field-label" for="promptTitle">Prompt name</label>
-          <input id="promptTitle" class="walnut-input" type="text" placeholder="Style DNA extractor" />
-
-          <label class="field-label" for="promptBody">Prompt content</label>
-          <textarea id="promptBody" class="walnut-input walnut-textarea" placeholder="Write your prompt..."></textarea>
-
-          <div class="action-row">
-            <button id="savePromptBtn" class="pill-btn">Save prompt</button>
-            <button id="clearPromptBtn" class="ghost-btn" type="button">Clear</button>
-          </div>
-        </article>
-
-        <article class="walnut-panel">
-          <p class="eyebrow">Prompt library</p>
-          <div id="promptsList" class="stack-list"></div>
-        </article>
+      <section class="walnut-panel quick-actions">
+        <p class="eyebrow">Launch</p>
+        <div class="action-row">
+          <a class="pill-btn link-btn" href="./notes.html">Open Notes</a>
+          <a class="pill-btn link-btn" href="./prompts.html">Open Prompts</a>
+          <a class="pill-btn link-btn" href="./gemini.html">Open Gemini</a>
+        </div>
       </section>
 
-      <section id="view-gemini" class="view">
-        <article class="walnut-panel form-panel">
-          <p class="eyebrow">Gemini workspace</p>
-          <label class="field-label" for="geminiPrompt">Draft prompt</label>
-          <textarea id="geminiPrompt" class="walnut-input walnut-textarea tall" placeholder="Draft your Gemini request here..."></textarea>
-
-          <div class="action-row">
-            <button id="copyGeminiBtn" class="pill-btn">Copy prompt</button>
-            <button id="openGeminiBtn" class="ghost-btn" type="button">Open Gemini</button>
-          </div>
-        </article>
-
-        <article class="walnut-panel">
-          <p class="eyebrow">Usage note</p>
-          <div class="info-card">
-            This local shell drafts and stores your prompts on-device. Open Gemini in-browser for live model interaction.
-          </div>
-        </article>
+      <section class="walnut-panel">
+        <p class="eyebrow">Prompt library</p>
+        <div id="libraryPreview" class="stack-list"></div>
       </section>
     </main>
+
+    <nav class="bottom-nav walnut-panel">
+      <a class="nav-link active" href="./index.html">Home</a>
+      <a class="nav-link" href="./notes.html">Notes</a>
+      <a class="nav-link" href="./prompts.html">Prompts</a>
+      <a class="nav-link" href="./gemini.html">Gemini</a>
+    </nav>
   </div>
 
+  <script src="./prompt-library.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

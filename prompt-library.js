@@ -1,144 +1,102 @@
-window.PROMPT_LIBRARY = {
-  "Writing": [
-    {
-      "title": "Pen Ink Technical Draftsman",
-      "description": "Pen Ink Technical Draftsman"
-    }
-  ],
-  "Research": [
-    {
-      "title": "Chain of Thought AI Researcher",
-      "description": "Chain of Thought AI Researcher"
-    },
-    {
-      "title": "dust, buried alien structure emerging, researchers brushing ancient symbols,",
-      "description": "dust, buried alien structure emerging, researchers brushing ancient symbols, twin sunset."
-    }
-  ],
-  "Planning": [
-    {
-      "title": "Cron Scheduler Linux Administrator",
-      "description": "Cron Scheduler Linux Administrator"
-    },
-    {
-      "title": "Balloon Party Planner",
-      "description": "Balloon Party Planner"
-    },
-    {
-      "title": "#187 – Act as a practical assistant",
-      "description": "Create a crisis communication plan for a small brand —"
-    },
-    {
-      "title": "#195 – Act as a practical assistant",
-      "description": "Design a networking strategy for introverts —"
-    }
-  ],
-  "Creative": [
-    {
-      "title": "Vector Assets Android Designer",
-      "description": "Vector Assets Android Designer"
-    },
-    {
-      "title": "Creative & Visual Styles (Aesthetics & Artistry)",
-      "description": "Creative & Visual Styles (Aesthetics & Artistry)"
-    },
-    {
-      "title": "Bauhaus Bauhaus Designer",
-      "description": "Bauhaus Bauhaus Designer"
-    },
-    {
-      "title": "Disco 70s Set Designer",
-      "description": "Disco 70s Set Designer"
-    },
-    {
-      "title": "AI-generated cinematic images",
-      "description": "AI-generated cinematic images. Design 10 ultra-specific Midjourney/Stable Diffusion"
-    },
-    {
-      "title": "#162 – Act as a practical assistant",
-      "description": "Design a personal finance dashboard framework —"
-    }
-  ],
-  "Business": [
-    {
-      "title": "Requirements Technical Product Manager",
-      "description": "Requirements Technical Product Manager"
-    },
-    {
-      "title": "Technical Product Manager",
-      "description": "Technical Product Manager"
-    },
-    {
-      "title": "Data Science, Automation & Marketing",
-      "description": "Data Science, Automation & Marketing"
-    }
-  ],
-  "Systems": [
-    {
-      "title": "Core Prompt Engineering & Meta-Frameworks",
-      "description": "Core Prompt Engineering & Meta-Frameworks"
-    },
-    {
-      "title": "Android Development & Architecture",
-      "description": "Android Development & Architecture"
-    },
-    {
-      "title": "DevOps & System Administration",
-      "description": "DevOps & System Administration"
-    },
-    {
-      "title": "Terminal Handoff Linux Systems Administrator",
-      "description": "Terminal Handoff Linux Systems Administrator"
-    },
-    {
-      "title": "Linux Systems Administrator",
-      "description": "Linux Systems Administrator"
-    },
-    {
-      "title": "Galaxy S24+ (SM-S926U1)",
-      "description": "covering camera system, SoC performance, Android 16"
-    }
-  ],
-  "General": [
-    {
-      "title": "Persona Template Prompt Engineer",
-      "description": "Persona Template Prompt Engineer"
-    },
-    {
-      "title": "Self-Correction Meta-Prompt Engineer",
-      "description": "Self-Correction Meta-Prompt Engineer"
-    },
-    {
-      "title": "Meta-Prompt Engineer",
-      "description": "Meta-Prompt Engineer"
-    },
-    {
-      "title": "Structured Output Data Architect",
-      "description": "Structured Output Data Architect"
-    },
-    {
-      "title": "The Architect's Ledger • Command Vault 2",
-      "description": "The Architect's Ledger • Command Vault 2"
-    },
-    {
-      "title": "Edge-Cases Penetration Tester",
-      "description": "Edge-Cases Penetration Tester"
-    },
-    {
-      "title": "The Architect's Ledger • Command Vault 3",
-      "description": "The Architect's Ledger • Command Vault 3"
-    },
-    {
-      "title": "Forecasting Futurist Analyst",
-      "description": "Forecasting Futurist Analyst"
-    },
-    {
-      "title": "The Radical Critic Radical Critic",
-      "description": "The Radical Critic Radical Critic"
-    },
-    {
-      "title": "API Health Check Site Reliability Engineer",
-      "description": "API Health Check Site Reliability Engineer"
-    }
-  ]
-};
+window.NEUROSTACK_PROMPT_LIBRARY = [
+  {
+    category: "Android Development",
+    title: "Production-ready Room database schema",
+    body: "Act as a senior Android architect. Build a production-ready Room database schema with DAO, migrations, and offline-first sync strategy using WorkManager."
+  },
+  {
+    category: "Android Development",
+    title: "Jetpack Compose bottom navigation",
+    body: "Act as a senior Android architect. Implement a Jetpack Compose bottom navigation system with animated transitions, deep link support, and state restoration."
+  },
+  {
+    category: "Android Development",
+    title: "MVVM architecture with Hilt",
+    body: "Act as a senior Android architect. Design a clean MVVM architecture with UseCases, Repository pattern, and Hilt dependency injection for a multi-module project."
+  },
+  {
+    category: "Android Development",
+    title: "Retrofit networking layer",
+    body: "Act as a senior Android architect. Build a robust Retrofit + OkHttp networking layer with interceptors, auth token refresh, and exponential backoff retry logic."
+  },
+  {
+    category: "Android Development",
+    title: "Compose UI component system",
+    body: "Act as a senior Android architect. Create a custom Compose UI component library with theming tokens, dark mode support, and accessibility semantics."
+  },
+  {
+    category: "Android Development",
+    title: "Offline-first sync queue",
+    body: "Act as a senior Android architect. Build a full offline-capable app using Room, DataStore, and a sync queue that resolves conflicts on reconnect."
+  },
+  {
+    category: "Android Development",
+    title: "Biometric authentication",
+    body: "Act as a senior Android architect. Implement biometric authentication with fingerprint and face unlock fallback using BiometricPrompt API."
+  },
+  {
+    category: "Android Development",
+    title: "CameraX document scanner",
+    body: "Act as a senior Android architect. Create a file picker and document scanner using CameraX with ML Kit document detection and PDF export."
+  },
+  {
+    category: "Cinematic Prompting",
+    title: "Moody dystopian cityscape",
+    body: "Act as a cinematic prompt engineer. Design a moody dystopian cityscape at golden hour — crumbling brutalist towers, neon reflections on rain-slicked streets, long shadows, volumetric smog."
+  },
+  {
+    category: "Cinematic Prompting",
+    title: "Underwater throne room",
+    body: "Act as a cinematic prompt engineer. Create a hyper-detailed underwater throne room — bioluminescent coral, shafts of pale light from above, a silhouetted figure on a throne of shipwrecks."
+  },
+  {
+    category: "Cinematic Prompting",
+    title: "Alien mesa astronaut",
+    body: "Act as a cinematic prompt engineer. Design a lone astronaut standing on a desolate alien mesa — twin moons rising, dust storm on the horizon, visor reflecting a dying star."
+  },
+  {
+    category: "Cinematic Prompting",
+    title: "Abandoned Victorian greenhouse",
+    body: "Act as a cinematic prompt engineer. Create an abandoned Victorian greenhouse overrun by jungle growth — cracked glass ceiling, dappled sunlight, exotic flowers blooming through decay."
+  },
+  {
+    category: "Cinematic Prompting",
+    title: "Cyberpunk street market",
+    body: "Act as a cinematic prompt engineer. Design a cyberpunk street market — holographic vendor signs, rain-soaked crowds, wok fire sparks, drone shadows overhead."
+  },
+  {
+    category: "Horror",
+    title: "Interactive horror ARG",
+    body: "You are a horror narrative content creator. Using a Galaxy S24+ main camera in RAW mode and NFC tag reading capability, design an interactive horror ARG with physical NFC triggers and RAW photo clues delivered through a Progressive Web App."
+  },
+  {
+    category: "Horror",
+    title: "Found-footage escalation arc",
+    body: "Act as an elite found-footage horror analyst. Design a slow-burn escalation arc for a found-footage film where every ten minutes introduces one stronger layer of evidence without breaking realism."
+  },
+  {
+    category: "Music",
+    title: "Mobile podcast production system",
+    body: "Act as a mobile podcast production expert. Design a complete mobile podcast setup using Android recording apps, mic positioning, gain staging, and noise floor management."
+  },
+  {
+    category: "Music",
+    title: "Country production breakdown",
+    body: "Act as a Nashville producer. Break down a modern country song arrangement, vocal layering plan, acoustic rhythm bed, steel guitar placement, and mix bus strategy."
+  },
+  {
+    category: "Creative",
+    title: "Dark neumorphic UI concept prompts",
+    body: "You are an AI image prompt engineer. Design 10 ultra-specific prompts for dark neumorphic UI mockups optimized for a high-PPI AMOLED display with HDR color depth."
+  },
+  {
+    category: "Creative",
+    title: "Brand identity mobile review workflow",
+    body: "You are a brand identity designer. Design a mobile-first brand asset review workflow for color calibration, typography approval, and icon QA on a wide-gamut phone display."
+  },
+  {
+    category: "Utility",
+    title: "Prompt vault architecture",
+    body: "Design a local-first prompt vault system with notes, tags, quick filters, copy actions, pinned prompts, and offline persistence for an Android-friendly Progressive Web App."
+  }
+];
