@@ -11,7 +11,7 @@ window.PROMPT_LIBRARY = {
       "description": "Chain of Thought AI Researcher"
     },
     {
-      "title": "dust, buried alien structure emerging, researchers brushing ancient symbols, twi",
+      "title": "dust, buried alien structure emerging, researchers brushing ancient symbols,",
       "description": "dust, buried alien structure emerging, researchers brushing ancient symbols, twin sunset."
     }
   ],
@@ -25,12 +25,12 @@ window.PROMPT_LIBRARY = {
       "description": "Balloon Party Planner"
     },
     {
-      "title": "#187 – Act as a practical assistant",
-      "description": "#187 – Act as a practical assistant. Create a crisis communication plan for a small brand —"
+      "title": "#187 â€“ Act as a practical assistant",
+      "description": "Create a crisis communication plan for a small brand â€”"
     },
     {
-      "title": "#195 – Act as a practical assistant",
-      "description": "#195 – Act as a practical assistant. Design a networking strategy for introverts —"
+      "title": "#195 â€“ Act as a practical assistant",
+      "description": "Design a networking strategy for introverts â€”"
     }
   ],
   "Creative": [
@@ -55,12 +55,8 @@ window.PROMPT_LIBRARY = {
       "description": "AI-generated cinematic images. Design 10 ultra-specific Midjourney/Stable Diffusion"
     },
     {
-      "title": "#162 – Act as a practical assistant",
-      "description": "#162 – Act as a practical assistant. Design a personal finance dashboard framework —"
-    },
-    {
-      "title": "Total",
-      "description": "220 unique, high-value, immediately usable prompts across Android, Creative,"
+      "title": "#162 â€“ Act as a practical assistant",
+      "description": "Design a personal finance dashboard framework â€”"
     }
   ],
   "Business": [
@@ -75,10 +71,6 @@ window.PROMPT_LIBRARY = {
     {
       "title": "Data Science, Automation & Marketing",
       "description": "Data Science, Automation & Marketing"
-    },
-    {
-      "title": "overrun by jungle growth",
-      "description": "cracked glass ceiling, dappled sunlight, exotic flowers"
     }
   ],
   "Systems": [
@@ -125,16 +117,16 @@ window.PROMPT_LIBRARY = {
       "description": "Structured Output Data Architect"
     },
     {
-      "title": "The Architect's Ledger • Command Vault 2",
-      "description": "The Architect's Ledger • Command Vault 2"
+      "title": "The Architect's Ledger â€¢ Command Vault 2",
+      "description": "The Architect's Ledger â€¢ Command Vault 2"
     },
     {
       "title": "Edge-Cases Penetration Tester",
       "description": "Edge-Cases Penetration Tester"
     },
     {
-      "title": "The Architect's Ledger • Command Vault 3",
-      "description": "The Architect's Ledger • Command Vault 3"
+      "title": "The Architect's Ledger â€¢ Command Vault 3",
+      "description": "The Architect's Ledger â€¢ Command Vault 3"
     },
     {
       "title": "Forecasting Futurist Analyst",
@@ -147,38 +139,6 @@ window.PROMPT_LIBRARY = {
     {
       "title": "API Health Check Site Reliability Engineer",
       "description": "API Health Check Site Reliability Engineer"
-    },
-    {
-      "title": "Regex Helper Regex Master",
-      "description": "Regex Helper Regex Master"
-    },
-    {
-      "title": "The Architect's Ledger • Command Vault 13",
-      "description": "The Architect's Ledger • Command Vault 13"
-    },
-    {
-      "title": "Key Rotation Cloud Security Architect",
-      "description": "Key Rotation Cloud Security Architect"
-    },
-    {
-      "title": "The Architect's Ledger • Command Vault 14",
-      "description": "The Architect's Ledger • Command Vault 14"
-    },
-    {
-      "title": "categories to allow persistent memory, and how to configure",
-      "description": "categories to allow persistent memory, and how to configure developer options to reduce"
-    },
-    {
-      "title": "display with HDR10+",
-      "description": "including color palette, lighting style, and composition guidance.""
-    },
-    {
-      "title": "#010 – Act as a senior Android architect",
-      "description": "#010 – Act as a senior Android architect. Build a media player service with ExoPlayer,"
-    },
-    {
-      "title": "Compose with animated card reordering and persistent state.",
-      "description": "Compose with animated card reordering and persistent state."
     }
   ]
 };
