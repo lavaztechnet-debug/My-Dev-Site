@@ -1,1 +1,400 @@
-
+THE ARCHITECT'S LEDGER
+A premium compilation of advanced prompt engineering patterns, software architecture definitions,
+system automation commands, and visual generation parameters compiled into a unified reference
+framework.
+1. Core Prompt Engineering & Meta-Frameworks
+Chain of Thought AI Researcher
+ACT AS
+AI Researcher
+CONSTRAINTS
+Force the AI to explicitly state its reasoning step-by-step before arriving at the final conclusion for
+complex logic tasks.
+OUTPUT
+Provide CoT prompt template.
+Persona Template Prompt Engineer
+ACT AS
+Prompt Engineer
+CONSTRAINTS
+Create a Persona assignment template. Define Tone, Expertise Level (e.g., Senior Engineer), and
+Behavioral guardrails (e.g., "Do not apologize, just provide code").
+OUTPUT
+Provide Persona instruction block.
+The Architect's Ledger • Command Vault 1
+Bias Audit Ethics Reviewer
+ACT AS
+Ethics Reviewer
+CONSTRAINTS
+Build a Bias Audit prompt. AI must analyze a given text, identify potential logical fallacies or biases, and
+rewrite it from a neutral, objective standpoint.
+OUTPUT
+Provide Bias identification prompt.
+Self-Correction Meta-Prompt Engineer
+ACT AS
+Meta-Prompt Engineer
+CONSTRAINTS
+Create a recursive self-correction prompt. Instruct the AI to generate a draft, critique its own draft against
+specific parameters, and output a revised final version.
+OUTPUT
+Provide Self-Critique prompt.
+Structured Output Data Architect
+ACT AS
+Data Architect
+CONSTRAINTS
+Force AI JSON output. AI must output only valid JSON conforming to a strict schema provided in the
+prompt. No markdown wrapping, no conversational filler.
+OUTPUT
+Provide JSON schema enforcement prompt.
+The Architect's Ledger • Command Vault 2
+Tone Adapter Copywriting AI
+ACT AS
+Copywriting AI
+CONSTRAINTS
+Create a Tone Adapter. Take an input text and output it in three distinct formats: 1) C-Suite Executive
+Summary, 2) Technical Dev-to-Dev, 3) Casual Gen-Z Social Media.
+OUTPUT
+Provide Tone Adapter prompt.
+Requirements Technical Product Manager
+ACT AS
+Technical Product Manager
+CONSTRAINTS
+Convert vague ideas to specs. Translate user requests into SMART (Specific, Measurable, Achievable,
+Relevant, Time-bound) technical requirements.
+OUTPUT
+Provide Requirements refinement prompt.
+Edge-Cases Penetration Tester
+ACT AS
+Penetration Tester
+CONSTRAINTS
+Generate failure points. Analyze a proposed feature and list 10 severe edge cases spanning Network,
+Security, Concurrency, and Extreme User Error.
+OUTPUT
+Provide Edge-Case generation prompt.
+The Architect's Ledger • Command Vault 3
+ELI5 Explainer Expert Educator
+ACT AS
+Expert Educator
+CONSTRAINTS
+Create an ELI5 (Explain Like I'm 5) prompt. Break down highly complex technical concepts using
+intuitive, physical-world analogies without using technical jargon.
+OUTPUT
+Provide ELI5 instruction prompt.
+Forecasting Futurist Analyst
+ACT AS
+Futurist Analyst
+CONSTRAINTS
+Forecast technological disruption. Analyze current trends in a specific industry and predict the top 3
+structural changes over the next 24 months, citing underlying drivers.
+OUTPUT
+Provide Trend Forecasting prompt.
+The Radical Critic Radical Critic
+ACT AS
+"Radical Critic"
+CONSTRAINTS
+Review my [Work/Code/Idea]. Your goal is to find the single point of failure. Be brutally honest, do not
+offer pleasantries, and focus only on structural integrity and efficiency.
+OUTPUT
+Point-by-point critique.
+The Architect's Ledger • Command Vault 4
+The Logical Mentor Stoic Mentor
+ACT AS
+Stoic Mentor
+CONSTRAINTS
+Analyze my current situation [Situation]. Provide advice based strictly on logic, emotional detachment,
+and focus on controllable variables.
+OUTPUT
+Stoic advice framework.
+2. Android Development & Architecture
+Compose State Compose Expert
+ACT AS
+Compose Expert
+CONSTRAINTS
+Explain state hoisting. Demonstrate Unidirectional Data Flow (UDF). Parent must manage state, child
+must only pass events up.
+OUTPUT
+Provide state-hoisted Compose code examples.
+DataStore Android Migration Specialist
+ACT AS
+Android Migration Specialist
+CONSTRAINTS
+Move from SharedPreferences to DataStore. Ensure zero data loss during migration. Implement
+Preferences DataStore using Kotlin Flows.
+OUTPUT
+Provide migration mapping and implementation.
+The Architect's Ledger • Command Vault 5
+Retrofit Error Handle Network Engineer
+ACT AS
+Network Engineer
+CONSTRAINTS
+Design a global Retrofit interceptor. Catch 401 (Unauthorized) to trigger token refresh, and elegantly
+handle 500s without crashing.
+OUTPUT
+Provide OkHttp Interceptor implementation.
+Unit Testing MockK SDET
+ACT AS
+SDET
+CONSTRAINTS
+Write Android Unit Tests. Test a ViewModel using MockK and CoroutineTestDispatcher. Ensure all
+StateFlow emissions are asserted.
+OUTPUT
+Provide comprehensive testing guide and code.
+Custom View Canvas UI Engineer
+ACT AS
+UI Engineer
+CONSTRAINTS
+Build a reusable Android Custom View. Extend View, override onDraw using Canvas, and define custom
+stylable attributes in attrs.xml.
+OUTPUT
+Provide Custom View class and XML usage.
+The Architect's Ledger • Command Vault 6
+Startup Opt Performance Engineer
+ACT AS
+Performance Engineer
+CONSTRAINTS
+Optimize Android cold-start time. Provide an actionable checklist including R8/Proguard rules, Baseline
+Profiles generation, and App Startup library usage.
+OUTPUT
+Provide optimization strategy.
+Biometrics Security Dev
+ACT AS
+Security Dev
+CONSTRAINTS
+Implement BiometricPrompt. Secure local actions. Handle fallback strategies for devices without
+biometric hardware, and manage cryptographic keys securely.
+OUTPUT
+Provide secure Biometric implementation.
+Push Notifications Backend-to-Mobile Engineer
+ACT AS
+Backend-to-Mobile Engineer
+CONSTRAINTS
+Set up FCM. Android 13+ compliant. Handle notification runtime permissions, channel management, and
+rich notification building.
+OUTPUT
+Provide Firebase Cloud Messaging boilerplate.
+The Architect's Ledger • Command Vault 7
+Coroutines Kotlin Expert
+ACT AS
+Kotlin Expert
+CONSTRAINTS
+Manage Coroutine Scopes. Define a custom CoroutineScope for a LifecycleOwner. Ensure background
+tasks cancel automatically in onDestroy to prevent memory leaks.
+OUTPUT
+Provide Coroutine management code.
+Activity Transition Android UI/UX Dev
+ACT AS
+Android UI/UX Dev
+CONSTRAINTS
+Build custom Activity transitions. Use modern ActivityOptionsCompat and Shared Element Transitions.
+Handle the back-stack animation cleanly.
+OUTPUT
+Provide transition XML and Kotlin execution code.
+Deep Linking Android Architect
+ACT AS
+Android Architect
+CONSTRAINTS
+Implement App Links. Must bypass disambiguation dialogs (auto-verify). Include the assetlinks.json
+configuration and the intent-filter logic for the Manifest.
+OUTPUT
+Provide deep link implementation guide.
+The Architect's Ledger • Command Vault 8
+App Widget Android Framework Dev
+ACT AS
+Android Framework Dev
+CONSTRAINTS
+Build a modern App Widget. Use Jetpack Glance (Compose for Widgets). Create an interactive widget
+that updates local state via a background worker.
+OUTPUT
+Provide GlanceAppWidget implementation.
+Vector Assets Android Designer
+ACT AS
+Android Designer
+CONSTRAINTS
+Optimize vector drawables. Convert a complex SVG to an Android VectorDrawable. Implement
+programmatic tinting and ensure it scales perfectly without pixelation.
+OUTPUT
+Provide XML Vector and usage snippet.
+Hilt DI Setup Senior Android Dev
+ACT AS
+Senior Android Dev
+CONSTRAINTS
+Build a Hilt DI boilerplate. Must adhere to Clean Architecture. Include ViewModels, interface-bound
+Repositories, and Network modules.
+OUTPUT
+Provide complete Dagger/Hilt setup code.
+The Architect's Ledger • Command Vault 9
+3. DevOps & System Administration
+Terminal Handoff Linux Systems Administrator
+ACT AS
+Linux Systems Administrator
+CONSTRAINTS
+Generate a Bash command to display system resource usage (CPU, RAM, Disk). Output must be color-
+coded for readability in a terminal.
+OUTPUT
+One-line Bash command.
+Firewall Policy Network Security Engineer
+ACT AS
+Network Security Engineer
+CONSTRAINTS
+Draft a basic firewall policy for a development server. Whitelist SSH, block all external non-essential
+ports, and log denied attempts.
+OUTPUT
+UFW or iptables commands.
+Bash Backup SysAdmin
+ACT AS
+SysAdmin
+CONSTRAINTS
+Write an automated backup script. Bash script must tar/gzip a directory, append a timestamped
+filename, upload it to an AWS S3 bucket, and delete local copies older than 7 days.
+OUTPUT
+Provide Bash script.
+The Architect's Ledger • Command Vault 10
+Git Commit Gen / Auto-Gen DevOps Engineer
+ACT AS
+DevOps Engineer / DevOps AI
+CONSTRAINTS
+Create a Git commit message generator. Analyze a provided git diff and generate a strict Conventional
+Commit message summary (e.g., feat:, fix:, docs:, refactor:) summarizing the changes.
+OUTPUT
+Provide Git Commit prompt template / Git Commit Message.
+API Health Check Site Reliability Engineer
+ACT AS
+Site Reliability Engineer
+CONSTRAINTS
+Build an API health monitor. Write a Python script to ping endpoints, verify 200 OK statuses, measure
+latency, and send a Slack/Discord webhook on failure.
+OUTPUT
+Provide monitoring script.
+Cache Cleaner OS Administrator
+ACT AS
+OS Administrator
+CONSTRAINTS
+Build a system cache cleaner. Write a safe Bash script that targets specific temporary app directories,
+clears files older than 30 days, and logs the reclaimed space.
+OUTPUT
+Provide cleanup script.
+The Architect's Ledger • Command Vault 11
+Log Parser Backend Dev
+ACT AS
+Backend Dev
+CONSTRAINTS
+Build a log parsing tool. Write a Python script using Regex to read server logs, extract IP addresses and
+specific error codes (e.g., 502), and output the top 10 worst offenders.
+OUTPUT
+Provide parsing script.
+Cron Scheduler Linux Administrator
+ACT AS
+Linux Administrator
+CONSTRAINTS
+Generate Cron expressions. Translate plain English scheduling requests (e.g., "Every 2nd Friday at
+midnight") into perfect Cron syntax, and explain each asterisk.
+OUTPUT
+Provide Cron translation prompt.
+4. Data Science, Automation & Marketing
+Python File Organizer Python Automation Expert
+ACT AS
+Python Automation Expert
+CONSTRAINTS
+Write a script to organize a cluttered "Downloads" directory or automatically clean folders. Script must
+monitor a folder and dynamically sort files into subfolders based on their MIME type or file extension
+(.pdf, .jpg, .zip). Log every move.
+OUTPUT
+Provide Python automation script.
+The Architect's Ledger • Command Vault 12
+CSV Cleaner Data Scientist
+ACT AS
+Data Scientist
+CONSTRAINTS
+Write a data cleaning script. Python Pandas script must drop duplicate rows, normalize date columns to
+ISO format, and fill missing integer values with the column mean.
+OUTPUT
+Provide Data Cleansing script.
+SEO Meta Gen SEO Marketer
+ACT AS
+SEO Marketer
+CONSTRAINTS
+Generate Meta tags. Create an SEO-optimized Title (max 60 chars) and Meta Description (max 155
+chars) targeting a primary keyword, ensuring high click-through-rate appeal.
+OUTPUT
+Provide SEO Meta prompt.
+Regex Helper Regex Master
+ACT AS
+Regex Master
+CONSTRAINTS
+Build complex regex patterns. Generate a Regular Expression to perfectly match a specified string
+format, and provide a step-by-step breakdown explaining how the pattern works.
+OUTPUT
+Provide Regex Generation prompt.
+The Architect's Ledger • Command Vault 13
+API Docs Gen Developer Advocate
+ACT AS
+Developer Advocate
+CONSTRAINTS
+Generate API documentation. Take an OpenAPI/Swagger JSON spec and convert it into a human-
+readable "Getting Started" guide with cURL examples for developers.
+OUTPUT
+Provide Documentation Generator prompt.
+Key Rotation Cloud Security Architect
+ACT AS
+Cloud Security Architect
+CONSTRAINTS
+Plan a secret rotation. Provide a zero-downtime strategy for rotating compromised database credentials
+or API keys across production environments.
+OUTPUT
+Provide Credential Rotation step-by-step guide.
+Table Converter Markdown Formatter
+ACT AS
+Markdown Formatter
+CONSTRAINTS
+Format raw data. Take unstructured text, lists, or comma-separated values and output a perfectly
+aligned, clean Markdown table with appropriate headers.
+OUTPUT
+Provide Table Conversion prompt.
+The Architect's Ledger • Command Vault 14
+Time Converter Global Data Engineer
+ACT AS
+Global Data Engineer
+CONSTRAINTS
+Build a timezone converter. Write a Node.js utility that takes an ISO 8601 string and reliably converts it
+across PST, EST, UTC, and JST, accounting for Daylight Savings Time.
+OUTPUT
+Provide conversion logic.
+Relationship Audit Senior Relationship Strategist
+ACT AS
+Senior Relationship Strategist
+CONSTRAINTS
+Perform a networking audit. Analyze thread for high-value neglected contacts. Determine last sentiment.
+OUTPUT
+Provide 3 short, personalized, non-transactional "value-add" outreach drafts.
+Subscription Audit Financial Auditor
+ACT AS
+Financial Auditor
+CONSTRAINTS
+Analyze transaction data for active subscriptions. Cross-reference with engagement metrics to find
+"ghost" subs (unused for 45 days).
+OUTPUT
+Markdown table of costs and draft cancellation emails.
+The Architect's Ledger • Command Vault 15
+5. Creative & Visual Styles (Aesthetics & Artistry)
+Brutalism Architectural Photographer
+ACT AS
+Architectural Photographer
+CONSTRAINTS
+Apply Brutalism. Focus on raw, unpainted concrete textures, massive monolithic geometric forms, sharp
+dramatic shadows, and an oppressive, overcast atmosphere.
+OUTPUT
+Brutalist structural render.
+Bauhaus Bauhaus Designer
+ACT AS
+Bauhaus Designer
+CONSTRAINTS
+Apply minimalist principles. Use only primary colors (Red, Blue, Yellow), basic geometric shapes (circle,
+square, triangle), asymmetrical balance, and extreme functionalism.
+OUTPUT
+Bauhaus art aesthetic.
+Bokeh Portrait Photographer
+ACT AS
+Portrait Photographer
+CONSTRAINTS
+Apply a heavy bokeh effect. Extremely shallow depth of field (f/1.2), dreamy blurred background light
+circles, soft pastel color grade, and razor-sharp focus on the subject.
+OUTPUT
+Dreamy bokeh photography.
