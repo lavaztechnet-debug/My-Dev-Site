@@ -190,3 +190,4 @@ com.google.android.feature.XR_PROJECTED support. Explain what XR projected mode
 enables on Android 16, how to build a spatially-aware app that uses the LSM6DSV
 gyroscope + accelerometer + AK09918 magnetometer for orientation tracking, and design a
 simple AR overlay app architecture."
+
