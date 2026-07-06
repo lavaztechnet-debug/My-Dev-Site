@@ -25,12 +25,12 @@ window.PROMPT_LIBRARY = {
       "description": "Balloon Party Planner"
     },
     {
-      "title": "#187 â€“ Act as a practical assistant",
-      "description": "Create a crisis communication plan for a small brand â€”"
+      "title": "#187 – Act as a practical assistant",
+      "description": "Create a crisis communication plan for a small brand —"
     },
     {
-      "title": "#195 â€“ Act as a practical assistant",
-      "description": "Design a networking strategy for introverts â€”"
+      "title": "#195 – Act as a practical assistant",
+      "description": "Design a networking strategy for introverts —"
     }
   ],
   "Creative": [
@@ -55,8 +55,8 @@ window.PROMPT_LIBRARY = {
       "description": "AI-generated cinematic images. Design 10 ultra-specific Midjourney/Stable Diffusion"
     },
     {
-      "title": "#162 â€“ Act as a practical assistant",
-      "description": "Design a personal finance dashboard framework â€”"
+      "title": "#162 – Act as a practical assistant",
+      "description": "Design a personal finance dashboard framework —"
     }
   ],
   "Business": [
@@ -117,16 +117,16 @@ window.PROMPT_LIBRARY = {
       "description": "Structured Output Data Architect"
     },
     {
-      "title": "The Architect's Ledger â€¢ Command Vault 2",
-      "description": "The Architect's Ledger â€¢ Command Vault 2"
+      "title": "The Architect's Ledger • Command Vault 2",
+      "description": "The Architect's Ledger • Command Vault 2"
     },
     {
       "title": "Edge-Cases Penetration Tester",
       "description": "Edge-Cases Penetration Tester"
     },
     {
-      "title": "The Architect's Ledger â€¢ Command Vault 3",
-      "description": "The Architect's Ledger â€¢ Command Vault 3"
+      "title": "The Architect's Ledger • Command Vault 3",
+      "description": "The Architect's Ledger • Command Vault 3"
     },
     {
       "title": "Forecasting Futurist Analyst",
