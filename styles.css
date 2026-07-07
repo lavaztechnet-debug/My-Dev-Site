@@ -81,11 +81,114 @@ h3 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
 .ghost-btn, .nav-chip, .mini-btn { background: var(--ghost-bg); box-shadow: var(--elev-1), var(--stroke-hi), var(--stroke-lo), var(--bevel-strong); }
 .nav-chip.active, .pill-btn.primary-accent { background: var(--button-bg-2); color: #08192c; }
 .field-label { display: block; margin: 16px 0 8px; color: var(--text-soft); text-transform: uppercase; letter-spacing: .18em; font-size: .74rem; }
-.neo-input { width: 100%; border: 1px solid rgba(193, 232, 255, 0.18); background: var(--panel-grad-2); color: var(--text-strong); border-radius: 24px; padding: 16px 18px; outline: none; box-shadow: inset 12px 12px 24px rgba(1, 9, 22, 0.82), inset -10px -10px 22px rgba(103, 156, 214, 0.14), inset 1px 1px 0 rgba(224, 246, 255, 0.16), inset -1px -1px 0 rgba(0, 0, 0, 0.22), 0 10px 24px rgba(0, 10, 30, 0.28); transition: box-shadow .2s ease, border-color .2s ease, transform .18s ease, background .2s ease; }
-.neo-input::placeholder { color: var(--text-faint); }
-.neo-input:focus { border-color: rgba(193, 232, 255, 0.34); background: linear-gradient(145deg, #1b4a84 0%, #10386f 45%, #052659 100%); box-shadow: inset 10px 10px 22px rgba(1, 9, 22, 0.86), inset -8px -8px 18px rgba(116, 170, 228, 0.16), inset 1px 1px 0 rgba(224, 246, 255, 0.18), inset -1px -1px 0 rgba(0, 0, 0, 0.26), 0 0 0 1px rgba(193, 232, 255, 0.12), 0 14px 30px rgba(0, 8, 24, 0.34); }
-.neo-textarea { min-height: 170px; resize: vertical; }
-.neo-textarea.tall { min-height: 220px; }
+.neo-input,
+input[type="text"],
+input[type="search"],
+textarea {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(125,160,202,0.22);
+  background: linear-gradient(180deg, rgba(9, 43, 92, 0.98) 0%, rgba(13, 55, 109, 0.94) 100%);
+  color: var(--text-strong);
+  border-radius: 22px;
+  padding: 16px 18px;
+  outline: none;
+  box-shadow:
+    inset 12px 12px 24px rgba(1, 9, 22, 0.82),
+    inset -10px -10px 22px rgba(103, 156, 214, 0.12),
+    inset 1px 1px 0 rgba(224, 246, 255, 0.10),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.24),
+    0 10px 24px rgba(0, 10, 30, 0.20);
+  transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.neo-input::placeholder,
+input[type="text"]::placeholder,
+input[type="search"]::placeholder,
+textarea::placeholder {
+  color: rgba(194, 219, 239, 0.72);
+}
+
+.neo-input:focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  border-color: rgba(193, 232, 255, 0.34);
+  background: linear-gradient(180deg, rgba(12, 49, 103, 0.98) 0%, rgba(19, 73, 141, 0.94) 100%);
+  box-shadow:
+    inset 10px 10px 22px rgba(1, 9, 22, 0.86),
+    inset -8px -8px 18px rgba(116, 170, 228, 0.14),
+    inset 1px 1px 0 rgba(224, 246, 255, 0.14),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.26),
+    0 0 0 1px rgba(193, 232, 255, 0.08),
+    0 14px 30px rgba(0, 8, 24, 0.26);
+}
+
+.neo-textarea,
+textarea {
+  min-height: 170px;
+  resize: vertical;
+}
+
+.neo-textarea.tall {
+  min-height: 220px;
+}
 .item-card { padding: 16px; border-radius: 24px; background: var(--panel-grad-2); border: 1px solid var(--line); box-shadow: var(--elev-2), var(--stroke-hi), var(--stroke-lo), var(--bevel-strong); }
 .library-stat { margin-top: 12px; display: inline-flex; padding: 10px 16px; border-radius: var(--radius-pill); background: var(--ghost-bg); box-shadow: var(--elev-1), var(--stroke-hi), var(--stroke-lo), var(--bevel-strong); color: var(--text-soft); }
 @media (max-width: 740px) { .grid.two-up { grid-template-columns: 1fr; } .topbar { flex-direction: column; } .header-actions { width: 100%; justify-content: flex-start; } }
+
+
+.neo-input,
+input[type="text"],
+input[type="search"],
+textarea {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(125,160,202,0.22);
+  background: linear-gradient(180deg, rgba(9, 43, 92, 0.98) 0%, rgba(13, 55, 109, 0.94) 100%);
+  color: var(--text-strong);
+  border-radius: 22px;
+  padding: 16px 18px;
+  outline: none;
+  box-shadow:
+    inset 12px 12px 24px rgba(1, 9, 22, 0.82),
+    inset -10px -10px 22px rgba(103, 156, 214, 0.12),
+    inset 1px 1px 0 rgba(224, 246, 255, 0.10),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.24),
+    0 10px 24px rgba(0, 10, 30, 0.20);
+  transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.neo-input::placeholder,
+input[type="text"]::placeholder,
+input[type="search"]::placeholder,
+textarea::placeholder {
+  color: rgba(194, 219, 239, 0.72);
+}
+
+.neo-input:focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  border-color: rgba(193, 232, 255, 0.34);
+  background: linear-gradient(180deg, rgba(12, 49, 103, 0.98) 0%, rgba(19, 73, 141, 0.94) 100%);
+  box-shadow:
+    inset 10px 10px 22px rgba(1, 9, 22, 0.86),
+    inset -8px -8px 18px rgba(116, 170, 228, 0.14),
+    inset 1px 1px 0 rgba(224, 246, 255, 0.14),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.26),
+    0 0 0 1px rgba(193, 232, 255, 0.08),
+    0 14px 30px rgba(0, 8, 24, 0.26);
+}
+
+.neo-textarea,
+textarea {
+  min-height: 170px;
+  resize: vertical;
+}
+
+.neo-textarea.tall {
+  min-height: 220px;
+}
