@@ -41,6 +41,7 @@
   function libraryData() {
     try {
       if (Array.isArray(window.NEUROSTACK_PROMPT_LIBRARY)) return window.NEUROSTACK_PROMPT_LIBRARY;
+      if (Array.isArray(window.NEUROSTACKPROMPTLIBRARY)) return window.NEUROSTACKPROMPTLIBRARY;
       return [];
     } catch (e) {
       return [];
