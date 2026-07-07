@@ -1,7 +1,7 @@
 (function () {
-  const NOTES_KEY = 'neurostack_notes_v3';
-  const PROMPTS_KEY = 'neurostack_prompts_v3';
-  const THEME_KEY = 'neurostack_theme_v1';
+  const NOTES_KEY = 'neurostack_notes_v4';
+  const PROMPTS_KEY = 'neurostack_prompts_v4';
+  const THEME_KEY = 'neurostack_theme_v2';
 
   function readStore(key) {
     try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
@@ -23,7 +23,7 @@
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     const btn = document.getElementById('themeToggle');
-    if (btn) btn.textContent = theme === 'light' ? 'Walnut theme' : 'Light theme';
+    if (btn) btn.textContent = theme === 'light' ? 'Blue noir theme' : 'Light theme';
     localStorage.setItem(THEME_KEY, theme);
   }
 
@@ -38,6 +38,18 @@
     });
   }
 
+  function libraryData() {
+    if (Array.isArray(window.NEUROSTACK_PROMPT_LIBRARY)) return window.NEUROSTACK_PROMPT_LIBRARY;
+    return [];
+  }
+
+  function renderDashboardCounts() {
+    const noteCount = document.getElementById('noteCount');
+    const promptCount = document.getElementById('promptCount');
+    if (noteCount) noteCount.textContent = String(readStore(NOTES_KEY).length);
+    if (promptCount) promptCount.textContent = String(readStore(PROMPTS_KEY).length);
+  }
+
   function bindNotesPage() {
     const noteTitle = document.getElementById('noteTitle');
     const noteBody = document.getElementById('noteBody');
@@ -48,21 +60,17 @@
 
     function render() {
       const notes = readStore(NOTES_KEY);
-      if (!notes.length) {
-        notesList.innerHTML = '<div class="item-card"><p class="empty-copy">No notes saved yet.</p></div>';
-        return;
-      }
-
-      notesList.innerHTML = notes.map((item, index) => `
-        <article class="item-card">
-          <h4>${escapeHtml(item.title || 'Untitled note')}</h4>
-          <p>${escapeHtml(item.body || '')}</p>
-          <div class="item-tools">
-            <button class="mini-btn" data-note-load="${index}">Load</button>
-            <button class="mini-btn" data-note-delete="${index}">Delete</button>
-          </div>
-        </article>
-      `).join('');
+      notesList.innerHTML = notes.length
+        ? notes.map((item, index) => `
+          <article class="item-card">
+            <h4>${escapeHtml(item.title || 'Untitled note')}</h4>
+            <p>${escapeHtml(item.body || '')}</p>
+            <div class="item-tools">
+              <button class="mini-btn" data-note-load="${index}">Load</button>
+              <button class="mini-btn" data-note-delete="${index}">Delete</button>
+            </div>
+          </article>`).join('')
+        : '<div class="item-card"><p class="empty-copy">No notes saved yet.</p></div>';
 
       document.querySelectorAll('[data-note-load]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -94,6 +102,7 @@
       noteTitle.value = '';
       noteBody.value = '';
       render();
+      renderDashboardCounts();
     });
 
     clearBtn.addEventListener('click', () => {
@@ -112,27 +121,24 @@
     const promptSearch = document.getElementById('promptSearch');
     const saveBtn = document.getElementById('savePromptBtn');
     const clearBtn = document.getElementById('clearPromptBtn');
-    const library = Array.isArray(window.NEUROSTACK_PROMPT_LIBRARY) ? window.NEUROSTACK_PROMPT_LIBRARY : [];
+    const libraryStat = document.getElementById('libraryStat');
+
     if (!promptTitle || !promptBody || !promptsList || !promptLibraryList || !promptSearch || !saveBtn || !clearBtn) return;
 
     function renderSaved() {
       const prompts = readStore(PROMPTS_KEY);
-      if (!prompts.length) {
-        promptsList.innerHTML = '<div class="item-card"><p class="empty-copy">No saved prompts yet.</p></div>';
-        return;
-      }
-
-      promptsList.innerHTML = prompts.map((item, index) => `
-        <article class="item-card">
-          <h4>${escapeHtml(item.title || 'Untitled prompt')}</h4>
-          <p>${escapeHtml(item.body || '')}</p>
-          <div class="item-tools">
-            <button class="mini-btn" data-prompt-load="${index}">Load</button>
-            <button class="mini-btn" data-prompt-copy="${index}">Copy</button>
-            <button class="mini-btn" data-prompt-delete="${index}">Delete</button>
-          </div>
-        </article>
-      `).join('');
+      promptsList.innerHTML = prompts.length
+        ? prompts.map((item, index) => `
+          <article class="item-card">
+            <h4>${escapeHtml(item.title || 'Untitled prompt')}</h4>
+            <p>${escapeHtml(item.body || '')}</p>
+            <div class="item-tools">
+              <button class="mini-btn" data-prompt-load="${index}">Load</button>
+              <button class="mini-btn" data-prompt-copy="${index}">Copy</button>
+              <button class="mini-btn" data-prompt-delete="${index}">Delete</button>
+            </div>
+          </article>`).join('')
+        : '<div class="item-card"><p class="empty-copy">No saved prompts yet.</p></div>';
 
       document.querySelectorAll('[data-prompt-load]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -164,30 +170,29 @@
     }
 
     function renderLibrary() {
+      const library = libraryData();
+      if (libraryStat) libraryStat.textContent = `Library items: ${library.length}`;
+
       const q = promptSearch.value.trim().toLowerCase();
       const filtered = library.filter(item => !q || `${item.category} ${item.title} ${item.body}`.toLowerCase().includes(q));
 
-      if (!filtered.length) {
-        promptLibraryList.innerHTML = '<div class="item-card"><p class="empty-copy">No prompt library matches found.</p></div>';
-        return;
-      }
-
-      promptLibraryList.innerHTML = filtered.map((item, index) => `
-        <article class="item-card">
-          <p class="eyebrow">${escapeHtml(item.category || 'Library')}</p>
-          <h4>${escapeHtml(item.title || 'Untitled')}</h4>
-          <p>${escapeHtml(item.body || '')}</p>
-          <div class="item-tools">
-            <button class="mini-btn" data-library-load="${index}">Load</button>
-            <button class="mini-btn" data-library-copy="${index}">Copy</button>
-            <button class="mini-btn" data-library-save="${index}">Save</button>
-          </div>
-        </article>
-      `).join('');
+      promptLibraryList.innerHTML = filtered.length
+        ? filtered.slice(0, 120).map((item, index) => `
+          <article class="item-card">
+            <p class="eyebrow">${escapeHtml(item.category || 'Library')}</p>
+            <h4>${escapeHtml(item.title || 'Untitled')}</h4>
+            <p>${escapeHtml(item.body || '')}</p>
+            <div class="item-tools">
+              <button class="mini-btn" data-library-load="${index}">Load</button>
+              <button class="mini-btn" data-library-copy="${index}">Copy</button>
+              <button class="mini-btn" data-library-save="${index}">Save</button>
+            </div>
+          </article>`).join('')
+        : '<div class="item-card"><p class="empty-copy">No prompt library matches found.</p></div>';
 
       document.querySelectorAll('[data-library-load]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const item = filtered[Number(btn.dataset.libraryLoad)];
+          const item = filtered.slice(0, 120)[Number(btn.dataset.libraryLoad)];
           if (!item) return;
           promptTitle.value = item.title || '';
           promptBody.value = item.body || '';
@@ -197,7 +202,7 @@
 
       document.querySelectorAll('[data-library-copy]').forEach(btn => {
         btn.addEventListener('click', async () => {
-          const item = filtered[Number(btn.dataset.libraryCopy)];
+          const item = filtered.slice(0, 120)[Number(btn.dataset.libraryCopy)];
           if (!item) return;
           await navigator.clipboard.writeText(item.body || '');
         });
@@ -205,7 +210,7 @@
 
       document.querySelectorAll('[data-library-save]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const item = filtered[Number(btn.dataset.librarySave)];
+          const item = filtered.slice(0, 120)[Number(btn.dataset.librarySave)];
           if (!item) return;
           const prompts = readStore(PROMPTS_KEY);
           prompts.unshift({ title: item.title || 'Library prompt', body: item.body || '', createdAt: Date.now() });
@@ -240,24 +245,19 @@
     renderLibrary();
   }
 
-  function renderDashboardCounts() {
-    const noteCount = document.getElementById('noteCount');
-    const promptCount = document.getElementById('promptCount');
-    if (noteCount) noteCount.textContent = String(readStore(NOTES_KEY).length);
-    if (promptCount) promptCount.textContent = String(readStore(PROMPTS_KEY).length);
-  }
-
   function bindDashboardPage() {
     renderDashboardCounts();
     const libraryPreview = document.getElementById('libraryPreview');
-    if (libraryPreview && Array.isArray(window.NEUROSTACK_PROMPT_LIBRARY)) {
-      libraryPreview.innerHTML = window.NEUROSTACK_PROMPT_LIBRARY.slice(0, 4).map(item => `
-        <article class="item-card">
-          <p class="eyebrow">${escapeHtml(item.category || 'Library')}</p>
-          <h4>${escapeHtml(item.title || 'Untitled')}</h4>
-          <p>${escapeHtml((item.body || '').slice(0, 180))}${item.body && item.body.length > 180 ? '…' : ''}</p>
-        </article>
-      `).join('');
+    if (libraryPreview) {
+      const library = libraryData();
+      libraryPreview.innerHTML = library.length
+        ? library.slice(0, 4).map(item => `
+          <article class="item-card">
+            <p class="eyebrow">${escapeHtml(item.category || 'Library')}</p>
+            <h4>${escapeHtml(item.title || 'Untitled')}</h4>
+            <p>${escapeHtml((item.body || '').slice(0, 180))}${item.body && item.body.length > 180 ? '…' : ''}</p>
+          </article>`).join('')
+        : '<div class="item-card"><p class="empty-copy">Prompt library not loaded yet.</p></div>';
     }
   }
 

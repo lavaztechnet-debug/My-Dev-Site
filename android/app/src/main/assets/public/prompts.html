@@ -8,7 +8,7 @@
 </head>
 <body data-page="prompts">
   <div class="app-shell">
-    <header class="topbar walnut-panel">
+    <header class="topbar neo-panel">
       <div>
         <p class="eyebrow">Prompts</p>
         <h1>Library</h1>
@@ -18,6 +18,7 @@
           <a class="nav-chip active" href="./prompts.html">Prompts</a>
           <a class="nav-chip" href="./gemini.html">Gemini</a>
         </div>
+        <div id="libraryStat" class="library-stat">Library items: 0</div>
       </div>
       <div class="header-actions">
         <button id="themeToggle" class="theme-toggle" type="button">Light theme</button>
@@ -25,15 +26,15 @@
     </header>
 
     <main class="main-stack">
-      <article class="walnut-panel form-panel">
+      <article class="neo-panel form-panel">
         <label class="field-label" for="promptSearch">Search library</label>
-        <input id="promptSearch" class="walnut-input" type="text" placeholder="Search Android, horror, cinematic, utility..." />
+        <input id="promptSearch" class="neo-input" type="text" placeholder="Search Android, horror, cinematic..." />
 
         <label class="field-label" for="promptTitle">Prompt title</label>
-        <input id="promptTitle" class="walnut-input" type="text" placeholder="Prompt title" />
+        <input id="promptTitle" class="neo-input" type="text" placeholder="Prompt title" />
 
         <label class="field-label" for="promptBody">Prompt body</label>
-        <textarea id="promptBody" class="walnut-input walnut-textarea" placeholder="Prompt content..."></textarea>
+        <textarea id="promptBody" class="neo-input neo-textarea" placeholder="Prompt content..."></textarea>
 
         <div class="action-row">
           <button id="savePromptBtn" class="pill-btn primary-accent">Save prompt</button>
@@ -41,19 +42,20 @@
         </div>
       </article>
 
-      <article class="walnut-panel">
+      <article class="neo-panel">
         <p class="eyebrow">Saved prompts</p>
         <div id="promptsList" class="stack-list"></div>
       </article>
 
-      <article class="walnut-panel">
+      <article class="neo-panel">
         <p class="eyebrow">Document library</p>
+        <p class="small-note">This should populate from prompt-library.js at runtime.</p>
         <div id="promptLibraryList" class="stack-list"></div>
       </article>
     </main>
-
-    <script src="./prompt-library.js"></script>
-    <script src="./app.js"></script>
   </div>
+
+  <script src="./prompt-library.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
