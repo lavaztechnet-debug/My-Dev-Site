@@ -2,29 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeuroStack - Notes</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="app.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NeuroStack Notes</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-<body>
-  <div class="bg-orb orb-a"></div><div class="bg-orb orb-b"></div>
-  <main class="shell">
-    <aside class="sidebar neu-panel">
-      <div class="brand neu-inset"><div class="brand-mark">N</div><div><h1>NeuroStack</h1><p>Notes</p></div></div>
-      <nav class="nav"><a class="nav-btn" href="index.html">Home</a><a class="nav-btn active" href="notes.html">Notes</a><a class="nav-btn" href="gemini.html">Gemini Helper</a><a class="nav-btn" href="prompts.html">Prompt Lab</a></nav>
-      <section class="sidebar-card neu-panel depth-lg"><h3>Stored Data</h3><p id="statsText">0 notes saved</p></section>
-    </aside>
-    <section class="content">
-      <header class="topbar neu-panel depth-lg">
-        <div><h2 id="pageTitle">Notes</h2><p id="pageSubtitle">Store notes locally with search, edit, and export.</p></div>
-        <div class="topbar-actions"><a class="neu-btn" href="index.html">Home</a><button id="themeToggle" class="neu-btn" type="button">🌙 Dark</button><button id="clearAllData" class="neu-btn danger-btn" type="button">Clear App Data</button></div>
-      </header>
-      <section class="grid two page-grid">
-        <article class="neu-panel depth-lg"><h3>Write Note</h3><form id="noteForm" class="stack"><input id="noteTitle" class="neu-input" type="text" placeholder="Note title" maxlength="120" required /><textarea id="noteBody" class="neu-input area-lg" placeholder="Write your note..." required></textarea><div class="row"><button type="submit" class="neu-btn primary-btn">Save Note</button><button type="button" id="resetNote" class="neu-btn">Reset</button><button type="button" id="exportNotes" class="neu-btn">Export JSON</button></div><input type="hidden" id="editingNoteId" /></form></article>
-        <article class="neu-panel depth-lg"><h3>Find Notes</h3><input id="searchNotes" class="neu-input" type="text" placeholder="Search title or content" /><div id="notesList" class="notes-list"></div></article>
-      </section>
-    </section>
-  </main>
+<body data-page="notes">
+  <div class="app-shell">
+    <header class="topbar walnut-panel">
+      <div>
+        <p class="eyebrow">Notes</p>
+        <h1>Capture</h1>
+      </div>
+      <a class="ghost-btn link-btn" href="./index.html">Home</a>
+    </header>
+
+    <main class="main-stack">
+      <article class="walnut-panel form-panel">
+        <label class="field-label" for="noteTitle">Title</label>
+        <input id="noteTitle" class="walnut-input" type="text" placeholder="Neural capture title" />
+        <label class="field-label" for="noteBody">Body</label>
+        <textarea id="noteBody" class="walnut-input walnut-textarea" placeholder="Write your note..."></textarea>
+        <div class="action-row">
+          <button id="saveNoteBtn" class="pill-btn">Save note</button>
+          <button id="clearNoteBtn" class="ghost-btn" type="button">Clear</button>
+        </div>
+      </article>
+
+      <article class="walnut-panel">
+        <p class="eyebrow">Saved notes</p>
+        <div id="notesList" class="stack-list"></div>
+      </article>
+    </main>
+
+    <nav class="bottom-nav walnut-panel">
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link active" href="./notes.html">Notes</a>
+      <a class="nav-link" href="./prompts.html">Prompts</a>
+      <a class="nav-link" href="./gemini.html">Gemini</a>
+    </nav>
+  </div>
+  <script src="./app.js"></script>
 </body>
 </html>
