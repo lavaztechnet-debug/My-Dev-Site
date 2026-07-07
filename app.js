@@ -1,7 +1,7 @@
 (function () {
-  const NOTES_KEY = 'neurostack_notes_v4';
-  const PROMPTS_KEY = 'neurostack_prompts_v4';
-  const THEME_KEY = 'neurostack_theme_v2';
+  const NOTES_KEY = 'neurostack_notes_v5';
+  const PROMPTS_KEY = 'neurostack_prompts_v5';
+  const THEME_KEY = 'neurostack_theme_v3';
 
   function readStore(key) {
     try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
@@ -39,8 +39,12 @@
   }
 
   function libraryData() {
-    if (Array.isArray(window.NEUROSTACK_PROMPT_LIBRARY)) return window.NEUROSTACK_PROMPT_LIBRARY;
-    return [];
+    try {
+      if (Array.isArray(window.NEUROSTACK_PROMPT_LIBRARY)) return window.NEUROSTACK_PROMPT_LIBRARY;
+      return [];
+    } catch (e) {
+      return [];
+    }
   }
 
   function renderDashboardCounts() {
@@ -139,34 +143,6 @@
             </div>
           </article>`).join('')
         : '<div class="item-card"><p class="empty-copy">No saved prompts yet.</p></div>';
-
-      document.querySelectorAll('[data-prompt-load]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const item = prompts[Number(btn.dataset.promptLoad)];
-          if (!item) return;
-          promptTitle.value = item.title || '';
-          promptBody.value = item.body || '';
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      });
-
-      document.querySelectorAll('[data-prompt-copy]').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const item = prompts[Number(btn.dataset.promptCopy)];
-          if (!item) return;
-          await navigator.clipboard.writeText(item.body || '');
-        });
-      });
-
-      document.querySelectorAll('[data-prompt-delete]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const updated = readStore(PROMPTS_KEY);
-          updated.splice(Number(btn.dataset.promptDelete), 1);
-          writeStore(PROMPTS_KEY, updated);
-          renderSaved();
-          renderDashboardCounts();
-        });
-      });
     }
 
     function renderLibrary() {
@@ -188,37 +164,7 @@
               <button class="mini-btn" data-library-save="${index}">Save</button>
             </div>
           </article>`).join('')
-        : '<div class="item-card"><p class="empty-copy">No prompt library matches found.</p></div>';
-
-      document.querySelectorAll('[data-library-load]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const item = filtered.slice(0, 120)[Number(btn.dataset.libraryLoad)];
-          if (!item) return;
-          promptTitle.value = item.title || '';
-          promptBody.value = item.body || '';
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      });
-
-      document.querySelectorAll('[data-library-copy]').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const item = filtered.slice(0, 120)[Number(btn.dataset.libraryCopy)];
-          if (!item) return;
-          await navigator.clipboard.writeText(item.body || '');
-        });
-      });
-
-      document.querySelectorAll('[data-library-save]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const item = filtered.slice(0, 120)[Number(btn.dataset.librarySave)];
-          if (!item) return;
-          const prompts = readStore(PROMPTS_KEY);
-          prompts.unshift({ title: item.title || 'Library prompt', body: item.body || '', createdAt: Date.now() });
-          writeStore(PROMPTS_KEY, prompts);
-          renderSaved();
-          renderDashboardCounts();
-        });
-      });
+        : '<div class="item-card"><p class="empty-copy">Prompt library not loaded or contains 0 valid items.</p></div>';
     }
 
     saveBtn.addEventListener('click', () => {
@@ -240,7 +186,6 @@
     });
 
     promptSearch.addEventListener('input', renderLibrary);
-
     renderSaved();
     renderLibrary();
   }
@@ -248,17 +193,16 @@
   function bindDashboardPage() {
     renderDashboardCounts();
     const libraryPreview = document.getElementById('libraryPreview');
-    if (libraryPreview) {
-      const library = libraryData();
-      libraryPreview.innerHTML = library.length
-        ? library.slice(0, 4).map(item => `
-          <article class="item-card">
-            <p class="eyebrow">${escapeHtml(item.category || 'Library')}</p>
-            <h4>${escapeHtml(item.title || 'Untitled')}</h4>
-            <p>${escapeHtml((item.body || '').slice(0, 180))}${item.body && item.body.length > 180 ? '…' : ''}</p>
-          </article>`).join('')
-        : '<div class="item-card"><p class="empty-copy">Prompt library not loaded yet.</p></div>';
-    }
+    if (!libraryPreview) return;
+    const library = libraryData();
+    libraryPreview.innerHTML = library.length
+      ? library.slice(0, 4).map(item => `
+        <article class="item-card">
+          <p class="eyebrow">${escapeHtml(item.category || 'Library')}</p>
+          <h4>${escapeHtml(item.title || 'Untitled')}</h4>
+          <p>${escapeHtml((item.body || '').slice(0, 180))}${item.body && item.body.length > 180 ? '…' : ''}</p>
+        </article>`).join('')
+      : '<div class="item-card"><p class="empty-copy">Prompt library not loaded yet.</p></div>';
   }
 
   function bindGeminiPage() {
