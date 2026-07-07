@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -12,8 +12,16 @@
       <div>
         <p class="eyebrow">Notes</p>
         <h1>Capture</h1>
+        <div class="page-switcher">
+          <a class="nav-chip" href="./index.html">Home</a>
+          <a class="nav-chip active" href="./notes.html">Notes</a>
+          <a class="nav-chip" href="./prompts.html">Prompts</a>
+          <a class="nav-chip" href="./gemini.html">Gemini</a>
+        </div>
       </div>
-      <a class="ghost-btn link-btn" href="./index.html">Home</a>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" type="button">Light theme</button>
+      </div>
     </header>
 
     <main class="main-stack">
@@ -23,7 +31,7 @@
         <label class="field-label" for="noteBody">Body</label>
         <textarea id="noteBody" class="walnut-input walnut-textarea" placeholder="Write your note..."></textarea>
         <div class="action-row">
-          <button id="saveNoteBtn" class="pill-btn">Save note</button>
+          <button id="saveNoteBtn" class="pill-btn primary-accent">Save note</button>
           <button id="clearNoteBtn" class="ghost-btn" type="button">Clear</button>
         </div>
       </article>
@@ -33,13 +41,6 @@
         <div id="notesList" class="stack-list"></div>
       </article>
     </main>
-
-    <nav class="bottom-nav walnut-panel">
-      <a class="nav-link" href="./index.html">Home</a>
-      <a class="nav-link active" href="./notes.html">Notes</a>
-      <a class="nav-link" href="./prompts.html">Prompts</a>
-      <a class="nav-link" href="./gemini.html">Gemini</a>
-    </nav>
   </div>
   <script src="./app.js"></script>
 </body>

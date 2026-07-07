@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -12,8 +12,16 @@
       <div>
         <p class="eyebrow">Gemini</p>
         <h1>Workspace</h1>
+        <div class="page-switcher">
+          <a class="nav-chip" href="./index.html">Home</a>
+          <a class="nav-chip" href="./notes.html">Notes</a>
+          <a class="nav-chip" href="./prompts.html">Prompts</a>
+          <a class="nav-chip active" href="./gemini.html">Gemini</a>
+        </div>
       </div>
-      <a class="ghost-btn link-btn" href="./index.html">Home</a>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" type="button">Light theme</button>
+      </div>
     </header>
 
     <main class="main-stack">
@@ -21,7 +29,7 @@
         <label class="field-label" for="geminiPrompt">Draft prompt</label>
         <textarea id="geminiPrompt" class="walnut-input walnut-textarea tall" placeholder="Draft your Gemini request here..."></textarea>
         <div class="action-row">
-          <button id="copyGeminiBtn" class="pill-btn">Copy prompt</button>
+          <button id="copyGeminiBtn" class="pill-btn primary-accent">Copy prompt</button>
           <button id="openGeminiBtn" class="ghost-btn" type="button">Open Gemini</button>
         </div>
       </article>
@@ -31,13 +39,6 @@
         <div id="geminiPromptPreview" class="stack-list"></div>
       </article>
     </main>
-
-    <nav class="bottom-nav walnut-panel">
-      <a class="nav-link" href="./index.html">Home</a>
-      <a class="nav-link" href="./notes.html">Notes</a>
-      <a class="nav-link" href="./prompts.html">Prompts</a>
-      <a class="nav-link active" href="./gemini.html">Gemini</a>
-    </nav>
   </div>
   <script src="./app.js"></script>
 </body>
