@@ -39,6 +39,7 @@ jobs:
           [ -f gemini.html ] && cp gemini.html _site/
           [ -f prompts.html ] && cp prompts.html _site/
           [ -f prompt-library.js ] && cp prompt-library.js _site/
+          [ -f nexus-vault.html ] && cp nexus-vault.html _site/
           [ -d assets ] && cp -r assets _site/
 
       - name: Upload artifact

@@ -19,7 +19,7 @@ For local development just open `index.html` in a browser or serve the repo root
 
 ## Architecture
 
-Four standalone pages linked by plain anchor tags (multi-page, despite the "SPA" name): `index.html` (dashboard), `notes.html`, `prompts.html`, `gemini.html`. Each page loads `prompt-library.js` then `app.js`.
+Five standalone pages linked by plain anchor tags (multi-page, despite the "SPA" name): `index.html` (dashboard), `notes.html`, `prompts.html`, `gemini.html`, and `nexus-vault.html`. The first four share `styles.css` and load `app.js` (index and prompts also load `prompt-library.js` first). `nexus-vault.html` is a fully self-contained page (own inline CSS/JS, own prompt database, own localStorage keys prefixed `nexus_vault_*`/`powerpad_*`) — it does not use `styles.css`, `app.js`, or the shared theme toggle; it links back to `index.html` from its tab bar.
 
 - **`app.js`** — the entire app logic in one IIFE. It runs every `bind*Page()` function on every page; each binder no-ops by returning early if its element IDs aren't present. To add behavior to a page, follow this pattern rather than branching on the page name. All user content rendered via `innerHTML` must go through the local `escapeHtml()` helper.
 - **localStorage keys are versioned** (`neurostack_notes_v5`, `neurostack_prompts_v5`, `neurostack_theme_v3`). Bump the version suffix only when the stored shape changes incompatibly — it silently orphans users' existing data.
@@ -35,7 +35,6 @@ The set of deployable files is hardcoded in three places that must be kept in sy
 2. `.github/workflows/pages.yml` "Prepare clean site folder" step (cp list → `_site/`)
 3. Nothing else — `capacitor.config.json` points at `dist/`, so Android picks up whatever `build` copies.
 
-Note: the `build` script currently does **not** copy `prompt-library.js`, so the Android APK's prompt library is stale/missing while GitHub Pages includes it. If touching the prompt library or build script, consider whether this needs fixing.
 
 ## Android / Capacitor
 
