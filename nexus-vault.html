@@ -1,0 +1,2610 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Nexus Vault Engine — Master Extended Vault</title>
+    <link rel="icon" type="image/webp" href="https://d2xsxph8kpxj0f.cloudfront.net/vault-v-icon.webp">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght=300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- High-Fidelity 3D Neumorphic Material Design System --- */
+        /* --- Style 6: Liquid Mercury with extreme 3D-Depth Configuration --- */
+        :root {
+            --bg-color: #e2e9f3;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --text-white: #ffffff;
+            
+            /* Extreme Neumorphic Shadow Dimensions for Liquid Chrome Effect */
+            --neo-light: #ffffff;
+            --neo-shadow: #b0c2d6;
+            
+            /* Status Interactive Variables */
+            --color-accent: #334155;
+            --color-fail: #ef4444;
+            --color-pass: #10b981;
+            --color-tier-beginner: #06b6d4;
+            --color-tier-intermediate: #f59e0b;
+            --color-tier-advanced: #f43f5e;
+            
+            /* Intense Material Glow Matrix */
+            --glow-fail: 0 0 15px rgba(239, 68, 68, 0.5);
+            --glow-pass: 0 0 15px rgba(16, 185, 129, 0.5);
+            --glow-accent: 0 0 18px rgba(51, 65, 85, 0.4);
+            --glow-amber: 0 0 18px rgba(245, 158, 11, 0.5);
+            
+            /* Autocomplete Token Elements Mapping definitions */
+            --bg-base: #e2e9f3;
+            --neo-inset: inset 4px 4px 8px #b0c2d6, inset -4px -4px 8px #ffffff;
+            --neo-shadow-dark: #b0c2d6;
+            --neo-shadow-light: #ffffff;
+            --accent-glow: #334155;
+
+            /* Liquid Mercury Specular Gradients */
+            --liquid-merc-bg: linear-gradient(135deg, #ffffff 0%, #cbd5e1 40%, #94a3b8 70%, #cbd5e1 100%);
+            --liquid-merc-gloss: linear-gradient(145deg, #ffffff 0%, #e2e8f0 45%, #cbd5e1 55%, #94a3b8 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #94a3b8 100%);
+            background-size: 400% 400%;
+            animation: gradientMotion 15s ease infinite;
+            color: var(--text-main);
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar Architecture */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            box-shadow: inset 2px 2px 5px var(--neo-shadow), inset -2px -2px 5px var(--neo-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ffffff, #cbd5e1);
+            border-radius: 5px;
+            box-shadow: 2px 2px 4px var(--neo-shadow), -2px -2px 4px var(--neo-light);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #cbd5e1, #94a3b8);
+            box-shadow: inset 1px 1px 2px var(--neo-shadow), inset -1px -1px 2px var(--neo-light);
+        }
+
+        /* --- Core App Animations --- */
+        @keyframes gradientMotion {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes slideFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(15px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes liquidPulse {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(203, 213, 225, 0.9), 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+        }
+
+        /* --- App Header Architecture --- */
+        header {
+            background: var(--bg-color);
+            padding: 18px 24px;
+            border-radius: 20px;
+            box-shadow: 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: slideFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            height: 44px;
+            width: 44px;
+            border-radius: 12px;
+            background: var(--liquid-merc-gloss);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: var(--text-main);
+            box-shadow: 4px 4px 8px var(--neo-shadow), -4px -4px 8px var(--neo-light), inset 1px 1px 2px #fff;
+            text-shadow: 1px 1px 0px var(--neo-light);
+        }
+
+        .brand-meta h1 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-shadow: 1px 1px 0px var(--neo-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .engine-badge {
+            font-size: 0.65rem;
+            background: var(--liquid-merc-gloss);
+            color: var(--text-main);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            box-shadow: inset 2px 2px 4px var(--neo-shadow), inset -2px -2px 4px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .brand-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .system-telemetry-strip {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            background-color: var(--color-pass);
+            box-shadow: var(--glow-pass);
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        /* --- Master Navigation Tabs --- */
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Style 6: Liquid Mercury with extreme 3D-Depth look */
+        .tab-btn {
+            flex: 1;
+            min-width: 100px;
+            border: none;
+            background: var(--liquid-merc-gloss);
+            padding: 16px 10px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #1e293b;
+            text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+            border-radius: 14px;
+            box-shadow: 
+                6px 6px 12px var(--neo-shadow), 
+                -6px -6px 12px var(--neo-light), 
+                inset 1px 1px 3px rgba(255, 255, 255, 0.9), 
+                inset -2px -2px 5px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn:hover {
+            color: #0f172a;
+            background: linear-gradient(145deg, #ffffff 0%, #cbd5e1 30%, #e2e8f0 70%, #94a3b8 100%);
+            transform: translateY(-2px);
+            box-shadow: 
+                8px 8px 16px var(--neo-shadow), 
+                -8px -8px 16px var(--neo-light), 
+                inset 2px 2px 4px rgba(255, 255, 255, 1), 
+                inset -3px -3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(145deg, #94a3b8 0%, #cbd5e1 50%, #e2e8f0 100%);
+            box-shadow: 
+                inset 5px 5px 10px rgba(0, 0, 0, 0.15), 
+                inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+            color: #0f172a;
+            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+            transform: translateY(1px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Main App Layout Architecture --- */
+        .view-panel {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .view-panel.active {
+            display: flex;
+            animation: slideFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .inner-vault-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+            .inner-vault-layout {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        /* --- Power Pad Feature Tool CSS Architecture --- */
+        .powerpad-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            background: var(--bg-color);
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .powerpad-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .powerpad-tool-select, .powerpad-tool-btn {
+            background: var(--liquid-merc-gloss);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            outline: none;
+            box-shadow: 3px 3px 6px var(--neo-shadow), -3px -3px 6px var(--neo-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .powerpad-tool-btn:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(145deg, #ffffff, #cbd5e1);
+        }
+
+        .powerpad-tool-select:focus, .powerpad-tool-btn:active {
+            box-shadow: inset 2px 2px 4px var(--neo-shadow), inset -2px -2px 4px var(--neo-light);
+            transform: translateY(0);
+        }
+
+        .powerpad-color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-color);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            padding: 6px 10px;
+            box-shadow: 3px 3px 6px var(--neo-shadow), -3px -3px 6px var(--neo-light);
+        }
+
+        .powerpad-color-picker-wrapper label {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .powerpad-color-input {
+            border: none;
+            background: transparent;
+            width: 28px;
+            height: 24px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .powerpad-editor-surface {
+            width: 100%;
+            min-height: 350px;
+            background: var(--bg-color);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: inset 4px 4px 10px var(--neo-shadow), inset -4px -4px 10px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            outline: none;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-main);
+            overflow-y: auto;
+            overflow-x: hidden;
+            word-wrap: break-word;
+            transition: all 0.3s ease;
+        }
+
+        .powerpad-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        /* --- Diagnostics Panel --- */
+        .diagnostics-accordion {
+            background: var(--bg-color);
+            border-radius: 20px;
+            box-shadow: 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .diagnostics-trigger {
+            width: 100%;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .diagnostics-trigger-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .diagnostics-chevron {
+            font-size: 0.95rem;
+            font-weight: 900;
+            transition: transform 0.3s;
+            color: var(--text-muted);
+        }
+
+        .diagnostics-accordion.open .diagnostics-chevron {
+            transform: rotate(180deg);
+        }
+
+        .diagnostics-content {
+            display: none;
+            padding: 0 20px 20px 20px;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .diagnostics-accordion.open .diagnostics-content {
+            display: flex;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .metrics-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .card {
+            background: var(--bg-color);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 5px 5px 10px var(--neo-shadow), -5px -5px 10px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .card-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.2px;
+        }
+
+        .card-value {
+            font-size: 1.3rem;
+            font-weight: 900;
+            font-family: 'Barlow', sans-serif;
+        }
+
+        .card-value.fail { color: var(--color-fail); text-shadow: var(--glow-fail); }
+        .card-value.pass { color: var(--color-pass); text-shadow: var(--glow-pass); }
+
+        .system-bottleneck-card {
+            background: var(--bg-color);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* --- Sidebar Options --- */
+        aside {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            aside {
+                width: 320px;
+                flex-shrink: 0;
+                position: sticky;
+                top: 20px;
+            }
+        }
+
+        .sidebar-deck {
+            background: var(--bg-color);
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .sidebar-section-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        .clear-filters-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-fail);
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            display: none;
+        }
+
+        .clear-filters-btn:hover {
+            text-shadow: var(--glow-fail);
+        }
+
+        .search-pod {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .search-input-field {
+            width: 100%;
+            border: none;
+            background: var(--bg-color);
+            padding: 12px 14px;
+            border-radius: 12px;
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            outline: none;
+            font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: border-color 0.2s;
+        }
+
+        .search-input-field:focus {
+            border-color: rgba(74, 85, 104, 0.5);
+        }
+
+        .category-pods-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pod-btn {
+            width: 100%;
+            border: none;
+            background: var(--bg-color);
+            padding: 11px 14px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 3px 3px 6px var(--neo-shadow), -3px -3px 6px var(--neo-light);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .pod-btn:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(145deg, #ffffff, #e2e8f0);
+        }
+
+        .pod-btn-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            max-width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pod-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .pod-btn-count {
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-muted);
+            box-shadow: inset 2px 2px 4px var(--neo-shadow), inset -2px -2px 4px var(--neo-light);
+        }
+
+        .pod-btn.active {
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transform: translateY(0);
+            background: var(--bg-color);
+        }
+
+        .pod-btn.active .pod-btn-count {
+            box-shadow: 2px 2px 4px var(--neo-shadow), -2px -2px 4px var(--neo-light);
+            color: var(--text-main);
+        }
+
+        /* --- Vibrant Complexity Vectors Styling --- */
+        .complexity-vector-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 4px;
+        }
+
+        .vector-pill {
+            border: none;
+            background: var(--bg-color);
+            padding: 8px 14px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            border-radius: 10px;
+            box-shadow: 4px 4px 8px var(--neo-shadow), -4px -4px 8px var(--neo-light);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .vector-pill:hover {
+            transform: translateY(-2px);
+        }
+
+        .vector-pill[data-tier="Beginner"] {
+            color: #0891b2;
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .vector-pill[data-tier="Intermediate"] {
+            color: #d97706;
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+        .vector-pill[data-tier="Advanced"] {
+            color: #e11d48;
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
+        .vector-pill.active {
+            transform: translateY(0);
+        }
+
+        .vector-pill.active[data-tier="Beginner"] { 
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: #ffffff !important; 
+            box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2), 0 0 12px rgba(6, 182, 212, 0.5);
+            text-shadow: none;
+        }
+        .vector-pill.active[data-tier="Intermediate"] { 
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #ffffff !important; 
+            box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2), 0 0 12px rgba(245, 158, 11, 0.5);
+            text-shadow: none;
+        }
+        .vector-pill.active[data-tier="Advanced"] { 
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            color: #ffffff !important; 
+            box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2), 0 0 12px rgba(244, 63, 94, 0.5);
+            text-shadow: none;
+        }
+
+        /* --- Workspace Workspace Framework --- */
+        .feed-and-playground-wrapper {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .playground-panel {
+            background: var(--bg-color);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: none;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+        }
+
+        .playground-panel.active {
+            display: flex;
+            animation: slideFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .playground-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            padding-bottom: 14px;
+        }
+
+        .pg-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pg-category-tag {
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-accent);
+            background: var(--bg-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            box-shadow: inset 2px 2px 4px var(--neo-shadow), inset -2px -2px 4px var(--neo-light);
+        }
+
+        .pg-title-text {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-top: 6px;
+            text-shadow: 1px 1px 0px var(--neo-light);
+        }
+
+        .pg-usecase-text {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        .pg-tier-badge {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 8px;
+            box-shadow: 3px 3px 6px var(--neo-shadow), -3px -3px 6px var(--neo-light);
+            background: var(--bg-color);
+        }
+
+        .pg-tier-badge[data-tier="Beginner"] { color: #06b6d4; }
+        .pg-tier-badge[data-tier="Intermediate"] { color: #f59e0b; }
+        .pg-tier-badge[data-tier="Advanced"] { color: #f43f5e; }
+
+        .pg-blueprint-template {
+            font-size: 0.82rem;
+            color: var(--text-main);
+            padding: 14px;
+            border-radius: 14px;
+            background: var(--bg-color);
+            box-shadow: inset 2px 2px 5px var(--neo-shadow), inset -2px -2px 5px var(--neo-light);
+            line-height: 1.5;
+            font-style: italic;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .variables-injection-deck {
+            background: var(--bg-color);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 4px 4px 8px var(--neo-shadow), -4px -4px 8px var(--neo-light);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .variables-section-title {
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .variables-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .variables-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .input-group-pod {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .input-group-pod label {
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .sculpted-input {
+            border: none;
+            background: var(--bg-color);
+            padding: 11px 14px;
+            border-radius: 10px;
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+            font-size: 0.82rem;
+            color: var(--text-main);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .sculpted-input:focus {
+            box-shadow: inset 2px 2px 4px var(--neo-shadow), inset -2px -2px 4px var(--neo-light);
+            border-color: rgba(74, 85, 104, 0.5);
+        }
+
+        .compiled-output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .compiled-output-header label {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .word-counter-telemetry {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .output-theatre-box {
+            width: 100%;
+            background: var(--bg-color);
+            border-radius: 16px;
+            box-shadow: inset 5px 5px 12px var(--neo-shadow), inset -5px -5px 12px var(--neo-light);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+        }
+
+        .output-theatre-content {
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.55;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            max-height: 280px;
+            overflow-y: auto;
+            min-height: 120px;
+            outline: none;
+        }
+
+        .playground-action-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            padding-top: 14px;
+        }
+
+        .btn-secondary {
+            border: none;
+            background: var(--liquid-merc-gloss);
+            padding: 10px 16px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px var(--neo-shadow), -3px -3px 6px var(--neo-light);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-main);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary:active {
+            box-shadow: inset 2px 2px 4px var(--neo-shadow), inset -2px -2px 4px var(--neo-light);
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            border: none;
+            background: var(--liquid-merc-gloss);
+            padding: 11px 20px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            border-radius: 10px;
+            box-shadow: 4px 4px 8px var(--neo-shadow), -4px -4px 8px var(--neo-light);
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 5px 5px 10px var(--neo-shadow), -5px -5px 10px var(--neo-light);
+        }
+
+        .btn-primary:active {
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+            transform: translateY(0);
+        }
+
+        /* --- Framework Feed Matrix --- */
+        .feed-header-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .feed-heading-title {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feed-results-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .prompts-deck-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .prompt-feed-card {
+            background: var(--bg-color);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 5px 5px 10px var(--neo-shadow), -5px -5px 10px var(--neo-light);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 14px;
+            animation: slideFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .prompt-feed-card:hover {
+            border-color: rgba(74, 85, 104, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 14px var(--neo-shadow), -6px -6px 14px var(--neo-light);
+        }
+
+        .prompt-feed-card.active-selected {
+            border-color: rgba(74, 85, 104, 0.7);
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+            transform: translateY(0);
+        }
+
+        .card-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 16px;
+        }
+
+        .card-usecase-tag {
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .card-tier-tag {
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 5px;
+            border: 1px solid transparent;
+        }
+
+        .card-tier-tag[data-tier="Beginner"] { color: #06b6d4; background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.3); }
+        .card-tier-tag[data-tier="Intermediate"] { color: #f59e0b; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.3); }
+        .card-tier-tag[data-tier="Advanced"] { color: #f43f5e; background: rgba(244, 63, 94, 0.08); border-color: rgba(244, 63, 94, 0.3); }
+
+        .card-core-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-top: 4px;
+            line-height: 1.3;
+            transition: color 0.2s;
+        }
+
+        .prompt-feed-card:hover .card-core-title {
+            color: var(--color-accent);
+        }
+
+        .card-body-preview {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 10px;
+            margin-top: auto;
+        }
+
+        .card-tags-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        /* --- Vibrant Colors on #tags --- */
+        .card-inline-hash {
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #ffffff;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            box-shadow: 2px 2px 5px rgba(59, 130, 246, 0.3), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+            border: none;
+            font-weight: 600;
+        }
+        
+        .card-inline-hash:nth-child(even) {
+            background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+            box-shadow: 2px 2px 5px rgba(236, 72, 153, 0.3), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+        }
+
+        .card-inline-hash:nth-child(3n) {
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            box-shadow: 2px 2px 5px rgba(16, 185, 129, 0.3), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+        }
+
+        .card-action-trigger-text {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .prompt-feed-card:hover .card-action-trigger-text {
+            text-decoration: underline;
+        }
+
+        .empty-feed-card {
+            border: 2px dashed rgba(163, 177, 198, 0.6);
+            border-radius: 18px;
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            box-shadow: inset 3px 3px 6px var(--neo-shadow), inset -3px -3px 6px var(--neo-light);
+        }
+
+        /* --- Toast Messaging Node --- */
+        .toast-notification-hub {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 14px 20px;
+            border-radius: 12px;
+            box-shadow: 6px 6px 15px var(--neo-shadow), -6px -6px 15px var(--neo-light);
+            border: 1px solid var(--color-pass);
+            transform: translateY(150%);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-notification-hub.active-toast {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-success-icon {
+            color: var(--color-pass);
+            text-shadow: var(--glow-pass);
+            font-size: 0.95rem;
+        }
+
+        /* ─── Integrated Autocomplete Sub-styles Matrix ─── */
+        .payload-floor-container {
+            position: relative;
+            width: 100%;
+            margin-top: 24px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-label-matrix {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .neo-autocomplete-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--bg-base);
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--neo-inset);
+            font-size: 1rem;
+            color: var(--text-main);
+            outline: none;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .neo-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            border-radius: 20px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-12px) scale(0.98);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 12px 12px 24px rgba(163, 177, 198, 0.45), -12px -12px 24px rgba(255, 255, 255, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.7) !important;
+            padding: 10px;
+            box-sizing: border-box;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .neo-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .neo-suggest-item {
+            padding: 12px 16px;
+            margin: 4px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-main);
+            background: transparent;
+            transition: all 0.2s ease;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .neo-suggest-item:hover {
+            color: var(--accent-glow); 
+            box-shadow: inset 4px 4px 8px rgba(163, 177, 198, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive Layout Safety Adaptations for Orientation Switching Toggle states */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .powerpad-editor-surface {
+                min-height: 180px;
+            }
+            .output-theatre-content {
+                max-height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="brand-block">
+                <div class="brand-logo">Ω</div>
+                <div class="brand-meta">
+                    <h1>NEXUS VAULT <span class="engine-badge">ENGINE</span></h1>
+                    <p class="brand-sub">Premium AI Prompt Orchestrator & Repository · Master Extended Engineering Vault</p>
+                </div>
+            </div>
+            
+            <div class="system-telemetry-strip">
+                <span class="status-dot"></span>
+                <span>SYSTEM STATUS: OPTIMAL</span>
+                <span style="color: rgba(163, 177, 198, 0.8);">|</span>
+                <span id="global-prompt-counter" style="color: var(--text-main); font-weight: 800;">0 Repos Online</span>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tab-trigger-powerpad" onclick="switchMainView('powerpad')">Power Pad</button>
+            <button class="tab-btn" id="tab-trigger-vault" onclick="switchMainView('vault')">Prompt Vault</button>
+            <button class="tab-btn" id="tab-trigger-diagnostics" onclick="switchMainView('diagnostics')">Diagnostics</button>
+        </div>
+    </header>
+
+    <div id="view-panel-powerpad" class="view-panel active">
+        <div class="powerpad-container">
+            <div class="powerpad-toolbar">
+                <select id="powerpad-font-style" class="powerpad-tool-select" onchange="applyPowerPadStyle('fontName', this.value)">
+                    <option value="'Inter', sans-serif">Inter (Default)</option>
+                    <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                    <option value="'Barlow', sans-serif">Barlow Hierarchy</option>
+                    <option value="Georgia, serif">Serif Classic</option>
+                </select>
+
+                <select id="powerpad-font-size" class="powerpad-tool-select" onchange="executeFontResize(this.value)">
+                    <option value="3">Normal Size</option>
+                    <option value="2">Small Text</option>
+                    <option value="5">Subheading</option>
+                    <option value="6">Main Title</option>
+                </select>
+
+                <div class="powerpad-color-picker-wrapper">
+                    <label for="powerpad-font-color">Ink Color</label>
+                    <input type="color" id="powerpad-font-color" class="powerpad-color-input" value="#2d3748" oninput="applyPowerPadStyle('foreColor', this.value)">
+                </div>
+
+                <button class="powerpad-tool-btn" style="font-weight: 900;" onclick="applyPowerPadStyle('bold')">B</button>
+                <button class="powerpad-tool-btn" style="font-style: italic;" onclick="applyPowerPadStyle('italic')">I</button>
+                <button class="powerpad-tool-btn" style="text-decoration: underline;" onclick="applyPowerPadStyle('underline')">U</button>
+                <button class="powerpad-tool-btn" onclick="applyPowerPadStyle('removeFormat')">Clear Style</button>
+                
+                <button class="powerpad-tool-btn" style="color: #2563eb;" onclick="savePowerPadAsHTML()">Save as HTML</button>
+                <button class="powerpad-tool-btn" style="color: #7c3aed;" onclick="savePowerPadAsMarkdown()">Save as Markdown</button>
+                <button class="powerpad-tool-btn" style="color: #059669;" onclick="savePowerPadState()">Save</button>
+                
+                <button class="powerpad-tool-btn" style="margin-left: auto; color: var(--color-pass);" onclick="copyPowerPadContents()">Copy Text</button>
+            </div>
+
+            <div id="powerpad-editor-surface" class="powerpad-editor-surface" contenteditable="true" spellcheck="false" oninput="runPowerPadTelemetry()">Welcome to Power Pad Workspace. A local persistent note taking environment running directly within your Android terminal wrapper core layers. Write or adjust your blueprint snippets here safely.</div>
+            
+            <div class="powerpad-meta-row">
+                <span id="powerpad-char-count">Characters: 181</span>
+                <span id="powerpad-word-count">Words: 24</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-panel-diagnostics" class="view-panel">
+        <div class="diagnostics-accordion open" id="sys-diagnostics-wrapper">
+            <button class="diagnostics-trigger" onclick="toggleDiagnosticsAccordion()">
+                <span class="diagnostics-trigger-title">
+                    <span style="color: var(--color-fail); margin-right: 4px;">▼</span> Telemetry Analysis Matrix
+                </span>
+                <span class="diagnostics-chevron">▲</span>
+            </button>
+            
+            <div class="diagnostics-content">
+                <div class="metrics-grid">
+                    <div class="card">
+                        <span class="card-label">TTFB (Document)</span>
+                        <div class="card-value fail">1,649 ms</div>
+                    </div>
+                    <div class="card">
+                        <span class="card-label">Render Delay</span>
+                        <div class="card-value">270 ms</div>
+                    </div>
+                    <div class="card">
+                        <span class="card-label">Total LCP Time</span>
+                        <div class="card-value fail">1,919 ms</div>
+                    </div>
+                    <div class="card">
+                        <span class="card-label">CLS Layout Shifts</span>
+                        <div class="card-value pass">0.00</div>
+                    </div>
+                </div>
+
+                <div class="system-bottleneck-card">
+                    <span class="card-label" style="color: var(--color-fail); margin-bottom: 0;">Critical System Bottleneck</span>
+                    <strong style="color: var(--text-main); font-weight: 800;">Server processing delay represents ~85% of total payload wait timeline.</strong> 
+                    <p style="color: var(--text-muted); font-size: 0.78rem; margin-top: 2px;">Client render pipeline additions include render-blocking CSS layers and scripts executing directly following evaluation stages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-panel-vault" class="view-panel">
+        <div class="inner-vault-layout">
+            
+            <aside>
+                <div class="sidebar-deck">
+                    <h2 class="sidebar-section-title">
+                        <span>Token Lookup Query</span>
+                        <button id="reset-filters-trigger" class="clear-filters-btn" onclick="clearPlatformFilters()">Clear All</button>
+                    </h2>
+                    
+                    <div class="search-pod">
+                        <input type="text" id="vault-repository-search" placeholder="Query repository tokens..." class="search-input-field" autocomplete="off">
+                        <div class="neo-dropdown" id="drop-token-lookup">
+                            <div class="neo-suggest-item" data-val="Blog Post">✍️ Blog Post Blueprint tokens</div>
+                            <div class="neo-suggest-item" data-val="API Design">💻 API Design Specifications</div>
+                            <div class="neo-suggest-item" data-val="Android mobile">🤖 Android mobile integration architectures</div>
+                            <div class="neo-suggest-item" data-val="Termux on android">🐚 Termux on android shell matrices</div>
+                            <div class="neo-suggest-item" data-val="Business Plan">💼 Business Strategy Moat systems</div>
+                        </div>
+                    </div>
+
+                    <h2 class="sidebar-section-title">Prompt Architecture</h2>
+                    <div class="category-pods-stack" id="category-navigation-container">
+                    </div>
+
+                    <h3 class="sidebar-section-title">Complexity Vectors</h3>
+                    <div class="complexity-vector-stack" id="difficulty-vector-container">
+                        <button data-tier="Beginner" class="vector-pill" onclick="toggleComplexityVectorFilter('Beginner')">Beginner</button>
+                        <button data-tier="Intermediate" class="vector-pill" onclick="toggleComplexityVectorFilter('Intermediate')">Intermediate</button>
+                        <button data-tier="Advanced" class="vector-pill" onclick="toggleComplexityVectorFilter('Advanced')">Advanced</button>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="feed-and-playground-wrapper">
+                
+                <div class="playground-panel" id="workspace-compiler-playground">
+                    <div class="playground-header">
+                        <div>
+                            <div class="pg-badge-row">
+                                <span id="pg-target-category" class="pg-category-tag">Category</span>
+                                <span id="pg-target-tier" class="pg-tier-badge" data-tier="Beginner">Tier</span>
+                            </div>
+                            <h2 id="pg-target-title" class="pg-title-text">Selected Prompt Title</h2>
+                            <p id="pg-target-usecase" class="pg-usecase-text">Use Case Target</p>
+                        </div>
+                    </div>
+
+                    <p id="pg-target-raw-blueprint" class="pg-blueprint-template">Raw framework contextual schema...</p>
+
+                    <div class="variables-injection-deck">
+                        <h3 class="variables-section-title">
+                            <span style="display: inline-block; width: 6px; height: 6px; background: var(--color-tier-intermediate); border-radius: 50%; box-shadow: var(--glow-amber);"></span>
+                            Variable Payload Injection Floor
+                        </h3>
+                        
+                        <div class="payload-floor-container">
+                          <div class="input-wrapper">
+                            <label class="input-label-matrix">Topic Matrix</label>
+                            <input 
+                              type="text" 
+                              id="input-topic" 
+                              class="neo-autocomplete-input"
+                              placeholder="Provide data injection for topic..." 
+                              autocomplete="off"
+                            >
+                            <div class="neo-dropdown" id="drop-topic">
+                              <div class="neo-suggest-item" data-val="Zero-Trust Network Architecture implementation costs">🔒 <strong>Zero-Trust Network Architecture</strong> implementation costs</div>
+                              <div class="neo-suggest-item" data-val="Predictive maintenance protocols for automated manufacturing">⚙️ <strong>Predictive maintenance protocols</strong> for automated manufacturing</div>
+                              <div class="neo-suggest-item" data-val="Decentralized identity mapping over ledger consensus frameworks">🌐 <strong>Decentralized identity mapping</strong> over consensus systems</div>
+                              <div class="neo-suggest-item" data-val="Android mobile native operational systems optimization">🤖 <strong>Android mobile native operational systems</strong> optimization</div>
+                              <div class="neo-suggest-item" data-val="Termux on android local cloud node configurations">🐚 <strong>Termux on android local cloud node</strong> configurations</div>
+                            </div>
+                          </div>
+
+                          <div class="input-wrapper">
+                            <label class="input-label-matrix">Industry Vector</label>
+                            <input 
+                              type="text" 
+                              id="input-industry" 
+                              class="neo-autocomplete-input"
+                              placeholder="Provide data injection for industry..." 
+                              autocomplete="off"
+                            >
+                            <div class="neo-dropdown" id="drop-industry">
+                              <div class="neo-suggest-item" data-val="Enterprise Cybersecurity & FinTech Ecosystems">🛡️ Enterprise Cybersecurity & FinTech Ecosystems</div>
+                              <div class="neo-suggest-item" data-val="Automated Manufacturing & Industrial IoT">🏭 Automated Manufacturing & Industrial IoT</div>
+                              <div class="neo-suggest-item" data-val="SaaS Cloud Architecture & Infrastructure Services">☁️ SaaS Cloud Architecture & Infrastructure Services</div>
+                              <div class="neo-suggest-item" data-val="Android mobile development environments ecosystems">🤖 Android mobile development environments ecosystems</div>
+                              <div class="neo-suggest-item" data-val="Termux on android continuous runtime compilation engines">🐚 Termux on android continuous runtime compilation engines</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="pg-dynamic-variables-grid" class="variables-grid">
+                        </div>
+                    </div>
+
+                    <div class="input-group-pod" style="gap: 8px;">
+                        <div class="compiled-output-header">
+                            <label>Compiled Prompt Payload</label>
+                            <span class="word-counter-telemetry" id="compiled-payload-word-counter">Words: 0</span>
+                        </div>
+                        <div class="output-theatre-box">
+                            <div id="pg-compiled-output-theatre" class="output-theatre-content" contenteditable="true" spellcheck="false" oninput="manuallyUpdateWordTelemetry()">Select a utility template below to build prompt payload pipeline.</div>
+                        </div>
+                    </div>
+
+                    <div class="playground-action-row">
+                        <button class="btn-secondary" onclick="closeWorkspacePlaygroundPanel()">Close Engine</button>
+                        <button class="btn-primary" onclick="pipeCompiledPayloadToPlatformHardware()">
+                            Copy Payload <span style="font-size: 0.9rem;">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="feed-header-panel">
+                    <h3 class="feed-heading-title">
+                        <span>Repository Core Blocks</span>
+                    </h3>
+                    <span class="feed-results-count" id="repository-results-counter">(Showing 0 framework blueprints)</span>
+                </div>
+
+                <div id="framework-blueprints-feed-target" class="prompts-deck-grid">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="toast-notification-hub" id="platform-toast-alert-node">
+        <span class="toast-success-icon">✔</span> <span id="toast-alert-message-string">Payload Extracted to Global Clipboard</span>
+    </div>
+
+    <script>
+        // System Architecture Category Metadata Record Definition Matrix
+        const CATEGORIES = [
+            { id: 1, name: "Writing & Content", icon: "✍️", count: 30 },
+            { id: 2, name: "Business & Strategy", icon: "💼", count: 30 },
+            { id: 3, name: "Coding & Development", icon: "💻", count: 30 },
+            { id: 4, name: "Research & Analysis", icon: "🔬", count: 30 },
+            { id: 5, name: "Marketing & SEO", icon: "🚀", count: 30 },
+            { id: 6, name: "Education & Learning", icon: "🎓", count: 30 },
+            { id: 7, name: "Creativity & Ideation", icon: "💡", count: 30 },
+            { id: 8, name: "Productivity & Planning", icon: "🎯", count: 30 },
+            { id: 9, name: "Data & Analytics", icon: "📊", count: 30 },
+            { id: 10, name: "Personal Development", icon: "⭐", count: 30 },
+            { id: 11, name: "Engineering Vault", icon: "🛠️", count: 8 }
+        ];
+
+        // Core Prompts Master Array Repository
+        const PROMPTS = [
+            // ─── CATEGORY 1: Writing & Content ───────────────────────────────────────
+            {
+                id: 1, title: "Long-Form Blog Post Generator", category: "Writing & Content", categoryId: 1,
+                tags: ["blog", "SEO", "content"], difficulty: "Intermediate", useCase: "Content Marketing",
+                prompt: "Write a comprehensive, SEO-optimized blog post of at least 1,500 words on the topic: [TOPIC]. Structure it with an engaging hook, 5–7 clearly defined sections with H2 subheadings, actionable takeaways in each section, and a compelling conclusion with a call-to-action. Use a conversational yet authoritative tone. Include a meta description of 155 characters and suggest 5 internal linking opportunities."
+            },
+            {
+                id: 2, title: "Email Newsletter Sequence", category: "Writing & Content", categoryId: 1,
+                tags: ["email", "newsletter", "sequence"], difficulty: "Intermediate", useCase: "Email Marketing",
+                prompt: "Create a 5-part email newsletter welcome sequence for [BRAND/PRODUCT]. Email 1: Warm welcome + brand story. Email 2: Core value proposition + social proof. Email 3: Educational content that solves [PAIN POINT]. Email 4: Case study or success story. Email 5: Soft pitch with exclusive offer. Each email should be 200–300 words, include a subject line, preview text, and one clear CTA. Maintain a consistent brand voice throughout."
+            },
+            {
+                id: 3, title: "Product Description Optimizer", category: "Writing & Content", categoryId: 1,
+                tags: ["ecommerce", "product", "copy"], difficulty: "Beginner", useCase: "E-commerce",
+                prompt: "Rewrite the following product description to maximize conversions: [PASTE DESCRIPTION]. Apply the AIDA framework (Attention, Interest, Desire, Action). Highlight the top 3 benefits (not features), address the primary customer objection, include sensory language, and end with urgency-driven CTA. Keep it under 150 words. Also provide a 50-word version for mobile and a 280-character version for social media."
+            },
+            {
+                id: 4, title: "Thought Leadership Article", category: "Writing & Content", categoryId: 1,
+                tags: ["thought leadership", "LinkedIn", "authority"], difficulty: "Advanced", useCase: "Personal Branding",
+                prompt: "Write a thought leadership article for LinkedIn on [TOPIC] from the perspective of a [JOB TITLE] with 10+ years of experience. Include a contrarian opening statement that challenges conventional wisdom, 3 original insights backed by data or personal experience, a personal anecdote that illustrates the core message, and a forward-looking conclusion. Aim for 800–1,000 words. Use short paragraphs optimized for LinkedIn's mobile-first readers."
+            },
+            {
+                id: 5, title: "Press Release Writer", category: "Writing & Content", categoryId: 1,
+                tags: ["PR", "press release", "media"], difficulty: "Intermediate", useCase: "Public Relations",
+                prompt: "Write a professional press release announcing [NEWS/EVENT] for [COMPANY NAME]. Follow the inverted pyramid structure: headline (under 10 words), dateline, lead paragraph (who, what, when, where, why), supporting body paragraphs with quotes from [SPOKESPERSON], boilerplate company description, and media contact information. Make the headline newsworthy and include a compelling angle that journalists would want to cover. Keep total length to 400–500 words."
+            },
+            {
+                id: 6, title: "Video Script with Hook", category: "Writing & Content", categoryId: 1,
+                tags: ["video", "YouTube", "script"], difficulty: "Intermediate", useCase: "Video Content",
+                prompt: "Write a YouTube video script for a [LENGTH]-minute video on [TOPIC]. Structure: 0–15s: Pattern-interrupt hook that stops the scroll. 15–45s: Promise what viewers will learn. 45s–[END-2min]: Main content in 3–5 clear segments with transitions. Final 2 min: Summary + subscribe CTA + next video teaser. Include [B-ROLL] suggestions in brackets, on-screen text callouts, and natural verbal transitions. Write in a conversational tone as if speaking directly to the viewer."
+            },
+            {
+                id: 7, title: "Case Study Framework", category: "Writing & Content", categoryId: 1,
+                tags: ["case study", "B2B", "proof"], difficulty: "Advanced", useCase: "Sales Enablement",
+                prompt: "Write a compelling B2B case study for [CLIENT/PROJECT] using the Problem-Solution-Result framework. Section 1 (Challenge): Describe the client's situation and pain points in vivid detail. Section 2 (Solution): Explain your approach, methodology, and key decisions made. Section 3 (Results): Present quantified outcomes with specific metrics, percentages, and timeframes. Section 4 (Testimonial): Write a realistic quote from the client. Include a sidebar with 3 key stats. Total length: 600–800 words."
+            },
+            {
+                id: 8, title: "Social Media Content Calendar", category: "Writing & Content", categoryId: 1,
+                tags: ["social media", "calendar", "content plan"], difficulty: "Intermediate", useCase: "Social Media",
+                prompt: "Create a 2-week social media content calendar for [BRAND] targeting [AUDIENCE] on [PLATFORMS]. For each of the 14 days, provide: platform, content type (post/reel/story/carousel), hook/headline, full caption (platform-appropriate length), 5 relevant hashtags, and best posting time. Mix content pillars: 40% educational, 30% entertaining, 20% promotional, 10% community engagement. Include 2 interactive posts (polls/questions) per week."
+            },
+            {
+                id: 9, title: "White Paper Executive Summary", category: "Writing & Content", categoryId: 1,
+                tags: ["white paper", "B2B", "executive"], difficulty: "Advanced", useCase: "B2B Content",
+                prompt: "Write an executive summary for a white paper on [TOPIC] targeting C-suite decision makers. Include: a compelling opening statement quantifying the business problem, 3 key findings from the research, strategic implications for [INDUSTRY], recommended actions with expected ROI, and a forward-looking conclusion. Use data-driven language, avoid jargon, and keep it to 500 words maximum. The tone should be authoritative yet accessible to non-technical executives."
+            },
+            {
+                id: 10, title: "Brand Voice Style Guide", category: "Writing & Content", categoryId: 1,
+                tags: ["brand voice", "style guide", "tone"], difficulty: "Advanced", useCase: "Brand Strategy",
+                prompt: "Create a comprehensive brand voice and tone guide for [COMPANY]. Include: Brand personality (3–5 adjectives with explanations), Voice characteristics (what we are vs. what we are not), Tone variations for different contexts (social media, customer support, sales, technical docs), Vocabulary guide (words to use/avoid), 5 example rewrites showing the brand voice in action, and grammar/punctuation preferences. Format as a practical reference document writers can use daily."
+            },
+            {
+                id: 11, title: "Podcast Episode Outline", category: "Writing & Content", categoryId: 1,
+                tags: ["podcast", "outline", "interview"], difficulty: "Beginner", useCase: "Podcasting",
+                prompt: "Create a detailed episode outline for a [LENGTH]-minute podcast episode on [TOPIC] with guest [GUEST TYPE]. Include: Episode title + 3 alternative titles, 5-sentence episode description for show notes, Pre-interview research questions (10), Episode structure with timestamps, 15 interview questions organized by depth (warm-up → core → insight → forward-looking), 3 potential clip moments for social media, and a closing question that always delivers a memorable answer."
+            },
+            {
+                id: 12, title: "Technical Documentation Writer", category: "Writing & Content", categoryId: 1,
+                tags: ["technical writing", "documentation", "API"], difficulty: "Advanced", useCase: "Technical Writing",
+                prompt: "Write clear technical documentation for [FEATURE/API/PROCESS]. Structure: Overview (what it does, who it's for, prerequisites), Step-by-step instructions with numbered steps, Code examples or command snippets in appropriate blocks, Common errors and troubleshooting guide (5 scenarios), FAQ section (5 questions), and Related resources. Use plain language, active voice, and assume the reader has [SKILL LEVEL]. Include a 'Quick Start' section at the top for experienced users."
+            },
+            {
+                id: 13, title: "Compelling Bio Writer", category: "Writing & Content", categoryId: 1,
+                tags: ["bio", "personal brand", "LinkedIn"], difficulty: "Beginner", useCase: "Personal Branding",
+                prompt: "Write 3 versions of a professional bio for [NAME], a [TITLE] who [KEY ACHIEVEMENT]. Version 1 (Long, 200 words): Full narrative bio for website About page. Version 2 (Medium, 100 words): LinkedIn summary opener. Version 3 (Short, 50 words): Speaker introduction or social media profile. Each version should open with impact, establish credibility, convey personality, and end with a clear value proposition. Avoid clichés like 'passionate' and 'guru'."
+            },
+            {
+                id: 14, title: "Headline Formula Generator", category: "Writing & Content", categoryId: 1,
+                tags: ["headlines", "copywriting", "conversion"], difficulty: "Beginner", useCase: "Copywriting",
+                prompt: "Generate 20 high-converting headline variations for [TOPIC/PRODUCT] using these proven formulas: 5 using numbers ('7 Ways to...'), 3 using 'How to' structure, 3 using the curiosity gap, 3 using social proof, 3 using urgency/scarcity, and 3 using direct benefit statements. For each headline, note which psychological trigger it uses and rate its estimated click-through potential (High/Medium/Low) with a one-sentence explanation."
+            },
+            {
+                id: 15, title: "Book Chapter Outline", category: "Writing & Content", categoryId: 1,
+                tags: ["book", "outline", "nonfiction"], difficulty: "Advanced", useCase: "Book Writing",
+                prompt: "Create a detailed chapter outline for a nonfiction book chapter on [TOPIC]. Include: Chapter title + 3 alternatives, Opening hook concept, Core argument/thesis statement, 5–7 main sections with sub-points, Key stories/examples to include in each section, Data points or research to source, Chapter summary points, Bridge to next chapter, and Exercises or reflection questions for readers. The chapter should deliver one transformative insight and build on [PREVIOUS CHAPTER TOPIC]."
+            },
+            {
+                id: 16, title: "Sales Copy Landing Page", category: "Writing & Content", categoryId: 1,
+                tags: ["landing page", "sales copy", "conversion"], difficulty: "Advanced", useCase: "Sales",
+                prompt: "Write complete landing page copy for [PRODUCT/SERVICE] targeting [AUDIENCE]. Include all sections: Hero (headline + subheadline + CTA), Problem section (agitate the pain), Solution introduction, Features-to-benefits breakdown (5 features), Social proof section (testimonial templates), FAQ (7 objection-handling questions), Guarantee statement, Final CTA with urgency element. Use the PAS (Problem-Agitate-Solution) framework throughout. Keep hero above the fold under 20 words."
+            },
+            {
+                id: 17, title: "Ghostwriting Voice Match", category: "Writing & Content", categoryId: 1,
+                tags: ["ghostwriting", "voice", "style"], difficulty: "Advanced", useCase: "Ghostwriting",
+                prompt: "Analyze the following writing samples from [PERSON] and extract their unique voice profile: [PASTE 3 SAMPLES]. Then write a new [CONTENT TYPE] on [TOPIC] that perfectly matches their voice. Your voice analysis should cover: sentence length patterns, vocabulary level, use of humor/metaphors, structural preferences, signature phrases, and emotional tone. After writing the piece, provide a 'Voice Match Report' explaining how you replicated each element."
+            },
+            {
+                id: 18, title: "Newsletter Subject Line Optimizer", category: "Writing & Content", categoryId: 1,
+                tags: ["email", "subject line", "open rate"], difficulty: "Beginner", useCase: "Email Marketing",
+                prompt: "Generate 15 email subject lines for a newsletter about [TOPIC] targeting [AUDIENCE]. Create 3 subject lines for each style: Curiosity gap (tease without revealing), Personal/direct (use 'you'), Numbered list ('5 things...'), Question format, and Benefit-driven. For each, provide: the subject line, a preview text (40 chars), predicted open rate category (High/Medium/Low), and the psychological principle it leverages. Flag any that might trigger spam filters."
+            },
+            {
+                id: 19, title: "Story-Driven Content Framework", category: "Writing & Content", categoryId: 1,
+                tags: ["storytelling", "narrative", "content"], difficulty: "Intermediate", useCase: "Content Strategy",
+                prompt: "Transform the following data/information into a compelling narrative story: [DATA/INFORMATION]. Use the Hero's Journey framework adapted for business content: Ordinary World (status quo), Call to Adventure (the challenge), Crossing the Threshold (decision to change), Tests and Trials (obstacles faced), Transformation (the solution), Return with Elixir (results achieved). Include specific sensory details, dialogue if appropriate, and a universal lesson. Target length: 600 words."
+            },
+            {
+                id: 20, title: "Content Repurposing Matrix", category: "Writing & Content", categoryId: 1,
+                tags: ["repurposing", "content strategy", "multi-channel"], difficulty: "Intermediate", useCase: "Content Strategy",
+                prompt: "Take the following long-form content and create a complete repurposing plan: [PASTE CONTENT]. Produce: 1 Twitter/X thread (10 tweets), 1 LinkedIn post (300 words), 3 Instagram carousel slide concepts, 1 short-form video script (60 seconds), 5 pull quotes for graphics, 1 email newsletter section (200 words), 3 blog post ideas spawned from this content, and 1 podcast talking points outline. Maintain the core message while optimizing for each platform's native format."
+            },
+            {
+                id: 21, title: "Persuasive Essay Structure", category: "Writing & Content", categoryId: 1,
+                tags: ["essay", "persuasion", "argument"], difficulty: "Intermediate", useCase: "Academic Writing",
+                prompt: "Write a persuasive essay arguing [POSITION] on [TOPIC]. Structure: Introduction with a bold thesis statement, 3 body paragraphs each with: topic sentence, evidence (statistics/expert quotes), analysis connecting evidence to thesis, and transition. Counterargument paragraph that steelmans the opposition before refuting it, and a conclusion that calls readers to action. Use Aristotle's rhetorical triangle: Logos (logic), Ethos (credibility), Pathos (emotion). Target: 800 words."
+            },
+            {
+                id: 22, title: "FAQ Content Generator", category: "Writing & Content", categoryId: 1,
+                tags: ["FAQ", "SEO", "content"], difficulty: "Beginner", useCase: "Website Content",
+                prompt: "Generate a comprehensive FAQ section for [PRODUCT/SERVICE/TOPIC] that targets both user intent and SEO. Create 15 questions organized in 3 tiers: Tier 1 (5 questions): Basic 'what is' and 'how does it work' questions. Tier 2 (5 questions): Comparison and decision-making questions. Tier 3 (5 questions): Advanced use case and troubleshooting questions. For each, write a 75–100 word answer optimized for featured snippets. Include schema markup suggestions."
+            },
+            {
+                id: 23, title: "Creative Brief Template", category: "Writing & Content", categoryId: 1,
+                tags: ["creative brief", "agency", "project"], difficulty: "Intermediate", useCase: "Agency Work",
+                prompt: "Create a comprehensive creative brief for [PROJECT TYPE] for [CLIENT/BRAND]. Include all essential sections: Project overview and objectives, Target audience (demographics + psychographics + pain points), Key message (single most important thing to communicate), Tone and voice guidelines, Mandatory inclusions and exclusions, Success metrics, Competitive context (3 competitors + differentiation), Deliverables list with specifications, Timeline milestones, and Budget parameters. Make it actionable enough for a creative team to execute without additional briefing."
+            },
+            {
+                id: 24, title: "Testimonial Request Email", category: "Writing & Content", categoryId: 1,
+                tags: ["testimonial", "social proof", "email"], difficulty: "Beginner", useCase: "Social Proof",
+                prompt: "Write 3 versions of an email requesting a testimonial from a satisfied customer of [PRODUCT/SERVICE]. Version A: Direct request with specific questions to guide their response. Version B: Casual/conversational approach for longtime customers. Version C: Video testimonial request with easy recording instructions. Each email should: personalize the opening, remind them of their specific result, make it easy to respond (3 guided questions), offer an incentive if appropriate, and include a deadline. Keep each under 200 words."
+            },
+            {
+                id: 25, title: "Annual Report Narrative", category: "Writing & Content", categoryId: 1,
+                tags: ["annual report", "corporate", "narrative"], difficulty: "Advanced", useCase: "Corporate Communications",
+                prompt: "Write the narrative sections of an annual report for [COMPANY] in [INDUSTRY] for fiscal year [YEAR]. Include: CEO Letter (400 words) — vision, key achievements, challenges overcome, and forward outlook. Year in Review narrative (300 words) — story of the year's journey. Impact section (200 words) — quantified community and environmental contributions. Looking Ahead (200 words) — strategic priorities for next year. Use a tone that is transparent, optimistic, and human. Avoid corporate jargon."
+            },
+            {
+                id: 26, title: "Comparison Article Writer", category: "Writing & Content", categoryId: 1,
+                tags: ["comparison", "review", "SEO"], difficulty: "Intermediate", useCase: "Affiliate/Review Content",
+                prompt: "Write a comprehensive comparison article: [OPTION A] vs [OPTION B] for [TARGET AUDIENCE]. Structure: Introduction (who this comparison is for), Quick verdict table (5 key criteria), Deep-dive section for each option (strengths, weaknesses, best for), Head-to-head comparison across 8 specific criteria, Pricing breakdown, Real user scenarios (3 use cases showing which wins), Final recommendation by user type, and FAQ (5 questions). Be objective and data-driven. Total: 1,200–1,500 words."
+            },
+            {
+                id: 27, title: "Listicle Content Creator", category: "Writing & Content", categoryId: 1,
+                tags: ["listicle", "blog", "engagement"], difficulty: "Beginner", useCase: "Blog Content",
+                prompt: "Write a high-engagement listicle: '[NUMBER] [ADJECTIVE] Ways to [ACHIEVE GOAL] in [TIMEFRAME]' for [AUDIENCE]. For each item: Write a bold, specific headline (not generic), Provide 100–150 words of actionable explanation, Include one concrete example or data point, Add a 'Pro Tip' callout box, and Rate the difficulty (Easy/Medium/Hard). Open with a compelling intro that justifies the list format. Close with a summary and a question to drive comments. Total: 1,500–2,000 words."
+            },
+            {
+                id: 28, title: "Speech & Presentation Script", category: "Writing & Content", categoryId: 1,
+                tags: ["speech", "presentation", "public speaking"], difficulty: "Advanced", useCase: "Public Speaking",
+                prompt: "Write a [LENGTH]-minute keynote speech on [TOPIC] for [AUDIENCE] at [EVENT TYPE]. Structure: Opening (story/statistic/question hook — 90 seconds), Agenda preview, 3 main points each with: core idea, supporting story, data point, and audience takeaway, Transition phrases between sections, Interactive moment (question/exercise) at the midpoint, Closing story that mirrors the opening, and memorable final line. Include [SPEAKER NOTES] in brackets. Aim for 130 words per minute of speaking time."
+            },
+            {
+                id: 29, title: "Content Audit Framework", category: "Writing & Content", categoryId: 1,
+                tags: ["content audit", "strategy", "SEO"], difficulty: "Advanced", useCase: "Content Strategy",
+                prompt: "Create a content audit framework for [WEBSITE/BRAND] with [NUMBER] existing pieces of content. Provide: Audit criteria checklist (15 items covering SEO, quality, accuracy, performance), Decision matrix for each piece (Keep/Update/Consolidate/Delete), Prioritization scoring system (1–5 scale for traffic potential, business value, update effort), Template for documenting findings, Action plan template with 30/60/90-day milestones, and KPIs to track post-audit improvement. Include instructions for conducting the audit efficiently."
+            },
+            {
+                id: 30, title: "Micro-Copy & UX Writing", category: "Writing & Content", categoryId: 1,
+                tags: ["UX writing", "micro-copy", "product"], difficulty: "Intermediate", useCase: "Product Design",
+                prompt: "Write UX micro-copy for [APP/PRODUCT] covering all critical touchpoints: Onboarding (welcome message, 3 tooltip texts, empty state messages), Error messages (5 common errors — make them helpful, not scary), Success states (5 confirmation messages), CTA buttons (10 variations beyond 'Submit' and 'Click Here'), Loading states (3 messages), and Notification copy (5 push notification templates). Follow the principles: clear over clever, human over robotic, helpful over apologetic. Each piece should be under 15 words."
+            },
+
+            // ─── CATEGORY 2: Business & Strategy ─────────────────────────────────────
+            {
+                id: 31, title: "Business Plan Executive Summary", category: "Business & Strategy", categoryId: 2,
+                tags: ["business plan", "startup", "investor"], difficulty: "Advanced", useCase: "Fundraising",
+                prompt: "Write a compelling executive summary for a business plan for [COMPANY NAME], a [BUSINESS TYPE] targeting [MARKET]. Cover in 500 words: Problem being solved (with market size data), Unique solution and value proposition, Business model and revenue streams, Target market and customer segments, Competitive advantage and moat, Traction and key milestones achieved, Team highlights, Financial projections (3-year summary), Funding ask and use of funds. Make it compelling enough for an investor to request a full deck within 2 minutes of reading."
+            },
+            {
+                id: 32, title: "SWOT Analysis Generator", category: "Business & Strategy", categoryId: 2,
+                tags: ["SWOT", "analysis", "strategy"], difficulty: "Intermediate", useCase: "Strategic Planning",
+                prompt: "Conduct a comprehensive SWOT analysis for [COMPANY/PRODUCT] in [INDUSTRY]. For each quadrant, provide 5–7 specific, evidence-based points (not generic): Strengths (internal advantages), Weaknesses (internal limitations), Opportunities (external factors to exploit), Threats (external risks). After the matrix, write a 200-word strategic synthesis identifying: the top SO strategy (leverage strengths to capture opportunities), the top ST strategy (use strengths to mitigate threats), and the most critical WT risk to address immediately."
+            },
+            {
+                id: 33, title: "Competitive Analysis Framework", category: "Business & Strategy", categoryId: 2,
+                tags: ["competitive analysis", "market research", "strategy"], difficulty: "Advanced", useCase: "Market Research",
+                prompt: "Create a competitive analysis for [YOUR COMPANY] against [COMPETITOR 1], [COMPETITOR 2], and [COMPETITOR 3] in [MARKET]. Include: Feature comparison matrix (10 criteria), Pricing strategy analysis, Target customer segment comparison, Go-to-market strategy differences, Perceived brand positioning (plot on a 2x2 matrix), Content and marketing approach, Technology stack differences, Key strengths and vulnerabilities of each competitor, and white space opportunities. Conclude with 3 strategic recommendations for differentiation."
+            },
+            {
+                id: 34, title: "OKR Framework Builder", category: "Business & Strategy", categoryId: 2,
+                tags: ["OKR", "goals", "planning"], difficulty: "Intermediate", useCase: "Goal Setting",
+                prompt: "Create a quarterly OKR framework for [TEAM/COMPANY] focused on [STRATEGIC PRIORITY]. Write 3 Objectives, each with 3–4 Key Results. For each Objective: Write it as an inspiring, qualitative goal statement. For each Key Result: Make it specific, measurable, and time-bound. Include a baseline (current state), target, and stretch target. Add a confidence score (1–10) and leading indicator metric. Also provide a check-in cadence recommendation and a scoring rubric for end-of-quarter review."
+            },
+            {
+                id: 35, title: "Investor Pitch Deck Narrative", category: "Business & Strategy", categoryId: 2,
+                tags: ["pitch deck", "investor", "startup"], difficulty: "Advanced", useCase: "Fundraising",
+                prompt: "Write the narrative script for a 10-slide investor pitch deck for [STARTUP] raising [AMOUNT] at [STAGE]. Slide 1: Hook + mission statement. Slide 2: Problem (make investors feel the pain). Slide 3: Solution (the 'aha moment'). Slide 4: Market size (TAM/SAM/SOM). Slide 5: Business model. Slide 6: Traction (key metrics). Slide 7: Go-to-market strategy. Slide 8: Team (why you). Slide 9: Financials (3-year projection). Slide 10: The ask + use of funds. For each slide: 3–5 bullet points + 60-second spoken narrative."
+            },
+            {
+                id: 36, title: "Business Model Canvas", category: "Business & Strategy", categoryId: 2,
+                tags: ["business model", "canvas", "strategy"], difficulty: "Intermediate", useCase: "Business Design",
+                prompt: "Complete a Business Model Canvas for [BUSINESS IDEA] in [INDUSTRY]. Fill in all 9 blocks with specific, actionable content: Customer Segments (3 distinct personas), Value Propositions (unique value for each segment), Channels (how you reach customers), Customer Relationships (type of relationship with each segment), Revenue Streams (pricing models and mechanisms), Key Resources (physical, intellectual, human, financial), Key Activities (most important things the business does), Key Partnerships (who you need), Cost Structure (major costs). Include a viability assessment."
+            },
+            {
+                id: 37, title: "Go-to-Market Strategy", category: "Business & Strategy", categoryId: 2,
+                tags: ["GTM", "launch", "strategy"], difficulty: "Advanced", useCase: "Product Launch",
+                prompt: "Develop a go-to-market strategy for launching [PRODUCT/SERVICE] targeting [AUDIENCE] in [MARKET]. Cover: Market segmentation and ICP definition, Positioning statement (using the Geoffrey Moore template), Pricing strategy with rationale, channel strategy (direct, indirect, digital), Launch phases (pre-launch, launch, post-launch) with specific activities, Sales motion (PLG, SLG, or hybrid), Success metrics for each phase, Budget allocation framework, and Risk mitigation plan. Provide a 90-day execution roadmap."
+            },
+            {
+                id: 38, title: "Meeting Agenda Optimizer", category: "Business & Strategy", categoryId: 2,
+                tags: ["meeting", "productivity", "agenda"], difficulty: "Beginner", useCase: "Operations",
+                prompt: "Create an optimized meeting agenda for a [MEETING TYPE] with [NUMBER] attendees lasting [DURATION]. For each agenda item: Time allocation, Owner/facilitator, Objective (decision/discussion/information), Pre-read materials needed, Success criteria (what does 'done' look like?), and Decision-making process (consensus/vote/RACI). Include: Pre-meeting preparation checklist, Parking lot section, Action item template, and Post-meeting follow-up structure. Design it to eliminate status updates and maximize decision velocity."
+            },
+            {
+                id: 39, title: "Strategic Partnership Proposal", category: "Business & Strategy", categoryId: 2,
+                tags: ["partnership", "B2B", "proposal"], difficulty: "Advanced", useCase: "Business Development",
+                prompt: "Write a strategic partnership proposal for [YOUR COMPANY] to partner with [PARTNER COMPANY]. Structure: Executive Summary (why this partnership, why now), Strategic Alignment (shared goals and values), Value Exchange (what each party brings and gains), Partnership Model (co-marketing, co-selling, integration, or white-label), Revenue sharing or compensation structure, Joint go-to-market plan, Success metrics and KPIs, Governance structure, Timeline and milestones, and Next steps. Make the business case undeniable with specific projected outcomes."
+            },
+            {
+                id: 40, title: "Crisis Communication Plan", category: "Business & Strategy", categoryId: 2,
+                tags: ["crisis", "communications", "PR"], difficulty: "Advanced", useCase: "Risk Management",
+                prompt: "Develop a crisis communication plan for [COMPANY] facing [CRISIS SCENARIO]. Include: Crisis severity classification matrix (1–4 levels), Response team structure and decision tree, First 24-hour action checklist, Stakeholder communication sequence (employees first, then customers, then media), Draft holding statement (50 words), Full press statement template, Social media response protocol, Internal FAQ for customer-facing staff, Monitoring and escalation procedures, and Post-crisis reputation recovery roadmap. Emphasize transparency and accountability throughout."
+            },
+            {
+                id: 41, title: "Pricing Strategy Analysis", category: "Business & Strategy", categoryId: 2,
+                tags: ["pricing", "strategy", "revenue"], difficulty: "Advanced", useCase: "Revenue Strategy",
+                prompt: "Analyze and recommend a pricing strategy for [PRODUCT/SERVICE] in [MARKET]. Evaluate 5 pricing models: Cost-plus, Value-based, Competitive, Freemium, and Tiered/Usage-based. For each model: Pros and cons for this specific product, Revenue potential analysis, Customer psychology impact, Implementation complexity. Recommend the optimal model with rationale. Provide a specific pricing structure with 3 tiers (if applicable), psychological pricing tactics to apply, and a testing methodology to validate the pricing."
+            },
+            {
+                id: 42, title: "Board Meeting Presentation", category: "Business & Strategy", categoryId: 2,
+                tags: ["board", "presentation", "executive"], difficulty: "Advanced", useCase: "Executive Communication",
+                prompt: "Create a board meeting presentation outline for [COMPANY] for [QUARTER/PERIOD]. Structure for a 60-minute meeting: Financial performance summary (10 min) — revenue, burn, runway, key metrics vs. plan. Strategic update (15 min) — progress on 3 strategic initiatives. Key decisions required (20 min) — 2–3 decisions with options and recommendations. Risk register update (10 min) — top 3 risks and mitigations. Q&A (5 min). For each section: key data points to present, narrative framing, and pre-read materials to distribute."
+            },
+            {
+                id: 43, title: "Customer Journey Mapping", category: "Business & Strategy", categoryId: 2,
+                tags: ["customer journey", "UX", "strategy"], difficulty: "Intermediate", useCase: "Customer Experience",
+                prompt: "Create a detailed customer journey map for [PERSONA] purchasing/using [PRODUCT/SERVICE]. Map all 5 stages: Awareness, Consideration, Decision, Onboarding, Retention. For each stage: Customer actions (what they do), Thoughts (what they're thinking), Emotions (how they feel — rate 1–5), Pain points (friction and frustrations), Touchpoints (where they interact with your brand), Opportunities (how to improve the experience). Conclude with a prioritized list of 5 experience improvements ranked by impact and effort."
+            },
+            {
+                id: 44, title: "Sales Playbook Builder", category: "Business & Strategy", categoryId: 2,
+                tags: ["sales", "playbook", "training"], difficulty: "Advanced", useCase: "Sales Enablement",
+                prompt: "Build a sales playbook section for selling [PRODUCT/SERVICE] to [BUYER PERSONA] at [COMPANY SIZE]. Include: Ideal Customer Profile (ICP) definition, Discovery question bank (20 questions organized by category), Common objections and responses (10 objections with 2 responses each), Competitive battle cards (3 competitors), Email templates for each stage (prospecting, follow-up, closing, re-engagement), Call script framework, Demo flow outline, Proposal template structure, and Negotiation tactics. Make it immediately usable by a new sales rep."
+            },
+            {
+                id: 45, title: "Operational Efficiency Audit", category: "Business & Strategy", categoryId: 2,
+                tags: ["operations", "efficiency", "process"], difficulty: "Advanced", useCase: "Operations",
+                prompt: "Design an operational efficiency audit framework for [DEPARTMENT/PROCESS] at [COMPANY TYPE]. Include: Process mapping methodology (how to document current state), Waste identification checklist (8 types of waste from Lean methodology), Bottleneck analysis questions, Technology stack assessment criteria, Team capacity utilization metrics, Cost-per-output calculation template, Benchmark comparison framework, Quick wins identification matrix (impact vs. effort), and 90-day improvement roadmap template. Provide specific questions for stakeholder interviews."
+            },
+            {
+                id: 46, title: "Fundraising Strategy Memo", category: "Business & Strategy", categoryId: 2,
+                tags: ["fundraising", "VC", "strategy"], difficulty: "Advanced", useCase: "Fundraising",
+                prompt: "Write a fundraising strategy memo for [COMPANY] planning to raise [AMOUNT] in [ROUND TYPE]. Cover: Fundraising readiness assessment (10 criteria), Investor targeting strategy (tier 1/2/3 investors, strategic vs. financial), Narrative positioning for this specific round, Data room checklist (25 items), Outreach sequencing strategy, Due diligence preparation guide, Term sheet negotiation priorities, Timeline with milestones, Common investor objections and responses, and post-close integration plan. Include a 'red flags' section of things to fix before starting."
+            },
+            {
+                id: 47, title: "Product Roadmap Narrative", category: "Business & Strategy", categoryId: 2,
+                tags: ["product roadmap", "strategy", "planning"], difficulty: "Intermediate", useCase: "Product Strategy",
+                prompt: "Write a product roadmap narrative for [PRODUCT] covering the next 12 months. Structure: Vision statement (where the product is going and why), Q1 theme and key initiatives (3 features/improvements with rationale), Q2 theme and key initiatives, Q3 theme and key initiatives, Q4 theme and key initiatives, Dependency map (what needs to happen before what), Resource requirements by quarter, Success metrics for each quarter, Assumptions and risks, and stakeholder communication plan. Frame each quarter's work in terms of customer value delivered."
+            },
+            {
+                id: 48, title: "Market Entry Strategy", category: "Business & Strategy", categoryId: 2,
+                tags: ["market entry", "expansion", "strategy"], difficulty: "Advanced", useCase: "Growth Strategy",
+                prompt: "Develop a market entry strategy for [COMPANY] entering [NEW MARKET/GEOGRAPHY]. Analyze: Market attractiveness (size, growth, competition, regulatory environment), Entry mode options (organic, acquisition, partnership, licensing) with pros/cons, Localization requirements (product, pricing, marketing, legal), Competitive landscape in the new market, Go-to-market approach for first 6 months, Resource requirements and investment needed, Risk assessment matrix, Success metrics and decision gates, and Exit criteria if the market doesn't perform. Recommend the optimal market entry strategy with rationale."
+            },
+            {
+                id: 49, title: "Change Management Plan", category: "Business & Strategy", categoryId: 2,
+                tags: ["change management", "transformation", "leadership"], difficulty: "Advanced", useCase: "Organizational Change",
+                prompt: "Create a change management plan for implementing [CHANGE INITIATIVE] at [ORGANIZATION]. Apply the Kotter 8-Step model: Create urgency (communication plan), Build the guiding coalition (stakeholder map), Form a strategic vision, Enlist a volunteer army (engagement tactics), Enable action by removing barriers, Generate short-term wins (30/60/90-day milestones), Sustain acceleration, and Institute change. Include: Resistance management strategies, Communication calendar, Training plan, Success metrics, and a stakeholder impact assessment matrix."
+            },
+            {
+                id: 50, title: "KPI Dashboard Design", category: "Business & Strategy", categoryId: 2,
+                tags: ["KPI", "dashboard", "metrics"], difficulty: "Intermediate", useCase: "Performance Management",
+                prompt: "Design a KPI dashboard framework for [DEPARTMENT/COMPANY] tracking [STRATEGIC GOAL]. Define 15 KPIs organized in 3 tiers: Tier 1 (5 North Star metrics — company-level), Tier 2 (5 department-level leading indicators), Tier 3 (5 operational metrics). For each KPI: Definition, calculation formula, data source, update frequency, owner, target value, red/yellow/green thresholds, and how it connects to business outcomes. Include a dashboard layout recommendation and a monthly review cadence template."
+            },
+            {
+                id: 51, title: "Vendor Evaluation Matrix", category: "Business & Strategy", categoryId: 2,
+                tags: ["vendor", "procurement", "evaluation"], difficulty: "Intermediate", useCase: "Procurement",
+                prompt: "Create a vendor evaluation matrix for selecting a [VENDOR TYPE] for [COMPANY]. Define 10 evaluation criteria with weights (must total 100%): include technical capabilities, pricing, support quality, security compliance, scalability, integration capabilities, vendor stability, references, implementation timeline, and total cost of ownership. Provide a scoring rubric (1–5) for each criterion, an RFP question bank (20 questions), a reference check questionnaire (10 questions), and a final scoring template. Include red flag indicators that should disqualify a vendor."
+            },
+            {
+                id: 52, title: "Startup Pitch Narrative", category: "Business & Strategy", categoryId: 2,
+                tags: ["startup", "pitch", "storytelling"], difficulty: "Advanced", useCase: "Fundraising",
+                prompt: "Write a 3-minute verbal pitch narrative for [STARTUP] that tells a compelling story. Structure: Open with a specific customer story that illustrates the problem (30 seconds), Reveal the size of the problem with data (20 seconds), Introduce your solution as the natural answer (30 seconds), Explain why your approach is uniquely defensible (20 seconds), Share your traction with the most impressive metric (20 seconds), Describe the market opportunity (15 seconds), Introduce the team's unfair advantage (15 seconds), Close with the ask and vision (10 seconds). Make it conversational, not rehearsed-sounding."
+            },
+            {
+                id: 53, title: "Business Continuity Plan", category: "Business & Strategy", categoryId: 2,
+                tags: ["BCP", "risk", "continuity"], difficulty: "Advanced", useCase: "Risk Management",
+                prompt: "Develop a business continuity plan for [COMPANY] covering [CRITICAL PROCESSES]. Include: Business Impact Analysis (identify critical functions and recovery time objectives), Risk scenarios (5 scenarios: cyberattack, natural disaster, key person loss, supply chain disruption, pandemic), Response procedures for each scenario, Communication tree and escalation protocol, Remote work activation checklist, Data backup and recovery procedures, Vendor/supplier contingency contacts, Employee safety protocols, Testing and drill schedule, and Plan review/update cadence. Make it actionable and accessible to non-technical staff."
+            },
+            {
+                id: 54, title: "Annual Strategic Planning Template", category: "Business & Strategy", categoryId: 2,
+                tags: ["strategic planning", "annual", "template"], difficulty: "Advanced", useCase: "Strategic Planning",
+                prompt: "Create an annual strategic planning process template for [COMPANY SIZE] company in [INDUSTRY]. Design a 3-month planning process: Month 1 (Analysis): Environmental scan, competitive review, internal performance assessment, stakeholder input gathering. Month 2 (Strategy): Strategic options development, scenario planning, priority setting, resource allocation. Month 3 (Planning): OKR setting, budget alignment, roadmap creation, communication planning. Include: Workshop agendas for each phase, Templates for each deliverable, Decision-making frameworks, and a final strategic plan document structure."
+            },
+            {
+                id: 55, title: "Negotiation Strategy Planner", category: "Business & Strategy", categoryId: 2,
+                tags: ["negotiation", "strategy", "deal"], difficulty: "Advanced", useCase: "Business Negotiation",
+                prompt: "Develop a negotiation strategy for [NEGOTIATION SCENARIO] with [COUNTERPART]. Apply the Harvard Principled Negotiation framework: Separate people from the problem (relationship considerations), Focus on interests not positions (map both parties' underlying interests), Invent options for mutual gain (5 creative solutions), Insist on objective criteria (what standards apply). Also include: BATNA analysis for both parties, Opening position and walk-away point, Concession strategy (what to give and in what order), Potential deal structures, and Red lines. Provide a pre-negotiation preparation checklist."
+            },
+            {
+                id: 56, title: "Franchise Business Model", category: "Business & Strategy", categoryId: 2,
+                tags: ["franchise", "business model", "expansion"], difficulty: "Advanced", useCase: "Business Expansion",
+                prompt: "Design a franchise business model framework for [BUSINESS TYPE]. Cover: Franchise concept definition and brand standards, Franchisee qualification criteria, Territory and exclusivity structure, Initial investment breakdown (franchise fee, setup costs, working capital), Ongoing fees (royalty, marketing fund, technology), Training program outline (initial + ongoing), Operations manual structure (key sections), Support systems (field support, technology, supply chain), Marketing and lead generation support, and Financial performance representations. Include a franchisee recruitment strategy."
+            },
+            {
+                id: 57, title: "Exit Strategy Planning", category: "Business & Strategy", categoryId: 2,
+                tags: ["exit strategy", "M&A", "valuation"], difficulty: "Advanced", useCase: "Business Exit",
+                prompt: "Create an exit strategy plan for [COMPANY] targeting a [EXIT TYPE: acquisition/IPO/merger] in [TIMEFRAME]. Include: Current valuation assessment and value drivers, Value enhancement roadmap (12–24 months of actions to increase valuation), Potential acquirer/investor target list with rationale, Due diligence preparation checklist (financial, legal, technical, operational), Management team retention strategy, Deal structure considerations, Tax optimization strategies, Post-exit transition planning, and Timeline with key milestones. Identify the top 3 risks to exit success."
+            },
+            {
+                id: 58, title: "Team Charter Builder", category: "Business & Strategy", categoryId: 2,
+                tags: ["team charter", "culture", "alignment"], difficulty: "Intermediate", useCase: "Team Building",
+                prompt: "Create a team charter for a [TEAM TYPE] team of [SIZE] people working on [MISSION]. Include: Team mission statement (one sentence), Core values (5 values with behavioral definitions), Ways of working (meeting norms, communication protocols, decision-making process), Roles and responsibilities matrix (RACI for key activities), Performance expectations and accountability mechanisms, Conflict resolution process, Team rituals and celebrations, Success metrics, and a 90-day onboarding plan for new team members. Make it collaborative — include a workshop process for the team to co-create it."
+            },
+            {
+                id: 59, title: "Revenue Model Design", category: "Business & Strategy", categoryId: 2,
+                tags: ["revenue model", "monetization", "strategy"], difficulty: "Advanced", useCase: "Business Model",
+                prompt: "Design a comprehensive revenue model for [BUSINESS] serving [CUSTOMER SEGMENTS]. Evaluate and recommend from these models: Subscription (recurring), Transactional (per-use), Freemium (free + premium), Marketplace (take rate), Licensing, Professional services, Data monetization, and Advertising. For the recommended model(s): Pricing tiers and structure, Unit economics (LTV, CAC, payback period), Revenue projections (Year 1–3), Key assumptions, Sensitivity analysis (tornado chart for key assumptions), Scenario analysis (base/bull/bear), and a path to profitability. Include a revenue diversification strategy."
+            },
+            {
+                id: 60, title: "Stakeholder Management Plan", category: "Business & Strategy", categoryId: 2,
+                tags: ["stakeholder", "management", "communication"], difficulty: "Intermediate", useCase: "Project Management",
+                prompt: "Create a stakeholder management plan for [PROJECT/INITIATIVE] at [ORGANIZATION]. Map all stakeholders using a Power/Interest matrix (High Power/High Interest, High Power/Low Interest, Low Power/High Interest, Low Power/Low Interest). For each stakeholder group: Current stance (champion/supporter/neutral/skeptic/blocker), Desired stance, Key concerns and motivations, Engagement strategy, Communication frequency and channel, Key messages, and Success indicators. Include a stakeholder engagement calendar and an escalation protocol for resistance."
+            },
+
+            // ─── CATEGORY 3: Coding & Development ────────────────────────────────────
+            {
+                id: 61, title: "Code Review Checklist", category: "Coding & Development", categoryId: 3,
+                tags: ["code review", "best practices", "quality"], difficulty: "Intermediate", useCase: "Software Development",
+                prompt: "Create a comprehensive code review checklist for [LANGUAGE/FRAMEWORK] pull requests. Organize into 8 categories: Functionality (does it work as intended?), Code quality (readability, naming, complexity), Performance (algorithmic efficiency, N+1 queries, caching), Security (input validation, auth checks, secrets exposure), Testing (coverage, edge cases, test quality), Documentation (comments, README updates, API docs), Architecture (SOLID principles, design patterns, coupling), and Deployment (migrations, feature flags, rollback plan). Provide 5 specific questions per category."
+            },
+            {
+                id: 62, title: "API Design Specification", category: "Coding & Development", categoryId: 3,
+                tags: ["API", "REST", "design"], difficulty: "Advanced", useCase: "Backend Development",
+                prompt: "Design a RESTful API specification for [FEATURE/SERVICE]. Include: Resource naming conventions, Endpoint definitions (method, path, description) for all CRUD operations, Request/response schemas with example JSON, Authentication and authorization approach, Error response format with standard error codes, Pagination strategy, Rate limiting policy, Versioning strategy, Webhook design (if applicable), and OpenAPI 3.0 spec skeleton. Follow REST best practices: statelessness, proper HTTP methods, meaningful status codes, and HATEOAS links where appropriate."
+            },
+            {
+                id: 63, title: "Database Schema Designer", category: "Coding & Development", categoryId: 3,
+                tags: ["database", "schema", "SQL"], difficulty: "Advanced", useCase: "Database Design",
+                prompt: "Design a normalized database schema for [APPLICATION TYPE]. Identify all entities and their relationships. For each table: column names with data types, primary/foreign keys, indexes, constraints (NOT NULL, UNIQUE, CHECK), and default values. Provide: ER diagram description, SQL CREATE TABLE statements, Indexing strategy with rationale, Query optimization considerations, Migration strategy for schema changes, and Data archival/retention policy. Consider scalability to [TARGET SCALE]. Include 5 common queries and their optimized SQL."
+            },
+            {
+                id: 64, title: "System Architecture Design", category: "Coding & Development", categoryId: 3,
+                tags: ["architecture", "system design", "scalability"], difficulty: "Advanced", useCase: "System Design",
+                prompt: "Design a scalable system architecture for [APPLICATION] that needs to handle [SCALE REQUIREMENTS]. Cover: High-level architecture diagram description (components and their relationships), Technology stack recommendations with rationale, Data flow between components, Database design decisions (SQL vs NoSQL, sharding strategy), Caching strategy (what to cache, where, TTL), Message queue design for async operations, API gateway and load balancing, CDN strategy, Monitoring and observability stack, Disaster recovery approach, and estimated infrastructure costs. Address the top 3 scaling bottlenecks."
+            },
+            {
+                id: 65, title: "Bug Report Template", category: "Coding & Development", categoryId: 3,
+                tags: ["bug report", "QA", "debugging"], difficulty: "Beginner", useCase: "QA & Testing",
+                prompt: "Create a comprehensive bug report for the following issue: [DESCRIBE THE BUG]. Structure the report with: Title (clear, specific, searchable), Environment (OS, browser, version, device), Severity and Priority classification, Steps to reproduce (numbered, precise), Expected behavior, Actual behavior, Screenshots/logs (describe what to attach), Root cause hypothesis (if known), Affected user percentage estimate, Workaround (if available), and Suggested fix approach. Also create a bug report template that the team can reuse for all future issues."
+            },
+            {
+                id: 66, title: "Technical Debt Assessment", category: "Coding & Development", categoryId: 3,
+                tags: ["technical debt", "refactoring", "architecture"], difficulty: "Advanced", useCase: "Engineering Management",
+                prompt: "Create a technical debt assessment framework for [CODEBASE/SYSTEM]. Include: Debt identification categories (code quality, architecture, testing, documentation, dependencies, security), Severity classification matrix (Critical/High/Medium/Low), Business impact assessment (how each debt item affects velocity, reliability, security), Effort estimation approach, Prioritization framework (impact vs. effort matrix), Debt paydown strategy (dedicated sprints vs. boy scout rule vs. strangler fig), Metrics to track debt reduction progress, and a quarterly debt review process. Provide a sample assessment for [SPECIFIC AREA]."
+            },
+            {
+                id: 67, title: "CI/CD Pipeline Design", category: "Coding & Development", categoryId: 3,
+                tags: ["CI/CD", "DevOps", "automation"], difficulty: "Advanced", useCase: "DevOps",
+                prompt: "Design a CI/CD pipeline for [APPLICATION TYPE] using [TECH STACK]. Define all pipeline stages: Source (branch strategy, PR requirements), Build (compilation, dependency installation, artifact creation), Test (unit, integration, E2E, performance, security scanning), Quality gates (code coverage thresholds, linting, SAST), Staging deployment (blue-green or canary), Production deployment (strategy, rollback triggers), Post-deployment verification, and Monitoring integration. Include pipeline YAML skeleton, estimated pipeline duration, and failure notification strategy."
+            },
+            {
+                id: 68, title: "Security Audit Checklist", category: "Coding & Development", categoryId: 3,
+                tags: ["security", "audit", "OWASP"], difficulty: "Advanced", useCase: "Security",
+                prompt: "Create a security audit checklist for [WEB APPLICATION/API] based on OWASP Top 10. For each vulnerability category: Specific test cases to run, Code patterns to look for, Configuration checks, Tool recommendations (automated scanning), Manual testing procedures, and Remediation guidance. Also include: Authentication and session management checks, Data encryption at rest and in transit, Third-party dependency vulnerability scanning, Infrastructure security (server hardening, network security), and Compliance requirements (GDPR, SOC2). Provide a risk scoring matrix."
+            },
+            {
+                id: 69, title: "Performance Optimization Plan", category: "Coding & Development", categoryId: 3,
+                tags: ["performance", "optimization", "web"], difficulty: "Advanced", useCase: "Performance Engineering",
+                prompt: "Create a performance optimization plan for [APPLICATION] currently experiencing [PERFORMANCE ISSUE]. Diagnostic approach: Profiling methodology, Key metrics to measure (Core Web Vitals, TTFB, FCP, LCP, TTI), Bottleneck identification process. Optimization strategies by layer: Frontend (bundle size, lazy loading, image optimization, caching), Backend (query optimization, connection pooling, async processing), Database (indexing, query plans, denormalization), Infrastructure (CDN, load balancing, auto-scaling). Provide a prioritized action list with expected impact and implementation effort for each optimization."
+            },
+            {
+                id: 70, title: "Microservices Design Patterns", category: "Coding & Development", categoryId: 3,
+                tags: ["microservices", "architecture", "patterns"], difficulty: "Advanced", useCase: "Architecture",
+                prompt: "Design a microservices architecture for [MONOLITHIC APPLICATION] being decomposed. Apply these patterns: Service decomposition strategy (by business capability or subdomain), API Gateway pattern (routing, auth, rate limiting), Service discovery approach, Inter-service communication (sync REST/gRPC vs async messaging), Data management (database per service, eventual consistency, saga pattern), Resilience patterns (circuit breaker, retry, bulkhead, timeout), Observability (distributed tracing, centralized logging, metrics), and Deployment strategy (containerization, orchestration). Identify the 5 highest-risk decomposition challenges."
+            },
+            {
+                id: 71, title: "Code Documentation Standards", category: "Coding & Development", categoryId: 3,
+                tags: ["documentation", "code quality", "standards"], difficulty: "Intermediate", useCase: "Engineering Culture",
+                prompt: "Create coding documentation standards for a [LANGUAGE] codebase at [COMPANY TYPE]. Define standards for: File-level documentation (module purpose, author, version), Function/method documentation (JSDoc/docstring format with params, returns, throws, examples), Class documentation, Inline comments (when to use, what to explain), README structure for each service/module, Architecture Decision Records (ADR) format, Changelog maintenance, API documentation (OpenAPI/Swagger standards), and Code example quality standards. Include good vs. bad examples for each standard."
+            },
+            {
+                id: 72, title: "Testing Strategy Framework", category: "Coding & Development", categoryId: 3,
+                tags: ["testing", "QA", "strategy"], difficulty: "Advanced", useCase: "Quality Assurance",
+                prompt: "Design a comprehensive testing strategy for [APPLICATION] using the testing pyramid. Define: Unit testing standards (coverage targets, what to test, mocking strategy), Integration testing approach (which integrations, test data management), E2E testing scope (critical user journeys, browser matrix), Performance testing plan (load, stress, soak tests with thresholds), Security testing integration, Visual regression testing, Accessibility testing, and Chaos engineering practices. Include: Test environment strategy, CI integration, Flaky test management policy, and testing KPIs to track."
+            },
+            {
+                id: 73, title: "Refactoring Roadmap", category: "Coding & Development", categoryId: 3,
+                tags: ["refactoring", "code quality", "planning"], difficulty: "Advanced", useCase: "Engineering",
+                prompt: "Create a refactoring roadmap for [LEGACY CODEBASE/COMPONENT]. Apply the Strangler Fig pattern: Phase 1 (Identify): Map the current architecture, identify pain points, define target architecture. Phase 2 (Isolate): Create abstraction layers, add comprehensive tests around legacy code. Phase 3 (Migrate): Increment incrementally replace legacy components with new implementations. Phase 4 (Eliminate): Remove legacy code once fully replaced. For each phase: specific tasks, success criteria, rollback plan, estimated effort, and risk assessment. Include a feature flag strategy to safely deploy refactored code."
+            },
+            {
+                id: 74, title: "Developer Onboarding Guide", category: "Coding & Development", categoryId: 3,
+                tags: ["onboarding", "developer", "documentation"], difficulty: "Intermediate", useCase: "Engineering Management",
+                prompt: "Create a developer onboarding guide for [TECH STACK] at [COMPANY TYPE]. Structure for a 2-week onboarding: Week 1 Day-by-day schedule: Environment setup (tools, access, local dev), Architecture overview, Codebase walkthrough, First contribution (bug fix or small feature). Week 2: Deep bites into key systems, pairing sessions, first independent task. Include: Development environment setup checklist, Coding standards and conventions, Git workflow and PR process, Testing requirements, Deployment process, On-call and incident response overview, and 30/60/90-day success milestones."
+            },
+            {
+                id: 75, title: "Infrastructure as Code Template", category: "Coding & Development", categoryId: 3,
+                tags: ["IaC", "Terraform", "DevOps"], difficulty: "Advanced", useCase: "Infrastructure",
+                prompt: "Design an Infrastructure as Code architecture for [APPLICATION] on [CLOUD PROVIDER] using Terraform/Pulumi. Define: Module structure (networking, compute, database, storage, security, monitoring), Environment strategy (dev/staging/prod with variable overrides), State management approach (remote state, locking), Secret management integration, Networking design (VPC, subnets, security groups, NAT), Auto-scaling configuration, Backup and disaster recovery setup, Cost optimization tags and policies, and CI/CD integration for infrastructure changes. Provide the directory structure and key resource definitions."
+            },
+            {
+                id: 76, title: "GraphQL Schema Design", category: "Coding & Development", categoryId: 3,
+                tags: ["GraphQL", "API", "schema"], difficulty: "Advanced", useCase: "API Development",
+                prompt: "Design a GraphQL schema for [APPLICATION DOMAIN]. Define: Types and their fields (with descriptions), Queries (list, single item, filtered/paginated), Mutations (create, update, delete, bulk operations), Subscriptions (real-time events), Input types for mutations, Enums and scalars, Interfaces and unions for polymorphism, Directives (@deprecated, @auth, @rateLimit), Error handling strategy (union types vs. extensions), and N+1 query prevention (DataLoader patterns). Include a sample query/mutation for each major operation and a schema stitching strategy if multiple services."
+            },
+            {
+                id: 77, title: "Incident Response Runbook", category: "Coding & Development", categoryId: 3,
+                tags: ["incident response", "SRE", "operations"], difficulty: "Advanced", useCase: "Site Reliability",
+                prompt: "Create an incident response runbook for [SERVICE/SYSTEM] experiencing [INCIDENT TYPE]. Structure: Detection (alerting thresholds, monitoring dashboards to check), Triage (severity classification matrix, impact assessment), Communication (who to notify, what to say, status page updates), Investigation (diagnostic commands, log queries, metrics to examine), Mitigation options (ordered by speed vs. risk), Resolution steps, Verification (how to confirm the incident is resolved), Post-incident review template, and Prevention recommendations. Include escalation contacts and on-call rotation guidelines."
+            },
+            {
+                id: 78, title: "Mobile App Architecture", category: "Coding & Development", categoryId: 3,
+                tags: ["mobile", "architecture", "React Native"], difficulty: "Advanced", useCase: "Mobile Development",
+                prompt: "Design a mobile app architecture for [APP TYPE] using [React Native/Flutter/Swift/Kotlin]. Cover: Project structure and folder organization, State management approach (Redux/MobX/Zustand/Provider), Navigation architecture (stack, tab, drawer), API layer design (caching, offline support, error handling), Authentication flow, Push notification architecture, Local storage strategy (SQLite, AsyncStorage, Realm), Performance optimization (FlatList optimization, image caching, bundle splitting), Testing strategy (unit, component, E2E with Detox/Maestro), and CI/CD for app store deployment."
+            },
+            {
+                id: 79, title: "Data Pipeline Architecture", category: "Coding & Development", categoryId: 3,
+                tags: ["data pipeline", "ETL", "architecture"], difficulty: "Advanced", useCase: "Data Engineering",
+                prompt: "Design a data pipeline architecture for [DATA SOURCE] → [DATA DESTINATION] processing [VOLUME/FREQUENCY]. Define: Ingestion layer (batch vs. streaming, connectors, schema registry), Processing layer (transformation logic, data quality checks, enrichment), Storage layer (data lake zones: raw/curated/serving, partitioning strategy), Orchestration (workflow management, dependency handling, retry logic), Monitoring (pipeline health, data quality metrics, SLA tracking), Error handling and dead letter queues, Data lineage tracking, and Cost optimization strategies. Provide technology recommendations with rationale."
+            },
+            {
+                id: 80, title: "Frontend Component Library", category: "Coding & Development", categoryId: 3,
+                tags: ["component library", "design system", "React"], difficulty: "Advanced", useCase: "Frontend Development",
+                prompt: "Design a React component library architecture for [DESIGN SYSTEM]. Define: Component taxonomy (atoms, molecules, organisms, templates), Folder structure and naming conventions, Props API design principles (composability, sensible defaults, escape hatches), Styling approach (CSS Modules/Styled Components/Tailwind/CSS-in-JS), Theme system (design tokens, dark mode support), Accessibility requirements (ARIA, keyboard navigation, focus management), Documentation structure (Storybook stories, usage examples, prop tables), Testing approach, Versioning and changelog strategy, and npm publishing workflow."
+            },
+            {
+                id: 81, title: "Serverless Architecture Design", category: "Coding & Development", categoryId: 3,
+                tags: ["serverless", "AWS Lambda", "architecture"], difficulty: "Advanced", useCase: "Cloud Architecture",
+                prompt: "Design a serverless architecture for [APPLICATION] on [AWS/GCP/Azure]. Define: Function decomposition (what logic belongs in which function), Event sources and triggers (API Gateway, S3, SQS, EventBridge), Cold start mitigation strategies, State management (DynamoDB, S3, ElastiCache), Authentication (Cognito, JWT, API keys), Error handling and retry logic, Observability (X-Ray tracing, CloudWatch dashboards), Cost modeling (invocations, duration, data transfer), Security (IAM least privilege, VPC configuration), and local development workflow. Identify anti-patterns to avoid."
+            },
+            {
+                id: 82, title: "Code Quality Metrics", category: "Coding & Development", categoryId: 3,
+                tags: ["code quality", "metrics", "engineering"], difficulty: "Intermediate", useCase: "Engineering Management",
+                prompt: "Define a code quality metrics framework for [ENGINEERING TEAM]. Identify 15 metrics across 5 categories: Reliability (defect rate, MTTR, error rate), Maintainability (cyclomatic complexity, code duplication, technical debt ratio), Security (vulnerability count by severity, time to patch), Performance (response time percentiles, throughput, resource utilization), and Velocity (lead time, deployment frequency, change failure rate). For each metric: definition, measurement method, target range, tool to collect it, and how to act on it. Include a metrics review cadence."
+            },
+            {
+                id: 83, title: "Authentication System Design", category: "Coding & Development", categoryId: 3,
+                tags: ["authentication", "security", "OAuth"], difficulty: "Advanced", useCase: "Security",
+                prompt: "Design a comprehensive authentication and authorization system for [APPLICATION]. Cover: Authentication methods (password, OAuth2/OIDC, SSO, MFA, passwordless), JWT vs. session-based auth trade-offs and recommendation, Token lifecycle management (issuance, refresh, revocation), Authorization model (RBAC, ABAC, or ReBAC), Permission system design, Multi-tenancy considerations, Security hardening (rate limiting, account lockout, suspicious activity detection), Audit logging requirements, and Compliance considerations (GDPR, SOC2). Provide implementation pseudocode for the core auth flow."
+            },
+            {
+                id: 84, title: "Open Source Project Setup", category: "Coding & Development", categoryId: 3,
+                tags: ["open source", "GitHub", "community"], difficulty: "Intermediate", useCase: "Open Source",
+                prompt: "Create a complete open source project setup guide for [PROJECT NAME] in [LANGUAGE]. Include all essential files and their content: README.md (project overview, quick start, full documentation links), CONTRIBUTING.md (how to contribute, PR process, code standards), CODE_OF_CONDUCT.md, LICENSE selection rationale, Issue templates (bug report, feature request), PR template, GitHub Actions workflows (CI, release automation), CHANGELOG format, Semantic versioning strategy, Community management approach (Discord/Slack, office hours), and a roadmap for reaching 100 GitHub stars."
+            },
+            {
+                id: 85, title: "Machine Learning Pipeline", category: "Coding & Development", categoryId: 3,
+                tags: ["ML", "pipeline", "MLOps"], difficulty: "Advanced", useCase: "Machine Learning",
+                prompt: "Design an end-to-end ML pipeline for [ML TASK: classification/regression/NLP/CV] using [FRAMEWORK]. Cover: Data ingestion and versioning (DVC, Delta Lake), Feature engineering pipeline (transformations, feature store), Model training workflow (experiment tracking with MLflow/W&B, hyperparameter tuning), Model evaluation framework (metrics, bias testing, explainability), Model registry and versioning, Serving architecture (batch vs. real-time, A/B testing), Monitoring (data drift, model performance degradation), Retraining triggers, and CI/CD for ML (testing data pipelines, model validation gates). Include a sample experiment configuration."
+            },
+            {
+                id: 86, title: "Caching Strategy Design", category: "Coding & Development", categoryId: 3,
+                tags: ["caching", "Redis", "performance"], difficulty: "Advanced", useCase: "Performance",
+                prompt: "Design a comprehensive caching strategy for [APPLICATION]. Identify all cacheable data and define for each: Cache type (in-memory, distributed, CDN, browser), Cache key design, TTL (time-to-live) rationale, Invalidation strategy (TTL expiry, event-driven, write-through, cache-aside), Consistency requirements, Cache warming approach, and Memory budget. Cover: Redis data structure selection for each use case, Cache stampede prevention, Multi-layer caching architecture, Cache hit rate targets, and Monitoring approach. Identify the 3 highest-impact caching opportunities for [SPECIFIC BOTTLENECK]."
+            },
+            {
+                id: 87, title: "Webhook System Design", category: "Coding & Development", categoryId: 3,
+                tags: ["webhooks", "events", "integration"], difficulty: "Advanced", useCase: "Integration",
+                prompt: "Design a webhook system for [PLATFORM] that allows third-party integrations. Cover: Event catalog (all events that can be subscribed to with payload schemas), Subscription management API (create, update, delete, list), Delivery mechanism (HTTP POST, retry logic with exponential backoff), Reliability guarantees (at-least-once delivery, idempotency keys), Security (HMAC signature verification, IP allowlisting, TLS), Performance (async delivery, queue-based architecture), Monitoring (delivery success rate, latency, failure alerts), Developer experience (webhook testing tool, event logs), and SDK design for common languages."
+            },
+            {
+                id: 88, title: "Monorepo Architecture", category: "Coding & Development", categoryId: 3,
+                tags: ["monorepo", "Nx", "Turborepo"], difficulty: "Advanced", useCase: "Engineering Architecture",
+                prompt: "Design a monorepo architecture for [ORGANIZATION] with [NUMBER] applications and [NUMBER] shared packages. Define: Tool selection rationale (Nx/Turborepo/Lerna), Repository structure (apps/, packages/, tools/), Shared package design (UI components, utilities, types, configs), Build pipeline optimization (caching, affected commands, parallel execution), Dependency management strategy, Code sharing boundaries and ownership, CI/CD optimization (only build/test affected projects), Release strategy (independent vs. fixed versioning), Developer experience (local development, hot reload across packages), and governance model for shared packages."
+            },
+            {
+                id: 89, title: "Observability Stack Design", category: "Coding & Development", categoryId: 3,
+                tags: ["observability", "monitoring", "SRE"], difficulty: "Advanced", useCase: "Site Reliability",
+                prompt: "Design a comprehensive observability stack for [APPLICATION] using the three pillars: Metrics (Prometheus/Datadog): What to instrument, metric naming conventions, dashboard design, alerting rules with thresholds. Logs (ELK/Loki): Structured logging format, log levels and when to use each, sensitive data handling, retention policy, search patterns for common issues. Traces (Jaeger/Zipkin/Tempo): Instrumentation strategy, sampling rate, span attributes, service map design. Also cover: SLI/SLO/SLA definitions, Error budget policy, On-call runbook integration, and cost management."
+            },
+            {
+                id: 90, title: "Feature Flag System", category: "Coding & Development", categoryId: 3,
+                tags: ["feature flags", "LaunchDarkly", "deployment"], difficulty: "Intermediate", useCase: "Deployment",
+                prompt: "Design a feature flag system for [APPLICATION] to enable safe deployments and experimentation. Cover: Flag types (release flags, experiment flags, ops flags, permission flags), Naming conventions and taxonomy, SDK integration patterns (server-side vs. client-side evaluation), Targeting rules (user segments, percentage rollouts, environment-based), Flag lifecycle management (creation, gradual rollout, cleanup), Experimentation framework (A/B testing, statistical significance), Emergency kill switch design, Technical debt prevention (flag cleanup policy), Audit logging, and integration with CI/CD pipeline. Include a flag review process."
+            },
+
+            // ─── CATEGORY 11: Engineering Vault (merged from Lavaz Premium 500 Extended Engineering Vault) ───
+            {
+                id: 91, title: "Standalone Automated Workstation Bootstrapper", category: "Engineering Vault", categoryId: 11,
+                tags: ["termux", "bootstrap", "shell"], difficulty: "Advanced", useCase: "Termux Workspace",
+                prompt: "Act as an Android System Architect. Generate a complete, error-free bash shell script for Termux that sets up a production-grade local development workstation on a standard Android device without root privileges. The script must execute sequential processing vectors to clean, update, and provision target paths. It must force-install core binary assets: zsh, oh-my-zsh configuration modules, git, neovim with full Lua syntax formatting layouts, Node.js LTS, Python3, OpenJDK 17, and the Android SDK command-line tools bundle. Programmatically declare exact absolute path arrays matching local environment storage locations (/storage/emulated/0/My-nexus-app-vault/). Implement fallback directory structure checkers to verify that access boundaries do not fail with absolute symlink exceptions. Output the entire script within a clean monospace environment block containing no truncated strings or missing execution statements."
+            },
+            {
+                id: 92, title: "AARCH64 Toolchain Binary Cross-Compiler Setup", category: "Engineering Vault", categoryId: 11,
+                tags: ["termux", "toolchain", "compiler"], difficulty: "Advanced", useCase: "Termux Workspace",
+                prompt: "Act as a Low-Level Build Infrastructure Engineer. Create a detailed architectural instruction prompt for setting up a native AARCH64 ARMv8-A binary compilation pipeline entirely within an unrooted Termux terminal block. The prompt must force the compilation toolchain to declare exact environment variable bindings for LD_PRELOAD configurations to resolve termux-exec library pointer path exceptions. Include step-by-step instructions for installing build-essential packages, clang, cmake, and rustc platforms natively inside local device parameters. Explicitly map makefile compiler flags (-march=armv8-a+crypto -O3) optimized for on-device code generation loops. Ensure that the generated prompt enforces thorough error handling loops that trap broken dynamic references or missing header structures, outputting a complete build pipeline validation script with no code compression."
+            },
+            {
+                id: 93, title: "Complete Non-Omitted Continuous APK Compiler", category: "Engineering Vault", categoryId: 11,
+                tags: ["android-studio", "gradle", "kotlin"], difficulty: "Advanced", useCase: "Android Studio Build",
+                prompt: "Act as a Principal Android Software Engineer. Generate an exhaustive code block layout instructions prompt that constructs a complete, fully functional Android Application package utilizing modern Kotlin components. The system prompt must explicitly command an LLM to render every single directory tree branch and source file without placeholder text, comment blocks, or ellipsis markers. Force the simultaneous output of: 1) build.gradle.kts project-level script with modern dependency resolution configurations. 2) build.gradle.kts app-level block enforcing signature validation properties, release minification tasks, and optimize-ready ProGuard rules. 3) A clean AndroidManifest.xml mapping precise application permissions and component lifecycles. 4) The full standalone architectural directory flow sequence. Provide complete instruction files designed to execute background gradle compilation tasks like assembleRelease natively without breaking symbol resolution trackers."
+            },
+            {
+                id: 94, title: "Automated ProGuard Code Obfuscation Rule Mapper", category: "Engineering Vault", categoryId: 11,
+                tags: ["android-studio", "proguard", "release"], difficulty: "Advanced", useCase: "Android Studio Build",
+                prompt: "Act as a Senior Android Release and App Sec Engineer. Provide a comprehensive instruction blueprint prompt designed to automatically analyze a target Android dependency structure mapping configuration list and output an error-free, custom-tailored mapping rule configuration file (`proguard-rules.pro`). The prompt must instruct the target LLM to trace every dynamic reflection class initialization loop, third-party JSON parsing data models, and dependency serialization frames within a modern Jetpack Compose layout. Force the explicit declaration of non-destructive optimization statements (`-keepattributes *Annotation*,Signature,InnerClasses`) and prevent the obfuscation of vital serialization mappings to eliminate runtime reflection execution exceptions on unrooted mobile targets. Provide the complete framework structure with no stubs."
+            },
+            {
+                id: 95, title: "HTML5 Layout DOM to Kotlin Jetpack Compose Transpiler", category: "Engineering Vault", categoryId: 11,
+                tags: ["compiler", "compose", "transpiler"], difficulty: "Advanced", useCase: "Compose Compiler",
+                prompt: "Act as an Expert Compiler Engine and Android Frontend Architect. Create an exhaustive system engineering conversion prompt designed to ingest a single-file, complex HTML5 layout document—including embedded inline flexboxes, relative positioning grids, CSS shadow effects, and JavaScript tracking functions—and instantly output an entirely complete, production-ready `MainActivity.kt` layout class. The generated prompt must strictly forbid the utilization of Android WebView hooks. Instead, it must require the precise architectural mapping of DOM tree structures into modern, pure native Jetpack Compose view tree configurations. Every layout container element, padding density, border thickness, text alignment style, and background tone must translate directly into custom layout Modifiers (`Layout`, `Box`, `LazyColumn`, `Canvas`). Include native side-effect handling using `LaunchedEffect` routines to map corresponding JavaScript execution blocks into clean Kotlin coroutines with zero missing lines."
+            },
+            {
+                id: 96, title: "High-Depth Vector Shadow Material Modifier Engine", category: "Engineering Vault", categoryId: 11,
+                tags: ["neumorphic", "compose", "ui"], difficulty: "Advanced", useCase: "3D Neumorphism",
+                prompt: "Act as a Principal UI/UX Component Architect. Develop an interactive Jetpack Compose code prompt block that creates a premium, high-depth 3D neumorphic shadow modifier framework. The prompt must force the design system to draw dual stacked vector shadows using pure hardware-accelerated rendering methods (`Modifier.drawBehind`). The explicit geometric calculation must map clear parameter points: a positive shadow offset vector ($14px$) rendering deep color parameters and a corresponding negative offset vector ($-14px$) rendering smooth, vibrant high-light characteristics. Incorporate fluid interactive components that dynamically animate the surface topography from a proud convex panel look to a deep, precise inset concave structure upon user input events. Ensure every single float position value, blend curve calculation, and hardware rendering rule is written out in full to maintain steady frame rate delivery paths on 120Hz mobile devices."
+            },
+            {
+                id: 97, title: "Transaction-Safe Local Memory Synchronization Framework", category: "Engineering Vault", categoryId: 11,
+                tags: ["room", "sqlite", "offline"], difficulty: "Advanced", useCase: "Room SQLite",
+                prompt: "Act as an Elite Android Database and Infrastructure Engineer. Generate an extensive prompt structure mapping out a zero-cloud, transaction-safe database synchronization engine utilizing the Android Jetpack Room persistence framework. The system prompt must enforce the complete generation of: 1) Advanced relational schemas utilizing nested `@Relation` mappings between operational asset tables. 2) Complex DAO interface structures incorporating explicit thread-safe `@Transaction` operation wrappers. 3) Custom data TypeConverters handling complex JSON structural arrays natively. The execution flow must explicitly lock execution parameters within isolated coroutine background execution loops (`Dispatchers.IO`) utilizing mutual exclusion primitives (`Mutex`) to guarantee background processing loops never trigger database deadlock conditions or UI freezing states during high-volume reads."
+            },
+            {
+                id: 98, title: "Biometric Keystore Key-Gen Intent System Handler", category: "Engineering Vault", categoryId: 11,
+                tags: ["security", "biometric", "keystore"], difficulty: "Advanced", useCase: "Zero-Knowledge Secure",
+                prompt: "Act as an Android Cryptography and Security Expert. Provide a comprehensive engineering system configuration prompt that builds a production-grade biometric authentication and local data security module using Kotlin. The target prompt must require the explicit creation of a secure system context that binds native application execution loops directly to hardware-backed key storage areas (`AndroidKeyStore`). Implement detailed initialization structures for a 256-bit AES-GCM secret key loop that requires active cryptographic verification states through the native user `BiometricPrompt` sequence. Include runtime task instructions that automatically perform strict garbage collection steps and force-overwrite sensitive tracking memory arrays inside memory buffers immediately upon completing data encryption cycles. Output the absolute configuration tree in full without shortcut comments."
+            }
+        ];
+
+        // Category counters are derived from the real prompt repository above
+        CATEGORIES.forEach(cat => {
+            cat.count = PROMPTS.filter(p => p.categoryId === cat.id).length;
+        });
+
+        // App Reactive Engine State Architecture
+        let activeCategoryFilterId = null;
+        let activeComplexityTierString = null;
+        let runningSearchTokenQuery = "";
+        let activelyCompiledPromptObject = null;
+        let executionSearchDebouncerTimer = null; 
+
+        // DOM Element Cache Map
+        const categoryNavigationContainer = document.getElementById('category-navigation-container');
+        const difficultyVectorContainer = document.getElementById('difficulty-vector-container');
+        const frameworkBlueprintsFeedTarget = document.getElementById('framework-blueprints-feed-target');
+        const vaultRepositorySearch = document.getElementById('vault-repository-search');
+        const resetFiltersTrigger = document.getElementById('reset-filters-trigger');
+        const repositoryResultsCounter = document.getElementById('repository-results-counter');
+        const globalPromptCounter = document.getElementById('global-prompt-counter');
+
+        // Workspace Controls DOM Cache Map
+        const workspaceCompilerPlayground = document.getElementById('workspace-compiler-playground');
+        const pgTargetCategory = document.getElementById('pg-target-category');
+        const pgTargetTitle = document.getElementById('pg-target-title');
+        const pgTargetUsecase = document.getElementById('pg-target-usecase');
+        const pgTargetTier = document.getElementById('pg-target-tier');
+        const pgTargetRawBlueprint = document.getElementById('pg-target-raw-blueprint');
+        const pgDynamicVariablesGrid = document.getElementById('pg-dynamic-variables-grid');
+        const pgCompiledOutputTheatre = document.getElementById('pg-compiled-output-theatre');
+        const compiledPayloadWordCounter = document.getElementById('compiled-payload-word-counter');
+
+        // System Diagnostic Panel Component Trigger DOM
+        const sysDiagnosticsWrapper = document.getElementById('sys-diagnostics-wrapper');
+
+        // Life Cycle Hook Initialization Core Run
+        window.addEventListener('DOMContentLoaded', () => {
+            globalPromptCounter.innerText = `${PROMPTS.length} Master Frameworks Active`;
+            
+            // Restore local cache contents if found
+            const savedPadContent = localStorage.getItem('powerpad_local_autosave_content');
+            if (savedPadContent) {
+                document.getElementById('powerpad-editor-surface').innerHTML = savedPadContent;
+            }
+            runPowerPadTelemetry();
+            
+            renderSidebarCategoryPods();
+            renderFrameworkBlueprintsFeed();
+            setupSearchInputPipeWatcher();
+            loadCachedWorkspacePayloadContext(); 
+            setupTokenDropdownWatcher();
+        });
+
+        // View Mode Panel Navigation Strategy Engine
+        function switchMainView(viewKey) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.view-panel').forEach(pnl => pnl.classList.remove('active'));
+
+            if (viewKey === 'powerpad') {
+                document.getElementById('tab-trigger-powerpad').classList.add('active');
+                document.getElementById('view-panel-powerpad').classList.add('active');
+            } else if (viewKey === 'diagnostics') {
+                document.getElementById('tab-trigger-diagnostics').classList.add('active');
+                document.getElementById('view-panel-diagnostics').classList.add('active');
+            } else {
+                document.getElementById('tab-trigger-vault').classList.add('active');
+                document.getElementById('view-panel-vault').classList.add('active');
+            }
+        }
+
+        // Power Pad Feature Implementations Layer
+        function applyPowerPadStyle(command, value = null) {
+            document.execCommand(command, false, value);
+            runPowerPadTelemetry();
+        }
+
+        function executeFontResize(sizeValue) {
+            document.execCommand('fontSize', false, sizeValue);
+            runPowerPadTelemetry();
+        }
+
+        function runPowerPadTelemetry() {
+            const surface = document.getElementById('powerpad-editor-surface');
+            const textContent = surface.innerText || "";
+            document.getElementById('powerpad-char-count').innerText = `Characters: ${textContent.length}`;
+            
+            const calculatedWords = textContent.trim().split(/\s+/).filter(w => w.length > 0).length;
+            document.getElementById('powerpad-word-count').innerText = `Words: ${calculatedWords}`;
+        }
+
+        function copyPowerPadContents() {
+            const surface = document.getElementById('powerpad-editor-surface');
+            navigator.clipboard.writeText(surface.innerText).then(() => {
+                triggerGlobalToastAlertNotification("Power Pad Notes Extracted to System Clipboard");
+            }).catch(err => {
+                console.error('Clipboard injection failure into platform hardware layers:', err);
+            });
+        }
+
+        // New Added Power Pad Actions
+        function savePowerPadAsHTML() {
+            const surface = document.getElementById('powerpad-editor-surface');
+            const htmlContent = surface.innerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'nexus_powerpad_note.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            triggerGlobalToastAlertNotification("Power Pad Note Saved as HTML File");
+        }
+
+        function savePowerPadAsMarkdown() {
+            const surface = document.getElementById('powerpad-editor-surface');
+            const textContent = surface.innerText || "";
+            const blob = new Blob([textContent], { type: 'text/markdown' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'nexus_powerpad_note.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            triggerGlobalToastAlertNotification("Power Pad Note Saved as Markdown File");
+        }
+
+        function savePowerPadState() {
+            const surface = document.getElementById('powerpad-editor-surface');
+            localStorage.setItem('powerpad_local_autosave_content', surface.innerHTML);
+            triggerGlobalToastAlertNotification("Power Pad Engine Core Local Cache Synchronized");
+        }
+
+        // Diagnostics Accordion Mechanics
+        function toggleDiagnosticsAccordion() {
+            const isClosed = !sysDiagnosticsWrapper.classList.contains('open');
+            const chevron = sysDiagnosticsWrapper.querySelector('.diagnostics-chevron');
+            if (isClosed) {
+                sysDiagnosticsWrapper.classList.add('open');
+                chevron.innerText = "▲";
+            } else {
+                sysDiagnosticsWrapper.classList.remove('open');
+                chevron.innerText = "▼";
+            }
+        }
+
+        // Sidebar Pod Blueprint Core Render System
+        function renderSidebarCategoryPods() {
+            categoryNavigationContainer.innerHTML = '';
+            CATEGORIES.forEach(cat => {
+                if (cat.count === 0) return;
+                const pod = document.createElement('button');
+                const isCurrentActive = activeCategoryFilterId === cat.id;
+                pod.className = `pod-btn ${isCurrentActive ? 'active' : ''}`;
+                pod.onclick = () => selectCategoryFilterChannel(cat.id);
+                
+                pod.innerHTML = `
+                    <div class="pod-btn-content">
+                        <span class="pod-icon">${cat.icon}</span>
+                        <span>${cat.name}</span>
+                    </div>
+                    <span class="pod-btn-count">${cat.count}</span>
+                `;
+                categoryNavigationContainer.appendChild(pod);
+            });
+        }
+
+        // Filtering Control Logic Layer
+        function selectCategoryFilterChannel(categoryId) {
+            if (activeCategoryFilterId === categoryId) {
+                activeCategoryFilterId = null;
+            } else {
+                activeCategoryFilterId = categoryId;
+            }
+            renderSidebarCategoryPods();
+            renderFrameworkBlueprintsFeed();
+            diagnoseActiveFilterStates();
+        }
+
+        // Complexity Vector Logic Layer
+        function toggleComplexityVectorFilter(tierString) {
+            const clickedBtn = difficultyVectorContainer.querySelector(`[data-tier="${tierString}"]`);
+            
+            if (activeComplexityTierString === tierString) {
+                activeComplexityTierString = null;
+                clickedBtn.classList.remove('active');
+            } else {
+                difficultyVectorContainer.querySelectorAll('.vector-pill').forEach(b => b.classList.remove('active'));
+                activeComplexityTierString = tierString;
+                clickedBtn.classList.add('active');
+            }
+            renderFrameworkBlueprintsFeed();
+            diagnoseActiveFilterStates();
+        }
+
+        function setupSearchInputPipeWatcher() {
+            vaultRepositorySearch.addEventListener('input', () => {
+                clearTimeout(executionSearchDebouncerTimer);
+                executionSearchDebouncerTimer = setTimeout(() => {
+                    runningSearchTokenQuery = vaultRepositorySearch.value.toLowerCase().trim();
+                    renderFrameworkBlueprintsFeed();
+                    diagnoseActiveFilterStates();
+                }, 150);
+            });
+        }
+
+        function setupTokenDropdownWatcher() {
+            const tokenSearch = document.getElementById('vault-repository-search');
+            const tokenDrop = document.getElementById('drop-token-lookup');
+            if(!tokenSearch || !tokenDrop) return;
+
+            tokenSearch.addEventListener('focus', () => {
+                tokenDrop.classList.add('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!tokenSearch.contains(e.target) && !tokenDrop.contains(e.target)) {
+                    tokenDrop.classList.remove('active');
+                }
+            });
+
+            tokenDrop.querySelectorAll('.neo-suggest-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    tokenSearch.value = item.getAttribute('data-val');
+                    tokenDrop.classList.remove('active');
+                    runningSearchTokenQuery = tokenSearch.value.toLowerCase().trim();
+                    renderFrameworkBlueprintsFeed();
+                    diagnoseActiveFilterStates();
+                });
+            });
+        }
+
+        function clearPlatformFilters() {
+            activeCategoryFilterId = null;
+            activeComplexityTierString = null;
+            runningSearchTokenQuery = "";
+            vaultRepositorySearch.value = "";
+            difficultyVectorContainer.querySelectorAll('.vector-pill').forEach(b => b.classList.remove('active'));
+            renderSidebarCategoryPods();
+            renderFrameworkBlueprintsFeed();
+            diagnoseActiveFilterStates();
+        }
+
+        function diagnoseActiveFilterStates() {
+            if (activeCategoryFilterId !== null || activeComplexityTierString !== null || runningSearchTokenQuery !== "") {
+                resetFiltersTrigger.style.display = "block";
+            } else {
+                resetFiltersTrigger.style.display = "none";
+            }
+        }
+
+        // Core Matrix Feed Core Generator Pipeline
+        function renderFrameworkBlueprintsFeed() {
+            const filteredData = PROMPTS.filter(p => {
+                if (activeCategoryFilterId && p.categoryId !== activeCategoryFilterId) return false;
+                if (activeComplexityTierString && p.difficulty !== activeComplexityTierString) return false;
+                if (runningSearchTokenQuery !== "") {
+                    const matchTitle = p.title.toLowerCase().includes(runningSearchTokenQuery);
+                    const matchUseCase = p.useCase.toLowerCase().includes(runningSearchTokenQuery);
+                    const matchBody = p.prompt.toLowerCase().includes(runningSearchTokenQuery);
+                    const matchTag = p.tags.some(t => t.toLowerCase().includes(runningSearchTokenQuery));
+                    return matchTitle || matchUseCase || matchBody || matchTag;
+                }
+                return true;
+            });
+
+            repositoryResultsCounter.innerText = `(Showing ${filteredData.length} framework blueprints)`;
+            frameworkBlueprintsFeedTarget.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                frameworkBlueprintsFeedTarget.innerHTML = `
+                    <div class="empty-feed-card">
+                        No token blueprints found matching active filtering query configuration layout.
+                    </div>
+                `;
+                return;
+            }
+
+            filteredData.forEach(p => {
+                const card = document.createElement('div');
+                const isSelected = activelyCompiledPromptObject && activelyCompiledPromptObject.id === p.id;
+                card.className = `prompt-feed-card ${isSelected ? 'active-selected' : ''}`;
+                card.id = `prompt-card-node-${p.id}`;
+                
+                card.innerHTML = `
+                    <div class="flex flex-col gap-2">
+                        <div class="card-top-row">
+                            <span class="card-usecase-tag">${p.useCase}</span>
+                            <span class="card-tier-tag" data-tier="${p.difficulty}">${p.difficulty}</span>
+                        </div>
+                        <h4 class="card-core-title">${p.title}</h4>
+                        <p class="card-body-preview">${p.prompt}</p>
+                    </div>
+                    <div class="card-bottom-row">
+                        <div class="card-tags-group">
+                            ${p.tags.slice(0, 3).map(t => `<span class="card-inline-hash">#${t}</span>`).join('')}
+                        </div>
+                        <span class="card-action-trigger-text">
+                            Load Pipe <span style="font-size: 0.85rem;">→</span>
+                        </span>
+                    </div>
+                `;
+                
+                card.onclick = () => loadActivePromptWorkspacePlayground(p);
+                frameworkBlueprintsFeedTarget.appendChild(card);
+            });
+        }
+
+        // Active Injection Playground Configuration Controller Engine
+        function loadActivePromptWorkspacePlayground(promptObject, structuralPreloadCacheData = null) {
+            activelyCompiledPromptObject = promptObject;
+            
+            document.querySelectorAll('.prompt-feed-card').forEach(c => c.classList.remove('active-selected'));
+            const specificCardNode = document.getElementById(`prompt-card-node-${promptObject.id}`);
+            if (specificCardNode) specificCardNode.classList.add('active-selected');
+
+            workspaceCompilerPlayground.classList.add('active');
+            workspaceCompilerPlayground.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            pgTargetCategory.innerText = promptObject.category;
+            pgTargetTitle.innerText = promptObject.title;
+            pgTargetUsecase.innerText = `Use Case Focus: ${promptObject.useCase}`;
+            pgTargetTier.innerText = promptObject.difficulty;
+            pgTargetTier.setAttribute('data-tier', promptObject.difficulty);
+            pgTargetRawBlueprint.innerText = promptObject.prompt;
+
+            const tokenRegexBounds = /\[([A-Z0-9_\/\s\-\:\.\,]+)\]/g;
+            const analyticalExtractedVariables = [];
+            let patternMatchIterator;
+            
+            while ((patternMatchIterator = tokenRegexBounds.exec(promptObject.prompt)) !== null) {
+                if (!analyticalExtractedVariables.includes(patternMatchIterator[1])) {
+                    analyticalExtractedVariables.push(patternMatchIterator[1]);
+                }
+            }
+
+            pgDynamicVariablesGrid.innerHTML = '';
+            
+            analyticalExtractedVariables.forEach(variableKey => {
+                if (variableKey === "TOPIC") {
+                    const linkedInput = document.getElementById("input-topic");
+                    if (linkedInput) {
+                        linkedInput.setAttribute('data-token-variable', 'TOPIC');
+                        linkedInput.className = "neo-autocomplete-input generic-variable-input-field";
+                        if (structuralPreloadCacheData && structuralPreloadCacheData["TOPIC"]) {
+                            linkedInput.value = structuralPreloadCacheData["TOPIC"];
+                        }
+                    }
+                    return;
+                }
+                if (variableKey === "INDUSTRY") {
+                    const linkedInput = document.getElementById("input-industry");
+                    if (linkedInput) {
+                        linkedInput.setAttribute('data-token-variable', 'INDUSTRY');
+                        linkedInput.className = "neo-autocomplete-input generic-variable-input-field";
+                        if (structuralPreloadCacheData && structuralPreloadCacheData["INDUSTRY"]) {
+                            linkedInput.value = structuralPreloadCacheData["INDUSTRY"];
+                        }
+                    }
+                    return;
+                }
+
+                const podWrapper = document.createElement('div');
+                podWrapper.className = "input-group-pod";
+                
+                let fallBackPreloadValue = "";
+                if (structuralPreloadCacheData && structuralPreloadCacheData[variableKey]) {
+                    fallBackPreloadValue = structuralPreloadCacheData[variableKey];
+                }
+
+                const dropdownId = `drop-var-gen-${variableKey.replace(/\s+/g, '-')}`;
+                let dropdownHtmlBlock = '';
+                if (variableKey === "VARIABLE_X" || variableKey === "VARIABLE_Y" || variableKey.includes("VARIABLE")) {
+                    dropdownHtmlBlock = `
+                        <div class="neo-dropdown" id="${dropdownId}">
+                            <div class="neo-suggest-item" data-val="Android mobile">🤖 Android mobile parameters</div>
+                            <div class="neo-suggest-item" data-val="Termux on android">🐚 Termux on android terminals</div>
+                            <div class="neo-suggest-item" data-val="Low-latency runtime pipeline">⚡ Low-latency runtime pipeline</div>
+                            <div class="neo-suggest-item" data-val="Secure programmatic storage modules">🔒 Secure programmatic storage modules</div>
+                        </div>
+                    `;
+                }
+
+                podWrapper.innerHTML = `
+                    <label>${variableKey.replace(/_/g, ' ')}</label>
+                    <input type="text" data-token-variable="${variableKey}" 
+                           id="input-var-gen-${variableKey.replace(/\s+/g, '-')}"
+                           placeholder="Provide data injection for ${variableKey.toLowerCase()}..." 
+                           class="sculpted-input generic-variable-input-field" 
+                           value="${fallBackPreloadValue}"
+                           oninput="executePayloadCompilationEngine()" autocomplete="off">
+                    ${dropdownHtmlBlock}
+                `;
+                pgDynamicVariablesGrid.appendChild(podWrapper);
+
+                if (dropdownHtmlBlock !== '') {
+                    setTimeout(() => {
+                        const dInput = document.getElementById(`input-var-gen-${variableKey.replace(/\s+/g, '-')}`);
+                        const dEl = document.getElementById(dropdownId);
+                        if(dInput && dEl) {
+                            dInput.addEventListener('focus', () => { dEl.classList.add('active'); });
+                            document.addEventListener('click', (ev) => {
+                                if(!dInput.contains(ev.target) && !dEl.contains(ev.target)) dEl.classList.remove('active');
+                            });
+                            dEl.querySelectorAll('.neo-suggest-item').forEach(itm => {
+                                itm.addEventListener('click', () => {
+                                    dInput.value = itm.getAttribute('data-val');
+                                    dEl.classList.remove('active');
+                                    executePayloadCompilationEngine();
+                                });
+                            });
+                        }
+                    }, 20);
+                }
+            });
+
+            executePayloadCompilationEngine();
+        }
+
+        // Live Parameter Compilation Logic Engine Component
+        function executePayloadCompilationEngine() {
+            if (!activelyCompiledPromptObject) return;
+
+            let finalCompiledWorkingString = activelyCompiledPromptObject.prompt;
+            const trackingCacheObjectToPersist = {};
+
+            document.querySelectorAll('.generic-variable-input-field').forEach(inputNode => {
+                const targetVariableName = inputNode.getAttribute('data-token-variable');
+                if (!targetVariableName) return;
+                const rawUserDataInput = inputNode.value;
+                trackingCacheObjectToPersist[targetVariableName] = rawUserDataInput;
+
+                const concreteReplacementString = rawUserDataInput.trim() !== '' ? rawUserDataInput : `[${targetVariableName}]`;
+                
+                const regularExpressionSafeEscapedVar = targetVariableName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                const iterationGlobalRegexSelector = new RegExp('\\[' + regularExpressionSafeEscapedVar + '\\]', 'g');
+                finalCompiledWorkingString = finalCompiledWorkingString.replace(iterationGlobalRegexSelector, concreteReplacementString);
+            });
+
+            pgCompiledOutputTheatre.innerText = finalCompiledWorkingString;
+            manuallyUpdateWordTelemetry();
+
+            persistWorkspaceStateToStorage(activelyCompiledPromptObject.id, trackingCacheObjectToPersist);
+        }
+
+        function manuallyUpdateWordTelemetry() {
+            const textStream = pgCompiledOutputTheatre.innerText;
+            const computedWordMetricsCount = textStream.split(/\s+/).filter(w => w.length > 0).length;
+            compiledPayloadWordCounter.innerText = `Words: ${computedWordMetricsCount}`;
+        }
+
+        function closeWorkspacePlaygroundPanel() {
+            workspaceCompilerPlayground.classList.remove('active');
+            activelyCompiledPromptObject = null;
+            localStorage.removeItem('nexus_vault_staging_ptr');
+            localStorage.removeItem('nexus_vault_staging_payload');
+            renderFrameworkBlueprintsFeed();
+        }
+
+        function persistWorkspaceStateToStorage(promptId, variablesDataMap) {
+            localStorage.setItem('nexus_vault_staging_ptr', promptId);
+            localStorage.setItem('nexus_vault_staging_payload', JSON.stringify(variablesDataMap));
+        }
+
+        function loadCachedWorkspacePayloadContext() {
+            const cachedPointerId = localStorage.getItem('nexus_vault_staging_ptr');
+            const cachedRawPayloadString = localStorage.getItem('nexus_vault_staging_payload');
+
+            if (cachedPointerId && cachedRawPayloadString) {
+                const matchedPromptObject = PROMPTS.find(p => p.id === parseInt(cachedPointerId));
+                if (matchedPromptObject) {
+                    try {
+                        const parsedPayloadVariablesMap = JSON.parse(cachedRawPayloadString);
+                        switchMainView('vault');
+                        loadActivePromptWorkspacePlayground(matchedPromptObject, parsedPayloadVariablesMap);
+                    } catch (error) {
+                        console.error("Technical state restoration sequence failed to deserialize safely:", error);
+                    }
+                }
+            }
+        }
+
+        // Native Hardware Hardware Interface Layer
+        function pipeCompiledPayloadToPlatformHardware() {
+            const dynamicCompiledPayloadPayloadString = pgCompiledOutputTheatre.innerText;
+            navigator.clipboard.writeText(dynamicCompiledPayloadPayloadString).then(() => {
+                triggerGlobalToastAlertNotification("Prompt Blueprint Extracted to System Clipboard");
+            }).catch(err => {
+                console.error('Platform hardware clipboard write access failure detected:', err);
+            });
+        }
+
+        function triggerGlobalToastAlertNotification(alertMessageString) {
+            const toastNode = document.getElementById('platform-toast-alert-node');
+            const toastStringElement = document.getElementById('toast-alert-message-string');
+            
+            toastStringElement.innerText = alertMessageString;
+            toastNode.classList.add('active-toast');
+
+            setTimeout(() => {
+                toastNode.classList.remove('active-toast');
+            }, 3000);
+        }
+
+        // Autocomplete Configuration Listeners Pipeline Wire
+        document.addEventListener("DOMContentLoaded", () => {
+            const setupAutocomplete = (inputId, dropdownId) => {
+                const inputEl = document.getElementById(inputId);
+                const dropEl = document.getElementById(dropdownId);
+                
+                if (!inputEl || !dropEl) return;
+
+                inputEl.addEventListener("focus", () => {
+                    dropEl.classList.add("active");
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!inputEl.contains(e.target) && !dropEl.contains(e.target)) {
+                        dropEl.classList.remove("active");
+                    }
+                });
+
+                dropEl.querySelectorAll(".neo-suggest-item").forEach(item => {
+                    item.addEventListener("click", () => {
+                        inputEl.value = item.getAttribute("data-val");
+                        dropEl.classList.remove("active");
+                        
+                        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                        executePayloadCompilationEngine();
+                    });
+                });
+
+                inputEl.addEventListener("input", () => {
+                    executePayloadCompilationEngine();
+                });
+            };
+
+            setupAutocomplete("input-topic", "drop-topic");
+            setupAutocomplete("input-industry", "drop-industry");
+        });
+    </script>
+</body>
+</html>
