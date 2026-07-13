@@ -4,7 +4,7 @@
   "private": true,
   "description": "Static NeuroStack mobile app wrapped with Capacitor for Android APK builds",
   "scripts": {
-    "build": "rm -rf dist && mkdir -p dist && cp -f index.html notes.html prompts.html gemini.html styles.css app.js gemini.js dist/",
+    "build": "rm -rf dist && mkdir -p dist && cp -f index.html notes.html prompts.html gemini.html nexus-vault.html styles.css app.js gemini.js prompt-library.js dist/",
     "cap:sync": "npx cap sync android"
   },
   "dependencies": {
