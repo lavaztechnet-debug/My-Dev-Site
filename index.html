@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NeuroStack Mobile</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="home">
+  <div class="app-shell">
+    <header class="topbar walnut-panel">
+      <div>
+        <p class="eyebrow">Walnut Noir+</p>
+        <h1>Lavaz NeuroStack</h1>
+        <div class="page-switcher">
+          <a class="nav-chip active" href="./index.html">Home</a>
+          <a class="nav-chip" href="./notes.html">Notes</a>
+          <a class="nav-chip" href="./prompts.html">Prompts</a>
+          <a class="nav-chip" href="./gemini.html">Gemini</a>
+          <a class="nav-chip" href="./nexus-vault.html">Vault</a>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" type="button">Light theme</button>
+        <a class="icon-btn" href="./prompts.html" aria-label="Open prompts">LN</a>
+      </div>
+    </header>
+
+    <main class="main-stack">
+      <section class="hero walnut-panel">
+        <p class="eyebrow">Dashboard</p>
+        <h2>More color. More depth. Cleaner navigation.</h2>
+        <p class="hero-copy">NeuroStack now uses a richer walnut-neumorphic shell with a soft light variant inspired by your reference neumorphic mockups.</p>
+      </section>
+
+      <section class="grid two-up">
+        <article class="walnut-panel metric-card">
+          <p class="eyebrow">Saved notes</p>
+          <h3 id="noteCount">0</h3>
+        </article>
+        <article class="walnut-panel metric-card">
+          <p class="eyebrow">Saved prompts</p>
+          <h3 id="promptCount">0</h3>
+        </article>
+      </section>
+
+      <section class="walnut-panel">
+        <p class="eyebrow">Launch</p>
+        <div class="action-row">
+          <a class="pill-btn primary-accent" href="./notes.html">Open Notes</a>
+          <a class="pill-btn" href="./prompts.html">Open Prompts</a>
+          <a class="pill-btn" href="./gemini.html">Open Gemini</a>
+        </div>
+      </section>
+
+      <section class="walnut-panel">
+        <p class="eyebrow">Prompt library preview</p>
+        <div id="libraryPreview" class="stack-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./prompt-library.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

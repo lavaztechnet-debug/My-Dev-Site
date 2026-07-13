@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NeuroStack Prompts</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="prompts">
+  <div class="app-shell">
+    <header class="topbar neo-panel">
+      <div>
+        <p class="eyebrow">Prompts</p>
+        <h1>Library</h1>
+        <div class="page-switcher">
+          <a class="nav-chip" href="./index.html">Home</a>
+          <a class="nav-chip" href="./notes.html">Notes</a>
+          <a class="nav-chip active" href="./prompts.html">Prompts</a>
+          <a class="nav-chip" href="./gemini.html">Gemini</a>
+          <a class="nav-chip" href="./nexus-vault.html">Vault</a>
+        </div>
+        <div id="libraryStat" class="library-stat">Library items: 0</div>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" type="button">Light theme</button>
+      </div>
+    </header>
+
+    <main class="main-stack">
+      <article class="neo-panel form-panel">
+        <label class="field-label" for="promptSearch">Search library</label>
+        <input id="promptSearch" class="neo-input" type="text" placeholder="Search Android, horror, cinematic..." />
+
+        <label class="field-label" for="promptTitle">Prompt title</label>
+        <input id="promptTitle" class="neo-input" type="text" placeholder="Prompt title" />
+
+        <label class="field-label" for="promptBody">Prompt body</label>
+        <textarea id="promptBody" class="neo-input neo-textarea" placeholder="Prompt content..."></textarea>
+
+        <div class="action-row">
+          <button id="savePromptBtn" class="pill-btn primary-accent">Save prompt</button>
+          <button id="clearPromptBtn" class="ghost-btn" type="button">Clear</button>
+        </div>
+      </article>
+
+      <article class="neo-panel">
+        <p class="eyebrow">Saved prompts</p>
+        <div id="promptsList" class="stack-list"></div>
+      </article>
+
+      <article class="neo-panel">
+        <p class="eyebrow">Document library</p>
+        <p class="small-note">This should populate from prompt-library.js at runtime.</p>
+        <div id="promptLibraryList" class="stack-list"></div>
+      </article>
+    </main>
+  </div>
+
+  <script src="./prompt-library.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
